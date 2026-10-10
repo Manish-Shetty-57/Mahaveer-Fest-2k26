@@ -33,9 +33,42 @@
         .glass-card { background: rgba(255, 255, 255, 0.04); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 1rem; }
         .shimmer-btn { background: linear-gradient(90deg, #f59e0b 0%, #fbbf24 50%, #f59e0b 100%); background-size: 200% auto; color: #000; font-weight: bold; transition: all 0.3s ease; }
         .shimmer-btn:hover { background-position: right center; box-shadow: 0 0 15px rgba(245, 158, 11, 0.4); }
+        .modal-overlay { background: rgba(0,0,0,0.7); backdrop-filter: blur(4px); }
+        .toast { animation: slideIn 0.3s ease-out, fadeOut 0.3s ease-in 2.7s forwards; }
+        @keyframes slideIn { from { transform: translateY(-20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        @keyframes fadeOut { from { opacity: 1; } to { opacity: 0; } }
     </style>
 </head>
 <body class="min-h-screen flex flex-col bg-dark text-gray-200">
+
+    <!-- ========== LOGIN GATE ========== -->
+    <div id="login-gate" class="min-h-screen flex items-center justify-center px-4">
+        <div class="glass-card p-8 sm:p-10 max-w-md w-full text-center">
+            <div class="w-16 h-16 rounded-full bg-gradient-to-tr from-gold to-yellow-200 flex items-center justify-center font-cinzel font-bold text-black text-2xl shadow-lg shadow-gold/20 mx-auto mb-6">A</div>
+            <h1 class="font-cinzel font-bold text-2xl text-white mb-2">ADMIN <span class="text-gold">DASHBOARD</span></h1>
+            <p class="text-xs text-gray-400 uppercase tracking-widest mb-6">Mahaveera Fest 2K26 — Restricted Access</p>
+            <div class="text-left mb-4">
+                <label class="text-xs text-gray-400 uppercase tracking-wider mb-1 block">Admin Secret Key</label>
+                <div class="relative">
+                    <input type="password" id="login-key-input" placeholder="Enter admin secret key..." 
+                        class="w-full bg-darker border border-white/10 rounded-lg px-4 py-3 text-sm text-white focus:outline-none focus:border-gold pr-10"
+                        onkeydown="if(event.key==='Enter') attemptLogin()">
+                    <button onclick="toggleKeyVisibility()" class="absolute right-3 top-3 text-gray-500 hover:text-gold transition">
+                        <i id="eye-icon" class="fa-solid fa-eye"></i>
+                    </button>
+                </div>
+            </div>
+            <p id="login-error" class="text-red-400 text-xs mb-3 hidden"><i class="fa-solid fa-triangle-exclamation mr-1"></i> <span></span></p>
+            <button onclick="attemptLogin()" class="shimmer-btn w-full py-3 rounded-lg text-sm tracking-wider">
+                <i class="fa-solid fa-lock-open mr-2"></i>UNLOCK DASHBOARD
+            </button>
+            <p class="text-[10px] text-gray-600 mt-4">Contact IQAC coordinator for access credentials</p>
+        </div>
+    </div>
+
+    <!-- ========== MAIN DASHBOARD (hidden until login) ========== -->
+    <div id="dashboard-content" class="hidden flex flex-col min-h-screen">
+
     <!-- Header -->
     <header class="sticky top-0 z-50 bg-dark/90 backdrop-blur-md border-b border-white/10">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 min-h-[5rem] flex flex-wrap items-center justify-between gap-3">
@@ -50,6 +83,9 @@
                 <a href="/" class="text-xs sm:text-sm text-gray-300 hover:text-white transition"><i class="fa-solid fa-arrow-left mr-1"></i> Public Site</a>
                 <button onclick="refreshData()" class="bg-white/10 hover:bg-white/20 px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-2 transition">
                     <i class="fa-solid fa-arrows-rotate"></i> Refresh
+                </button>
+                <button onclick="logout()" class="bg-red-900/50 hover:bg-red-800/70 text-red-200 px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-2 transition">
+                    <i class="fa-solid fa-right-from-bracket"></i> Logout
                 </button>
             </div>
         </div>
@@ -103,10 +139,13 @@
                 <button onclick="switchTab('events')" id="tabBtnEvents" class="flex-1 sm:flex-none px-3.5 py-2 rounded-lg text-xs font-bold transition bg-white/5 text-gray-300 hover:bg-white/10">
                     <i class="fa-solid fa-trophy mr-1"></i> Rosters
                 </button>
+                <button onclick="switchTab('manage')" id="tabBtnManage" class="flex-1 sm:flex-none px-3.5 py-2 rounded-lg text-xs font-bold transition bg-white/5 text-gray-300 hover:bg-white/10">
+                    <i class="fa-solid fa-gear mr-1"></i> Manage
+                </button>
             </div>
         </div>
 
-        <!-- TAB 1: Student Master List (Every Participant with Phone & College) -->
+        <!-- TAB 1: Student Master List -->
         <div id="tabContentStudents" class="glass-card p-6 mb-12 overflow-x-auto">
             <div class="flex items-center justify-between mb-4">
                 <h2 class="text-xl font-cinzel font-bold text-white flex items-center gap-2">
@@ -124,10 +163,11 @@
                         <th class="py-3 px-4">College Name</th>
                         <th class="py-3 px-4">Coordinator Contact</th>
                         <th class="py-3 px-4">Events Registered</th>
+                        <th class="py-3 px-4">Actions</th>
                     </tr>
                 </thead>
                 <tbody id="studentTableBody" class="divide-y divide-white/5 text-gray-300">
-                    <tr><td colspan="7" class="py-8 text-center text-gray-500">Loading records...</td></tr>
+                    <tr><td colspan="8" class="py-8 text-center text-gray-500">Loading records...</td></tr>
                 </tbody>
             </table>
         </div>
@@ -150,10 +190,11 @@
                         <th class="py-3 px-4">Unique Students</th>
                         <th class="py-3 px-4">Remaining Quota</th>
                         <th class="py-3 px-4">Enrolled Events</th>
+                        <th class="py-3 px-4">Actions</th>
                     </tr>
                 </thead>
                 <tbody id="collegeTableBody" class="divide-y divide-white/5 text-gray-300">
-                    <tr><td colspan="7" class="py-8 text-center text-gray-500">Loading records...</td></tr>
+                    <tr><td colspan="8" class="py-8 text-center text-gray-500">Loading records...</td></tr>
                 </tbody>
             </table>
         </div>
@@ -169,50 +210,203 @@
                 <p class="text-gray-500 text-center py-8">Loading event rosters...</p>
             </div>
         </div>
+
+        <!-- TAB 4: Manage / CRUD Operations -->
+        <div id="tabContentManage" class="glass-card p-6 mb-12 hidden">
+            <h2 class="text-xl font-cinzel font-bold text-white flex items-center gap-2 mb-6">
+                <i class="fa-solid fa-gear text-gold"></i> Manage Records
+            </h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Add College Card -->
+                <div class="border border-white/10 rounded-xl p-5 bg-white/[0.02]">
+                    <h3 class="text-sm font-bold text-gold uppercase tracking-wider mb-4"><i class="fa-solid fa-plus mr-2"></i>Register New College</h3>
+                    <div class="space-y-3">
+                        <input type="text" id="mc-college-name" placeholder="College Name *" class="w-full bg-darker border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-gold">
+                        <input type="text" id="mc-faculty-name" placeholder="Faculty Coordinator Name *" class="w-full bg-darker border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-gold">
+                        <input type="tel" id="mc-faculty-phone" placeholder="Faculty Phone (e.g. 9876543210) *" class="w-full bg-darker border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-gold">
+                        <input type="email" id="mc-faculty-email" placeholder="Faculty Email *" class="w-full bg-darker border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-gold">
+                        <button onclick="adminAddCollege()" class="shimmer-btn w-full py-2 rounded-lg text-sm">
+                            <i class="fa-solid fa-building-columns mr-2"></i>Register College
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Danger Zone -->
+                <div class="border border-red-900/40 rounded-xl p-5 bg-red-950/10">
+                    <h3 class="text-sm font-bold text-red-400 uppercase tracking-wider mb-4"><i class="fa-solid fa-triangle-exclamation mr-2"></i>Danger Zone</h3>
+                    <p class="text-xs text-gray-400 mb-4">These actions are irreversible. Use with extreme caution.</p>
+                    <button onclick="confirmClearAll()" class="w-full bg-red-900/60 hover:bg-red-800/70 text-red-200 font-bold py-2.5 px-4 rounded-lg text-sm flex items-center justify-center gap-2 transition mb-3">
+                        <i class="fa-solid fa-trash-can"></i> Clear ALL Records (Reset Database)
+                    </button>
+                    <p class="text-[10px] text-red-400/60">This deletes every college, student, registration, and association record.</p>
+                </div>
+            </div>
+        </div>
+
     </main>
 
     <footer class="bg-darker border-t border-white/10 py-6 text-center text-xs text-gray-500">
         <p>&copy; 2026 Sri Mahaveera College, Moodbidri. Admin Reporting Dashboard.</p>
     </footer>
 
+    </div><!-- end #dashboard-content -->
+
+    <!-- ========== EDIT MODAL ========== -->
+    <div id="edit-modal" class="fixed inset-0 z-[100] hidden items-center justify-center modal-overlay">
+        <div class="glass-card p-6 sm:p-8 max-w-lg w-full mx-4 border border-gold/20">
+            <div class="flex items-center justify-between mb-5">
+                <h3 id="edit-modal-title" class="text-lg font-cinzel font-bold text-gold"></h3>
+                <button onclick="closeEditModal()" class="text-gray-400 hover:text-white text-xl"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div id="edit-modal-body" class="space-y-3"></div>
+            <div class="flex justify-end gap-3 mt-6 pt-4 border-t border-white/10">
+                <button onclick="closeEditModal()" class="px-4 py-2 rounded-lg text-xs font-bold bg-white/5 text-gray-300 hover:bg-white/10 transition">Cancel</button>
+                <button id="edit-modal-save" onclick="" class="shimmer-btn px-5 py-2 rounded-lg text-sm">Save Changes</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== CONFIRM MODAL ========== -->
+    <div id="confirm-modal" class="fixed inset-0 z-[100] hidden items-center justify-center modal-overlay">
+        <div class="glass-card p-6 sm:p-8 max-w-md w-full mx-4 border border-red-500/30">
+            <div class="text-center">
+                <div class="w-14 h-14 rounded-full bg-red-900/50 flex items-center justify-center mx-auto mb-4">
+                    <i class="fa-solid fa-triangle-exclamation text-red-400 text-2xl"></i>
+                </div>
+                <h3 id="confirm-title" class="text-lg font-cinzel font-bold text-white mb-2"></h3>
+                <p id="confirm-message" class="text-sm text-gray-400 mb-6"></p>
+                <div class="flex justify-center gap-3">
+                    <button onclick="closeConfirmModal()" class="px-5 py-2 rounded-lg text-xs font-bold bg-white/5 text-gray-300 hover:bg-white/10 transition">Cancel</button>
+                    <button id="confirm-action-btn" onclick="" class="px-5 py-2 rounded-lg text-sm font-bold bg-red-600 hover:bg-red-500 text-white transition">Confirm Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div id="toast-container" class="fixed top-4 right-4 z-[200] space-y-2"></div>
+
     <!-- Script for Dashboard & Excel Download -->
     <script>
-        const API_BASE_URL = 'http://localhost:8000/api';
+        const API_BASE_URL = window.location.origin.includes('localhost') 
+            ? 'http://localhost:8000/api' 
+            : `${window.location.origin}/api`;
         let rawSummaryData = null;
         let masterStudentsList = [];
+        let adminSecretKey = '';
 
-        // Extract ADMIN_SECRET_KEY from current page URL parameters
-        const urlParams = new URLSearchParams(window.location.search);
-        const adminSecretKey = urlParams.get('ADMIN_SECRET_KEY') || '';
-
-        async function fetchDashboardData() {
-            try {
-                if(!adminSecretKey) {
-                    throw new Error('Access Denied: Missing ADMIN KEY parameter.');
-                }
-                const res = await fetch(`${API_BASE_URL}/admin/summary?ADMIN_SECRET_KEY=${encodeURIComponent(adminSecretKey)}`);
-                if(!res.ok) {
-                    if(res.status === 403) {
-                        throw new Error('Restricted Area: Invalid ADMIN KEY provided.');
-                    }
-                    throw new Error('Failed to fetch summary data');
-                }
-                const json = await res.json();
-                rawSummaryData = json.data;
-                renderDashboard();
-            } catch(err) {
-                console.error(err);
-                document.getElementById('studentTableBody').innerHTML = `
-                    <tr><td colspan="7" class="py-8 text-center text-red-400">
-                        <i class="fa-solid fa-triangle-exclamation mr-2"></i> ${err.message || 'Failed to connect to backend.'}
-                    </td></tr>
-                `;
+        // ====================================================================
+        // LOGIN GATE
+        // ====================================================================
+        function toggleKeyVisibility() {
+            const inp = document.getElementById('login-key-input');
+            const icon = document.getElementById('eye-icon');
+            if (inp.type === 'password') {
+                inp.type = 'text';
+                icon.className = 'fa-solid fa-eye-slash';
+            } else {
+                inp.type = 'password';
+                icon.className = 'fa-solid fa-eye';
             }
         }
 
+        async function attemptLogin() {
+            const key = document.getElementById('login-key-input').value.trim();
+            const errEl = document.getElementById('login-error');
+            if (!key) {
+                errEl.classList.remove('hidden');
+                errEl.querySelector('span').textContent = 'Please enter the admin secret key.';
+                return;
+            }
+            // Validate key by hitting the API
+            try {
+                const res = await fetch(`${API_BASE_URL}/admin/summary?ADMIN_SECRET_KEY=${encodeURIComponent(key)}`);
+                if (res.status === 403) {
+                    errEl.classList.remove('hidden');
+                    errEl.querySelector('span').textContent = 'Invalid secret key. Access denied.';
+                    return;
+                }
+                if (!res.ok) {
+                    errEl.classList.remove('hidden');
+                    errEl.querySelector('span').textContent = 'Cannot connect to backend server.';
+                    return;
+                }
+                // Success
+                adminSecretKey = key;
+                const json = await res.json();
+                rawSummaryData = json.data;
+                document.getElementById('login-gate').classList.add('hidden');
+                document.getElementById('dashboard-content').classList.remove('hidden');
+                document.getElementById('dashboard-content').classList.add('flex');
+                renderDashboard();
+            } catch (err) {
+                errEl.classList.remove('hidden');
+                errEl.querySelector('span').textContent = 'Cannot connect to backend server. Is it running?';
+            }
+        }
+
+        function logout() {
+            adminSecretKey = '';
+            rawSummaryData = null;
+            masterStudentsList = [];
+            document.getElementById('dashboard-content').classList.add('hidden');
+            document.getElementById('dashboard-content').classList.remove('flex');
+            document.getElementById('login-gate').classList.remove('hidden');
+            document.getElementById('login-key-input').value = '';
+            document.getElementById('login-error').classList.add('hidden');
+        }
+
+        // Check URL params for auto-login (backward compat)
+        window.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const keyFromUrl = urlParams.get('ADMIN_SECRET_KEY');
+            if (keyFromUrl) {
+                document.getElementById('login-key-input').value = keyFromUrl;
+                attemptLogin();
+            }
+        });
+
+        // ====================================================================
+        // TOAST NOTIFICATIONS
+        // ====================================================================
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toast-container');
+            const colors = {
+                success: 'bg-green-600/90 border-green-500/50 text-green-100',
+                error: 'bg-red-600/90 border-red-500/50 text-red-100',
+                info: 'bg-blue-600/90 border-blue-500/50 text-blue-100'
+            };
+            const icons = {
+                success: 'fa-circle-check',
+                error: 'fa-triangle-exclamation',
+                info: 'fa-circle-info'
+            };
+            const toast = document.createElement('div');
+            toast.className = `toast ${colors[type] || colors.info} border rounded-lg px-4 py-3 text-sm font-semibold flex items-center gap-2 shadow-lg backdrop-blur-sm`;
+            toast.innerHTML = `<i class="fa-solid ${icons[type] || icons.info}"></i> ${message}`;
+            container.appendChild(toast);
+            setTimeout(() => toast.remove(), 3000);
+        }
+
+        // ====================================================================
+        // DATA FETCH & RENDER
+        // ====================================================================
+        async function fetchDashboardData() {
+            try {
+                const res = await fetch(`${API_BASE_URL}/admin/summary?ADMIN_SECRET_KEY=${encodeURIComponent(adminSecretKey)}`);
+                if (!res.ok) throw new Error('Failed to fetch summary data');
+                const json = await res.json();
+                rawSummaryData = json.data;
+                renderDashboard();
+            } catch (err) {
+                console.error(err);
+                showToast(err.message || 'Failed to refresh data', 'error');
+            }
+        }
 
         function renderDashboard() {
-            if(!rawSummaryData) return;
+            if (!rawSummaryData) return;
 
             // Stats
             document.getElementById('stat-colleges').innerText = rawSummaryData.total_colleges || 0;
@@ -221,16 +415,16 @@
 
             // Compile Master Students List with Event details
             masterStudentsList = [];
-            
+
             // Build student -> events map
             const studentEventsMap = {};
-            if(rawSummaryData.event_wise_summary) {
+            if (rawSummaryData.event_wise_summary) {
                 rawSummaryData.event_wise_summary.forEach(ev => {
-                    if(ev.roster) {
+                    if (ev.roster) {
                         ev.roster.forEach(team => {
-                            if(team.team_members) {
+                            if (team.team_members) {
                                 team.team_members.forEach(m => {
-                                    if(!studentEventsMap[m.id]) studentEventsMap[m.id] = [];
+                                    if (!studentEventsMap[m.id]) studentEventsMap[m.id] = [];
                                     studentEventsMap[m.id].push(`${ev.event_name} (${ev.department})`);
                                 });
                             }
@@ -239,15 +433,17 @@
                 });
             }
 
-            if(rawSummaryData.college_wise_summary) {
+            if (rawSummaryData.college_wise_summary) {
                 rawSummaryData.college_wise_summary.forEach(col => {
-                    if(col.unique_students_roster) {
+                    if (col.unique_students_roster) {
                         col.unique_students_roster.forEach(st => {
                             masterStudentsList.push({
+                                id: st.id,
                                 student_name: st.student_name,
                                 student_phone: st.student_phone || 'Not provided',
                                 puc_year: st.puc_year,
                                 college_name: col.college_name,
+                                college_id: col.college_id,
                                 coordinator: `${col.faculty_coordinator_name} (${col.faculty_phone})`,
                                 coordinator_email: col.faculty_email,
                                 events: (studentEventsMap[st.id] || []).join(', ') || 'Registered'
@@ -265,9 +461,9 @@
         function renderStudentsTable(list) {
             const tbody = document.getElementById('studentTableBody');
             document.getElementById('studentsCountBadge').innerText = `${list.length} Students`;
-            
-            if(list.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="7" class="py-8 text-center text-gray-500">No student records found.</td></tr>`;
+
+            if (list.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="8" class="py-8 text-center text-gray-500">No student records found.</td></tr>`;
                 return;
             }
 
@@ -282,6 +478,16 @@
                     <td class="py-3 px-4 text-gray-200">${s.college_name}</td>
                     <td class="py-3 px-4 text-xs text-gray-400">${s.coordinator}</td>
                     <td class="py-3 px-4 text-xs text-blue-300 max-w-xs truncate">${s.events}</td>
+                    <td class="py-3 px-4">
+                        <div class="flex items-center gap-1">
+                            <button onclick="openEditStudent('${s.id}', '${escapeAttr(s.student_name)}', '${escapeAttr(s.student_phone)}', '${escapeAttr(s.puc_year)}')" class="p-1.5 rounded hover:bg-blue-900/50 text-blue-400 hover:text-blue-300 transition" title="Edit Student">
+                                <i class="fa-solid fa-pen-to-square text-xs"></i>
+                            </button>
+                            <button onclick="confirmDeleteStudent('${s.id}', '${escapeAttr(s.student_name)}')" class="p-1.5 rounded hover:bg-red-900/50 text-red-400 hover:text-red-300 transition" title="Delete Student">
+                                <i class="fa-solid fa-trash text-xs"></i>
+                            </button>
+                        </div>
+                    </td>
                 </tr>
             `).join('');
         }
@@ -290,8 +496,8 @@
             const tbody = document.getElementById('collegeTableBody');
             document.getElementById('collegesCountBadge').innerText = `${colleges.length} Colleges`;
 
-            if(colleges.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="7" class="py-8 text-center text-gray-500">No colleges registered yet.</td></tr>`;
+            if (colleges.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="8" class="py-8 text-center text-gray-500">No colleges registered yet.</td></tr>`;
                 return;
             }
 
@@ -304,13 +510,23 @@
                     <td class="py-3 px-4 font-bold text-blue-400">${c.total_unique_students} / 25</td>
                     <td class="py-3 px-4"><span class="px-2 py-0.5 rounded ${c.remaining_quota === 0 ? 'bg-red-900/50 text-red-300' : 'bg-green-900/50 text-green-300'} text-xs font-bold">${c.remaining_quota} left</span></td>
                     <td class="py-3 px-4 text-xs text-gray-300">${(c.events_enrolled || []).join(', ') || 'None'}</td>
+                    <td class="py-3 px-4">
+                        <div class="flex items-center gap-1">
+                            <button onclick="openEditCollege('${c.college_id}', '${escapeAttr(c.college_name)}', '${escapeAttr(c.faculty_coordinator_name)}', '${escapeAttr(c.faculty_phone)}', '${escapeAttr(c.faculty_email)}')" class="p-1.5 rounded hover:bg-blue-900/50 text-blue-400 hover:text-blue-300 transition" title="Edit College">
+                                <i class="fa-solid fa-pen-to-square text-xs"></i>
+                            </button>
+                            <button onclick="confirmDeleteCollege('${c.college_id}', '${escapeAttr(c.college_name)}')" class="p-1.5 rounded hover:bg-red-900/50 text-red-400 hover:text-red-300 transition" title="Delete College">
+                                <i class="fa-solid fa-trash text-xs"></i>
+                            </button>
+                        </div>
+                    </td>
                 </tr>
             `).join('');
         }
 
         function renderEventRosters(events) {
             const container = document.getElementById('eventRostersContainer');
-            if(events.length === 0) {
+            if (events.length === 0) {
                 container.innerHTML = `<p class="text-gray-500 text-center py-6">No events scheduled.</p>`;
                 return;
             }
@@ -335,13 +551,16 @@
                                         <p class="font-bold text-white text-sm">${r.college_name}</p>
                                         <p class="text-gray-400">Coordinator: ${r.faculty_coordinator} (${r.faculty_phone})</p>
                                     </div>
-                                    <div class="flex flex-wrap gap-2">
+                                    <div class="flex flex-wrap gap-2 items-center">
                                         ${r.team_members.map(m => `
                                             <span class="bg-white/5 border border-white/10 px-2 py-1 rounded text-gray-200">
                                                 <strong>${m.student_name}</strong> (${m.puc_year})
                                                 ${m.student_phone ? `<span class="text-green-400 font-mono ml-1"><i class="fa-solid fa-phone text-[10px]"></i> ${m.student_phone}</span>` : ''}
                                             </span>
                                         `).join('')}
+                                        <button onclick="confirmDeleteRegistration('${r.registration_id}', '${escapeAttr(ev.event_name)}', '${escapeAttr(r.college_name)}')" class="p-1.5 rounded hover:bg-red-900/50 text-red-400 hover:text-red-300 transition ml-2" title="Delete this registration">
+                                            <i class="fa-solid fa-trash text-xs"></i>
+                                        </button>
                                     </div>
                                 </div>
                             `).join('')}
@@ -351,52 +570,49 @@
             `).join('');
         }
 
+        // ====================================================================
+        // UTILITY HELPERS
+        // ====================================================================
+        function escapeAttr(str) {
+            if (!str) return '';
+            return String(str).replace(/'/g, "\\'").replace(/"/g, '&quot;');
+        }
+
         function filterTables() {
             const query = (document.getElementById('searchInput').value || '').toLowerCase();
             const dept = document.getElementById('deptFilter').value;
 
-            // Filter master students
             const filteredStudents = masterStudentsList.filter(s => {
                 const matchesQuery = s.student_name.toLowerCase().includes(query) ||
-                                     s.student_phone.toLowerCase().includes(query) ||
-                                     s.college_name.toLowerCase().includes(query) ||
-                                     s.coordinator.toLowerCase().includes(query);
+                    s.student_phone.toLowerCase().includes(query) ||
+                    s.college_name.toLowerCase().includes(query) ||
+                    s.coordinator.toLowerCase().includes(query);
                 const matchesDept = !dept || s.events.includes(dept);
                 return matchesQuery && matchesDept;
             });
             renderStudentsTable(filteredStudents);
 
-            // Filter colleges
-            if(rawSummaryData && rawSummaryData.college_wise_summary) {
+            if (rawSummaryData && rawSummaryData.college_wise_summary) {
                 const filteredColleges = rawSummaryData.college_wise_summary.filter(c => {
                     return c.college_name.toLowerCase().includes(query) ||
-                           c.faculty_coordinator_name.toLowerCase().includes(query) ||
-                           c.faculty_phone.includes(query) ||
-                           c.faculty_email.toLowerCase().includes(query);
+                        c.faculty_coordinator_name.toLowerCase().includes(query) ||
+                        c.faculty_phone.includes(query) ||
+                        c.faculty_email.toLowerCase().includes(query);
                 });
                 renderCollegesTable(filteredColleges);
             }
         }
 
         function switchTab(tab) {
-            document.getElementById('tabContentStudents').classList.add('hidden');
-            document.getElementById('tabContentColleges').classList.add('hidden');
-            document.getElementById('tabContentEvents').classList.add('hidden');
+            const tabs = ['Students', 'Colleges', 'Events', 'Manage'];
+            tabs.forEach(t => {
+                document.getElementById(`tabContent${t}`).classList.add('hidden');
+                document.getElementById(`tabBtn${t}`).className = "flex-1 sm:flex-none px-3.5 py-2 rounded-lg text-xs font-bold transition bg-white/5 text-gray-300 hover:bg-white/10";
+            });
 
-            document.getElementById('tabBtnStudents').className = "px-4 py-2 rounded-lg text-xs font-bold transition bg-white/5 text-gray-300 hover:bg-white/10";
-            document.getElementById('tabBtnColleges').className = "px-4 py-2 rounded-lg text-xs font-bold transition bg-white/5 text-gray-300 hover:bg-white/10";
-            document.getElementById('tabBtnEvents').className = "px-4 py-2 rounded-lg text-xs font-bold transition bg-white/5 text-gray-300 hover:bg-white/10";
-
-            if(tab === 'students') {
-                document.getElementById('tabContentStudents').classList.remove('hidden');
-                document.getElementById('tabBtnStudents').className = "px-4 py-2 rounded-lg text-xs font-bold transition bg-gold text-black";
-            } else if(tab === 'colleges') {
-                document.getElementById('tabContentColleges').classList.remove('hidden');
-                document.getElementById('tabBtnColleges').className = "px-4 py-2 rounded-lg text-xs font-bold transition bg-gold text-black";
-            } else if(tab === 'events') {
-                document.getElementById('tabContentEvents').classList.remove('hidden');
-                document.getElementById('tabBtnEvents').className = "px-4 py-2 rounded-lg text-xs font-bold transition bg-gold text-black";
-            }
+            const capTab = tab.charAt(0).toUpperCase() + tab.slice(1);
+            document.getElementById(`tabContent${capTab}`).classList.remove('hidden');
+            document.getElementById(`tabBtn${capTab}`).className = "flex-1 sm:flex-none px-3.5 py-2 rounded-lg text-xs font-bold transition bg-gold text-black";
         }
 
         function refreshData() {
@@ -404,15 +620,208 @@
         }
 
         // ====================================================================
-        // Instant Excel (.xlsx) Export with SheetJS
+        // EDIT MODALS
         // ====================================================================
-        function exportToExcel() {
-            if(!masterStudentsList || masterStudentsList.length === 0) {
-                alert('No student records available to export.');
+        function openEditModal(title, bodyHtml, saveFn) {
+            document.getElementById('edit-modal-title').textContent = title;
+            document.getElementById('edit-modal-body').innerHTML = bodyHtml;
+            document.getElementById('edit-modal-save').setAttribute('onclick', saveFn);
+            document.getElementById('edit-modal').classList.remove('hidden');
+            document.getElementById('edit-modal').classList.add('flex');
+        }
+
+        function closeEditModal() {
+            document.getElementById('edit-modal').classList.add('hidden');
+            document.getElementById('edit-modal').classList.remove('flex');
+        }
+
+        function openEditCollege(id, name, coordinator, phone, email) {
+            const body = `
+                <input type="text" id="ec-name" value="${name}" placeholder="College Name" class="w-full bg-darker border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-gold">
+                <input type="text" id="ec-coordinator" value="${coordinator}" placeholder="Coordinator Name" class="w-full bg-darker border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-gold">
+                <input type="tel" id="ec-phone" value="${phone}" placeholder="Phone" class="w-full bg-darker border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-gold">
+                <input type="email" id="ec-email" value="${email}" placeholder="Email" class="w-full bg-darker border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-gold">
+            `;
+            openEditModal('Edit College', body, `saveEditCollege('${id}')`);
+        }
+
+        async function saveEditCollege(id) {
+            const body = {
+                college_name: document.getElementById('ec-name').value.trim(),
+                faculty_coordinator_name: document.getElementById('ec-coordinator').value.trim(),
+                faculty_phone: document.getElementById('ec-phone').value.trim(),
+                faculty_email: document.getElementById('ec-email').value.trim()
+            };
+            try {
+                const res = await fetch(`${API_BASE_URL}/admin/college/${id}?ADMIN_SECRET_KEY=${encodeURIComponent(adminSecretKey)}`, {
+                    method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body)
+                });
+                if (!res.ok) throw new Error((await res.json()).detail?.message || 'Update failed');
+                closeEditModal();
+                showToast('College updated successfully');
+                fetchDashboardData();
+            } catch (err) {
+                showToast(err.message, 'error');
+            }
+        }
+
+        function openEditStudent(id, name, phone, pucYear) {
+            const phoneVal = phone === 'Not provided' ? '' : phone;
+            const body = `
+                <input type="text" id="es-name" value="${name}" placeholder="Student Name" class="w-full bg-darker border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-gold">
+                <input type="tel" id="es-phone" value="${phoneVal}" placeholder="Phone (optional)" class="w-full bg-darker border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-gold">
+                <select id="es-puc" class="w-full bg-darker border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-gold">
+                    <option value="1st PUC" ${pucYear === '1st PUC' ? 'selected' : ''}>1st PUC</option>
+                    <option value="2nd PUC" ${pucYear === '2nd PUC' ? 'selected' : ''}>2nd PUC</option>
+                </select>
+            `;
+            openEditModal('Edit Student', body, `saveEditStudent('${id}')`);
+        }
+
+        async function saveEditStudent(id) {
+            const body = {
+                student_name: document.getElementById('es-name').value.trim(),
+                student_phone: document.getElementById('es-phone').value.trim() || null,
+                puc_year: document.getElementById('es-puc').value
+            };
+            try {
+                const res = await fetch(`${API_BASE_URL}/admin/student/${id}?ADMIN_SECRET_KEY=${encodeURIComponent(adminSecretKey)}`, {
+                    method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body)
+                });
+                if (!res.ok) throw new Error((await res.json()).detail?.message || 'Update failed');
+                closeEditModal();
+                showToast('Student updated successfully');
+                fetchDashboardData();
+            } catch (err) {
+                showToast(err.message, 'error');
+            }
+        }
+
+        // ====================================================================
+        // CONFIRM DELETE MODALS
+        // ====================================================================
+        function openConfirmModal(title, message, actionFn) {
+            document.getElementById('confirm-title').textContent = title;
+            document.getElementById('confirm-message').textContent = message;
+            document.getElementById('confirm-action-btn').setAttribute('onclick', actionFn);
+            document.getElementById('confirm-modal').classList.remove('hidden');
+            document.getElementById('confirm-modal').classList.add('flex');
+        }
+
+        function closeConfirmModal() {
+            document.getElementById('confirm-modal').classList.add('hidden');
+            document.getElementById('confirm-modal').classList.remove('flex');
+        }
+
+        function confirmDeleteCollege(id, name) {
+            openConfirmModal('Delete College?', `This will permanently delete "${name}" and all its students and registrations.`, `executeDeleteCollege('${id}')`);
+        }
+
+        async function executeDeleteCollege(id) {
+            closeConfirmModal();
+            try {
+                const res = await fetch(`${API_BASE_URL}/admin/college/${id}?ADMIN_SECRET_KEY=${encodeURIComponent(adminSecretKey)}`, { method: 'DELETE' });
+                if (!res.ok) throw new Error((await res.json()).detail?.message || 'Delete failed');
+                showToast('College deleted successfully');
+                fetchDashboardData();
+            } catch (err) {
+                showToast(err.message, 'error');
+            }
+        }
+
+        function confirmDeleteStudent(id, name) {
+            openConfirmModal('Delete Student?', `This will permanently remove "${name}" from all events and the database.`, `executeDeleteStudent('${id}')`);
+        }
+
+        async function executeDeleteStudent(id) {
+            closeConfirmModal();
+            try {
+                const res = await fetch(`${API_BASE_URL}/admin/student/${id}?ADMIN_SECRET_KEY=${encodeURIComponent(adminSecretKey)}`, { method: 'DELETE' });
+                if (!res.ok) throw new Error((await res.json()).detail?.message || 'Delete failed');
+                showToast('Student deleted successfully');
+                fetchDashboardData();
+            } catch (err) {
+                showToast(err.message, 'error');
+            }
+        }
+
+        function confirmDeleteRegistration(id, eventName, collegeName) {
+            openConfirmModal('Delete Registration?', `Remove "${collegeName}" from "${eventName}"? The students will remain in the database.`, `executeDeleteRegistration('${id}')`);
+        }
+
+        async function executeDeleteRegistration(id) {
+            closeConfirmModal();
+            try {
+                const res = await fetch(`${API_BASE_URL}/admin/registration/${id}?ADMIN_SECRET_KEY=${encodeURIComponent(adminSecretKey)}`, { method: 'DELETE' });
+                if (!res.ok) throw new Error((await res.json()).detail?.message || 'Delete failed');
+                showToast('Registration deleted successfully');
+                fetchDashboardData();
+            } catch (err) {
+                showToast(err.message, 'error');
+            }
+        }
+
+        function confirmClearAll() {
+            openConfirmModal('⚠ CLEAR ALL DATA?', 'This will DELETE every college, student, registration, and association record. This action is IRREVERSIBLE.', 'executeClearAll()');
+        }
+
+        async function executeClearAll() {
+            closeConfirmModal();
+            try {
+                const res = await fetch(`${API_BASE_URL}/admin/clear-all?ADMIN_SECRET_KEY=${encodeURIComponent(adminSecretKey)}`, { method: 'POST' });
+                if (!res.ok) throw new Error((await res.json()).detail?.message || 'Clear failed');
+                showToast('All records cleared successfully');
+                fetchDashboardData();
+            } catch (err) {
+                showToast(err.message, 'error');
+            }
+        }
+
+        // ====================================================================
+        // ADD COLLEGE (from Manage tab)
+        // ====================================================================
+        async function adminAddCollege() {
+            const name = document.getElementById('mc-college-name').value.trim();
+            const faculty = document.getElementById('mc-faculty-name').value.trim();
+            const phone = document.getElementById('mc-faculty-phone').value.trim();
+            const email = document.getElementById('mc-faculty-email').value.trim();
+
+            if (!name || !faculty || !phone || !email) {
+                showToast('All fields are required.', 'error');
                 return;
             }
 
-            // Create workbook
+            try {
+                const res = await fetch(`${API_BASE_URL}/college/register`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        college_name: name,
+                        faculty_coordinator_name: faculty,
+                        faculty_phone: phone,
+                        faculty_email: email
+                    })
+                });
+                const json = await res.json();
+                if (!res.ok) throw new Error(json.error?.message || json.detail || 'Registration failed');
+                showToast(`College "${name}" registered successfully!`);
+                // Clear form
+                ['mc-college-name', 'mc-faculty-name', 'mc-faculty-phone', 'mc-faculty-email'].forEach(id => document.getElementById(id).value = '');
+                fetchDashboardData();
+            } catch (err) {
+                showToast(err.message, 'error');
+            }
+        }
+
+        // ====================================================================
+        // Instant Excel (.xlsx) Export with SheetJS
+        // ====================================================================
+        function exportToExcel() {
+            if (!masterStudentsList || masterStudentsList.length === 0) {
+                showToast('No student records available to export.', 'info');
+                return;
+            }
+
             const wb = XLSX.utils.book_new();
 
             // Sheet 1: Master Students with Phone
@@ -430,7 +839,7 @@
             XLSX.utils.book_append_sheet(wb, wsStudents, "All Students");
 
             // Sheet 2: College Summary
-            if(rawSummaryData && rawSummaryData.college_wise_summary) {
+            if (rawSummaryData && rawSummaryData.college_wise_summary) {
                 const collegeDataForExport = rawSummaryData.college_wise_summary.map(c => ({
                     "College Name": c.college_name,
                     "Faculty Coordinator": c.faculty_coordinator_name,
@@ -445,12 +854,12 @@
             }
 
             // Sheet 3: Event-wise Rosters
-            if(rawSummaryData && rawSummaryData.event_wise_summary) {
+            if (rawSummaryData && rawSummaryData.event_wise_summary) {
                 const eventRows = [];
                 rawSummaryData.event_wise_summary.forEach(ev => {
-                    if(ev.roster) {
+                    if (ev.roster) {
                         ev.roster.forEach(r => {
-                            if(r.team_members) {
+                            if (r.team_members) {
                                 r.team_members.forEach(m => {
                                     eventRows.push({
                                         "Department": ev.department,
@@ -467,21 +876,16 @@
                         });
                     }
                 });
-                if(eventRows.length > 0) {
+                if (eventRows.length > 0) {
                     const wsEvents = XLSX.utils.json_to_sheet(eventRows);
                     XLSX.utils.book_append_sheet(wb, wsEvents, "Event Rosters");
                 }
             }
 
-            // Generate filename with timestamp
             const dateStr = new Date().toISOString().split('T')[0];
             XLSX.writeFile(wb, `Mahaveera_Fest_2K26_Registrations_${dateStr}.xlsx`);
+            showToast('Excel exported successfully!');
         }
-
-        // Auto load on page open
-        window.addEventListener('DOMContentLoaded', () => {
-            fetchDashboardData();
-        });
     </script>
 </body>
 </html>
