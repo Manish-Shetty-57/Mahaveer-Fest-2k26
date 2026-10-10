@@ -144,18 +144,14 @@ RESTRICTED_AREA_HTML = """<!DOCTYPE html>
 """
 
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
-
 @app.get("/admin/dashboard", tags=["Pages"])
 def admin_dashboard_page(request: Request):
     secret_key = request.query_params.get("ADMIN_SECRET_KEY")
     if not secret_key or secret_key != settings.ADMIN_SECRET_KEY:
         return HTMLResponse(content=RESTRICTED_AREA_HTML, status_code=403)
 
-    tmpl_path = os.path.join(BASE_DIR, "admin_dashboard.html")
-    if os.path.exists(tmpl_path):
-        return FileResponse(tmpl_path)
+    if os.path.exists("admin_dashboard.html"):
+        return FileResponse("admin_dashboard.html")
     return {"message": "Admin dashboard page template not found."}
 
 
@@ -163,63 +159,56 @@ def admin_dashboard_page(request: Request):
 @app.get("/register", tags=["Pages"])
 @app.get("/register.html", tags=["Pages"])
 def register_page():
-    tmpl_path = os.path.join(BASE_DIR, "register.html")
-    if os.path.exists(tmpl_path):
-        return FileResponse(tmpl_path)
+    if os.path.exists("register.html"):
+        return FileResponse("register.html")
     return {"message": "Registration page not found."}
 
 
 @app.get("/check-status", tags=["Pages"])
 @app.get("/check-status.html", tags=["Pages"])
 def check_status_page():
-    tmpl_path = os.path.join(BASE_DIR, "check_status.html")
-    if os.path.exists(tmpl_path):
-        return FileResponse(tmpl_path)
+    if os.path.exists("check_status.html"):
+        return FileResponse("check_status.html")
     return {"message": "Check status page not found."}
 
 
 @app.get("/science", tags=["Pages"])
 @app.get("/science.html", tags=["Pages"])
 def science_page():
-    tmpl_path = os.path.join(BASE_DIR, "science.html")
-    if os.path.exists(tmpl_path):
-        return FileResponse(tmpl_path)
+    if os.path.exists("science.html"):
+        return FileResponse("science.html")
     return {"message": "Science department page not found."}
 
 
 @app.get("/commerce", tags=["Pages"])
 @app.get("/commerce.html", tags=["Pages"])
 def commerce_page():
-    tmpl_path = os.path.join(BASE_DIR, "commerce.html")
-    if os.path.exists(tmpl_path):
-        return FileResponse(tmpl_path)
+    if os.path.exists("commerce.html"):
+        return FileResponse("commerce.html")
     return {"message": "Commerce department page not found."}
 
 
 @app.get("/it", tags=["Pages"])
 @app.get("/it.html", tags=["Pages"])
 def it_page():
-    tmpl_path = os.path.join(BASE_DIR, "it.html")
-    if os.path.exists(tmpl_path):
-        return FileResponse(tmpl_path)
+    if os.path.exists("it.html"):
+        return FileResponse("it.html")
     return {"message": "IT department page not found."}
 
 
 @app.get("/humanities", tags=["Pages"])
 @app.get("/humanities.html", tags=["Pages"])
 def humanities_page():
-    tmpl_path = os.path.join(BASE_DIR, "humanities.html")
-    if os.path.exists(tmpl_path):
-        return FileResponse(tmpl_path)
+    if os.path.exists("humanities.html"):
+        return FileResponse("humanities.html")
     return {"message": "Humanities department page not found."}
 
 
 @app.get("/about", tags=["Pages"])
 @app.get("/about.html", tags=["Pages"])
 def about_page():
-    tmpl_path = os.path.join(BASE_DIR, "about.html")
-    if os.path.exists(tmpl_path):
-        return FileResponse(tmpl_path)
+    if os.path.exists("about.html"):
+        return FileResponse("about.html")
     return {"message": "About page not found."}
 
 
