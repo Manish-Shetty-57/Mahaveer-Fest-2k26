@@ -1,0 +1,1133 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration | MAHAVEERA FEST 2K26</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        cream: '#FAF3E0',
+                        parchment: '#F2E4C4',
+                        ivory: '#FFF8EE',
+                        gold: { DEFAULT: '#D4AF37', light: '#F0CB5A', dark: '#A8860C' },
+                        crimson: { DEFAULT: '#8B0000', light: '#B91C1C', deep: '#5C0000' },
+                        navy: '#0D1B2A',
+                        inkblue: '#1A2744'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        cinzel: ['Cinzel', 'serif'],
+                        playfair: ['Playfair Display', 'serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;800;900&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --cream: #FAF3E0;
+            --parchment: #F2E4C4;
+            --gold: #D4AF37;
+            --gold-light: #F0CB5A;
+            --gold-dark: #A8860C;
+            --crimson: #8B0000;
+            --crimson-light: #B91C1C;
+            --crimson-deep: #5C0000;
+            --navy: #0D1B2A;
+            --ink: #1A2744;
+            --border-gold: rgba(212, 175, 55, 0.3);
+        }
+
+        * { box-sizing: border-box; }
+        body {
+            background: radial-gradient(circle at 10% 20%, #FAF3E0 0%, #F5E6C8 50%, #EDD9A3 100%);
+            color: var(--navy);
+            overflow-x: hidden;
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.4;
+        }
+
+        /* Spatial Navbar */
+        #navbar {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+            background: rgba(250, 243, 224, 0.88);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border-gold);
+            box-shadow: 0 8px 32px rgba(139,0,0,0.06);
+            transition: all 0.3s ease;
+        }
+
+        .nav-link {
+            font-size: 0.82rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            font-weight: 600;
+            color: var(--navy);
+            position: relative;
+            transition: color 0.3s;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -3px; left: 0;
+            width: 0; height: 2px;
+            background: var(--crimson);
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover { color: var(--crimson); }
+        .nav-link:hover::after { width: 100%; }
+
+        /* Spatial Form Container */
+        .form-container {
+            background: rgba(255, 255, 255, 0.85);
+            border: 1px solid var(--border-gold);
+            border-radius: 1.75rem;
+            box-shadow: 0 25px 60px -15px rgba(139, 0, 0, 0.15), 0 0 0 1px rgba(212, 175, 55, 0.2);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .form-header {
+            background: linear-gradient(135deg, var(--crimson-deep), var(--crimson), #b91c1c);
+            padding: 2.25rem 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+        .form-header::after {
+            content: '';
+            position: absolute;
+            bottom: -25px; left: 50%; transform: translateX(-50%);
+            width: 92%; height: 50px;
+            background: rgba(255,255,255,0.9);
+            border-radius: 50%;
+            filter: blur(20px);
+        }
+
+        .step-dot {
+            width: 38px; height: 38px;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 700; font-size: 0.85rem;
+            border: 2px solid #d1d5db;
+            color: #9ca3af;
+            background: #fff;
+            position: relative; z-index: 1;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+        .step-dot.active {
+            border-color: var(--crimson);
+            background: var(--crimson);
+            color: #fff;
+            box-shadow: 0 0 0 5px rgba(139,0,0,0.18), 0 8px 16px rgba(139,0,0,0.25);
+            transform: scale(1.08);
+        }
+        .step-dot.completed {
+            border-color: var(--gold);
+            background: var(--gold);
+            color: #fff;
+            box-shadow: 0 4px 12px rgba(212,175,55,0.3);
+        }
+        .step-line {
+            flex: 1;
+            height: 2px;
+            background: #e5e7eb;
+            max-width: 80px;
+            transition: background 0.4s ease;
+        }
+        .step-line.done { background: var(--gold); }
+        .step-label {
+            font-size: 0.72rem;
+            color: #9ca3af;
+            margin-top: 0.4rem;
+            text-align: center;
+            letter-spacing: 0.05em;
+            font-weight: 600;
+        }
+        .step-label.active { color: var(--crimson); font-weight: 700; }
+
+        @media (max-width: 640px) {
+            .step-dot {
+                width: 30px;
+                height: 30px;
+                font-size: 0.75rem;
+            }
+            .step-label {
+                font-size: 0.65rem;
+            }
+            .step-line {
+                max-width: 32px;
+            }
+        }
+
+        .form-input {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.9);
+            border: 1.5px solid #e5d9c0;
+            border-radius: 0.65rem;
+            padding: 0.75rem 1rem;
+            font-size: 0.9rem;
+            color: var(--navy);
+            transition: all 0.25s ease;
+            outline: none;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
+        }
+        .form-input:focus {
+            border-color: var(--crimson);
+            box-shadow: 0 0 0 4px rgba(139,0,0,0.1), inset 0 1px 2px rgba(0,0,0,0.02);
+            background: #fff;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: var(--crimson);
+            margin-bottom: 0.4rem;
+        }
+
+        .btn-crimson {
+            background: linear-gradient(135deg, var(--crimson-deep) 0%, var(--crimson) 50%, var(--crimson-light) 100%);
+            background-size: 200% auto;
+            color: #fff;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 0.75rem 2rem;
+            border-radius: 0.65rem;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.85rem;
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            box-shadow: 0 4px 15px rgba(139,0,0,0.25);
+        }
+        .btn-crimson:hover {
+            background-position: right center;
+            box-shadow: 0 8px 25px rgba(139,0,0,0.4);
+            transform: translateY(-2px);
+        }
+
+        .btn-gold {
+            background: linear-gradient(135deg, var(--gold-dark), var(--gold), var(--gold-light));
+            background-size: 200% auto;
+            color: #1a1000;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 0.75rem 2rem;
+            border-radius: 0.65rem;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.85rem;
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            box-shadow: 0 4px 15px rgba(212,175,55,0.3);
+        }
+        .btn-gold:hover {
+            background-position: right center;
+            box-shadow: 0 8px 25px rgba(212,175,55,0.5);
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            background: rgba(255,255,255,0.6);
+            color: var(--navy);
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.65rem;
+            border: 1.5px solid #d1d5db;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.85rem;
+            display: inline-flex; align-items: center; gap: 0.5rem;
+        }
+        .btn-outline:hover {
+            border-color: var(--crimson);
+            color: var(--crimson);
+            background: #fff;
+        }
+
+        .loader {
+            width: 18px; height: 18px;
+            border: 2.5px solid rgba(255,255,255,0.3);
+            border-top-color: #fff;
+            border-radius: 50%;
+            display: none;
+            animation: rotateSlow 0.7s linear infinite;
+        }
+        .loader.active { display: inline-block; }
+
+        @keyframes rotateSlow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes drawCheck { 0% { stroke-dashoffset: 200; } 100% { stroke-dashoffset: 0; } }
+
+        .step-content { display: none; }
+        .step-content.active { display: block; animation: fadeInUp 0.4s ease forwards; }
+
+        .participant-card {
+            background: rgba(250,243,224,0.7);
+            border: 1px solid rgba(212,175,55,0.3);
+            border-radius: 0.75rem;
+            padding: 0.85rem 1.15rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+            transition: transform 0.2s;
+        }
+        .participant-card:hover { transform: translateY(-1px); }
+
+        .review-event-card {
+            background: rgba(250,243,224,0.6);
+            border: 1px solid rgba(212,175,55,0.25);
+            border-left: 4px solid var(--crimson);
+            border-radius: 0.6rem;
+            padding: 0.85rem 1.15rem;
+        }
+
+        .success-circle {
+            stroke: var(--gold);
+            stroke-width: 2.5;
+            fill: none;
+            stroke-dasharray: 166;
+            stroke-dashoffset: 166;
+            animation: drawCheck 0.8s ease forwards 0.2s;
+        }
+        .success-check {
+            stroke: var(--crimson);
+            stroke-width: 3;
+            fill: none;
+            stroke-dasharray: 200;
+            stroke-dashoffset: 200;
+            animation: drawCheck 0.6s ease forwards 0.8s;
+        }
+        .success-svg-wrap { width: 80px; height: 80px; margin: 0 auto; }
+
+        #toast-container {
+            position: fixed;
+            bottom: 1.5rem; right: 1.5rem;
+            z-index: 9999;
+            display: flex; flex-direction: column; gap: 0.75rem;
+        }
+        .toast {
+            background: var(--navy);
+            color: #fff;
+            border-radius: 0.75rem;
+            padding: 0.85rem 1.25rem;
+            border-left: 4px solid var(--gold);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+            max-width: 380px;
+            transform: translateX(120%);
+            transition: transform 0.35s ease;
+            font-size: 0.88rem;
+        }
+        .toast.show { transform: translateX(0); }
+        .toast.error { border-left-color: #dc2626; }
+        .toast.warning { border-left-color: #d97706; }
+
+        .orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(80px);
+            pointer-events: none;
+            z-index: 0;
+        }
+    </style>
+</head>
+<body class="pt-24 pb-16">
+
+    <!-- Ambient Orbs for Spatial Depth -->
+    <div class="orb w-96 h-96 bg-gold/15 top-10 left-[-100px]"></div>
+    <div class="orb w-96 h-96 bg-crimson/10 bottom-10 right-[-100px]"></div>
+
+    <!-- NAVBAR -->
+    <nav id="navbar" class="py-3">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between">
+                <a href="/" class="flex items-center gap-2">
+                    <span class="text-crimson font-cinzel font-black text-xl leading-none">MAHAVEERA</span>
+                    <span class="text-gold font-cinzel font-bold text-base leading-none">FEST<span class="text-crimson-light">2K26</span></span>
+                </a>
+                <div class="hidden md:flex items-center gap-7">
+                    <a href="/" class="nav-link">Home</a>
+                    <a href="/science.html" class="nav-link">Science</a>
+                    <a href="/commerce.html" class="nav-link">Commerce</a>
+                    <a href="/it.html" class="nav-link">IT</a>
+                    <a href="/humanities.html" class="nav-link">Humanities</a>
+                    <a href="/check-status.html" class="nav-link">Check Status</a>
+                    <a href="/about.html" class="nav-link">About</a>
+                </div>
+                <div class="flex items-center gap-3">
+                    <a href="/" class="hidden sm:inline-flex btn-outline text-xs py-2 px-4">
+                        <i class="fa-solid fa-arrow-left"></i> Fest Overview
+                    </a>
+                    <button id="mobile-menu-btn" class="md:hidden p-2 text-navy rounded-lg focus:outline-none" aria-label="Toggle Menu">
+                        <i class="fa-solid fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile Dropdown Menu -->
+            <div id="mobile-menu" class="hidden md:hidden mt-3 p-4 rounded-2xl bg-white/95 backdrop-blur-md border border-gold/30 shadow-xl flex flex-col gap-3">
+                <a href="/" class="mobile-link text-sm font-semibold text-navy hover:text-crimson py-1">Home</a>
+                <a href="/science.html" class="mobile-link text-sm font-semibold text-blue-700 hover:text-crimson py-1">Science (NOVEXA)</a>
+                <a href="/commerce.html" class="mobile-link text-sm font-semibold text-amber-700 hover:text-crimson py-1">Commerce (COMQUEST)</a>
+                <a href="/it.html" class="mobile-link text-sm font-semibold text-purple-700 hover:text-crimson py-1">IT (UTKARSH)</a>
+                <a href="/humanities.html" class="mobile-link text-sm font-semibold text-rose-700 hover:text-crimson py-1">Humanities (MAHAVITH)</a>
+                <a href="/check-status.html" class="mobile-link text-sm font-semibold text-crimson hover:text-crimson py-1 font-bold">Check Status</a>
+                <a href="/about.html" class="mobile-link text-sm font-semibold text-navy hover:text-crimson py-1">About Fest & IQAC</a>
+                <a href="/" class="mobile-link btn-outline text-center text-xs py-2.5 mt-1">
+                    <i class="fa-solid fa-arrow-left"></i> Fest Overview
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- MAIN REGISTRATION SECTION -->
+    <main class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        
+        <div class="text-center mb-8">
+            <span class="inline-flex items-center gap-2 bg-white/80 border border-gold/40 rounded-full px-4 py-1.5 text-xs font-bold text-crimson uppercase tracking-wider mb-3 shadow-sm">
+                <i class="fa-solid fa-ticket"></i> Free Registration Portal
+            </span>
+            <h1 class="font-cinzel font-black text-2xl sm:text-4xl text-navy mb-2">
+                College Team <span class="text-crimson">Registration</span>
+            </h1>
+            <p class="text-navy/60 text-xs sm:text-sm">
+                Sri Mahaveera College, Moodbidri &nbsp;|&nbsp; Deadline: 24 October 2026 &nbsp;|&nbsp; Max 25 Students
+            </p>
+        </div>
+
+        <div class="form-container">
+            <!-- Header Banner -->
+            <div class="form-header text-center">
+                <h2 class="font-cinzel font-bold text-white text-lg sm:text-xl">
+                    MAHAVEERA FEST 2K26
+                </h2>
+                <p class="text-red-100 text-[11px] sm:text-xs mt-1 uppercase tracking-widest font-semibold">
+                    Intercollegiate PU Competition Registration Form
+                </p>
+            </div>
+
+            <!-- Step Progress Indicator -->
+            <div class="px-2 sm:px-6 py-4 sm:py-5 border-b border-gold/15 bg-white/40">
+                <div class="flex items-start justify-center gap-0">
+                    <div class="flex flex-col items-center w-14 sm:w-20">
+                        <div class="step-dot active" id="indicator-1">1</div>
+                        <span class="step-label active" id="label-1">College</span>
+                    </div>
+                    <div class="step-line mt-3 sm:mt-4" id="line-1-2"></div>
+                    <div class="flex flex-col items-center w-14 sm:w-20">
+                        <div class="step-dot" id="indicator-2">2</div>
+                        <span class="step-label" id="label-2">Events</span>
+                    </div>
+                    <div class="step-line mt-3 sm:mt-4" id="line-2-3"></div>
+                    <div class="flex flex-col items-center w-14 sm:w-20">
+                        <div class="step-dot" id="indicator-3">3</div>
+                        <span class="step-label" id="label-3">Review</span>
+                    </div>
+                    <div class="step-line mt-3 sm:mt-4" id="line-3-4"></div>
+                    <div class="flex flex-col items-center w-14 sm:w-20">
+                        <div class="step-dot" id="indicator-4">✓</div>
+                        <span class="step-label" id="label-4">Done</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Form Content Body -->
+            <div class="p-6 sm:p-8">
+
+                <!-- STEP 1: College Details -->
+                <div id="step-1" class="step-content active">
+                    <h3 class="font-cinzel font-bold text-lg text-navy mb-4 pb-2 border-b border-gold/20 flex items-center gap-2">
+                        <i class="fa-solid fa-school text-crimson"></i> Step 1: College & Faculty Coordinator
+                    </h3>
+
+                    <form id="form-step-1" class="space-y-4" novalidate>
+                        <div>
+                            <label class="form-label" for="college_name">College Name *</label>
+                            <input type="text" id="college_name" name="college_name" required
+                                class="form-input" placeholder="e.g. Sri Mahaveera PU College, Moodbidri">
+                        </div>
+                        <div>
+                            <label class="form-label" for="faculty_name">Faculty Coordinator Name *</label>
+                            <input type="text" id="faculty_name" name="faculty_name" required
+                                class="form-input" placeholder="Full name of faculty-in-charge">
+                        </div>
+                        <div class="grid sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="form-label" for="faculty_phone">Faculty Phone Number *</label>
+                                <div class="relative">
+                                    <span class="absolute left-3 top-1/2 -translate-y-1/2 text-navy/40 text-sm font-semibold">+91</span>
+                                    <input type="tel" id="faculty_phone" name="faculty_phone" required
+                                        class="form-input pl-12" placeholder="9876543210">
+                                </div>
+                            </div>
+                            <div>
+                                <label class="form-label" for="faculty_email">Faculty Official Email *</label>
+                                <input type="email" id="faculty_email" name="faculty_email" required
+                                    class="form-input" placeholder="coordinator@college.edu.in">
+                            </div>
+                        </div>
+
+                        <div class="flex justify-between items-center pt-5 border-t border-gold/15 mt-6">
+                            <span class="text-xs text-navy/50 italic">All fields marked with * are strictly mandatory</span>
+                            <button type="submit" class="btn-crimson">
+                                Next: Select Events <i class="fa-solid fa-arrow-right"></i>
+                                <div class="loader" id="loader-1"></div>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- STEP 2: Select Events -->
+                <div id="step-2" class="step-content">
+                    <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-2 mb-4">
+                        <h3 class="font-cinzel font-bold text-lg text-navy flex items-center gap-2">
+                            <i class="fa-solid fa-list-check text-crimson"></i> Step 2: Choose Events & Rosters
+                        </h3>
+                        <div class="flex items-center gap-2 bg-cream/90 border border-gold/40 rounded-xl px-3 py-1.5 shadow-sm">
+                            <i class="fa-solid fa-users text-crimson text-sm"></i>
+                            <span class="text-xs font-semibold text-navy">Unique Students:</span>
+                            <span id="student-counter" class="font-bold text-crimson text-lg">0</span>
+                            <span class="text-navy/40 text-xs">/ 25 Cap</span>
+                        </div>
+                    </div>
+                    <p class="text-navy/60 text-xs mb-5 pb-3 border-b border-gold/15">
+                        Tick the events your college wishes to enter. Each participant requires their Name, Mobile Number, and PUC Year. Same student may participate in multiple events.
+                    </p>
+
+                    <div id="events-selection-container" class="space-y-5 max-h-[55vh] overflow-y-auto pr-1 pb-2">
+                        <!-- Dynamically populated via JS -->
+                    </div>
+
+                    <div class="flex justify-between pt-5 border-t border-gold/20 mt-6">
+                        <button type="button" class="btn-back btn-outline">
+                            <i class="fa-solid fa-arrow-left"></i> Back
+                        </button>
+                        <button type="button" id="btn-next-2" class="btn-crimson">
+                            Review Registration <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- STEP 3: Review & Confirm -->
+                <div id="step-3" class="step-content">
+                    <h3 class="font-cinzel font-bold text-lg text-navy mb-4 flex items-center gap-2">
+                        <i class="fa-solid fa-file-contract text-crimson"></i> Step 3: Review & Confirm Entry
+                    </h3>
+
+                    <!-- College Summary -->
+                    <div class="bg-cream/70 border border-gold/25 rounded-xl p-4 mb-4">
+                        <h4 class="text-xs uppercase tracking-widest font-bold text-crimson mb-2 pb-1 border-b border-gold/15">
+                            Contingent Details
+                        </h4>
+                        <div class="grid sm:grid-cols-2 gap-3 text-sm">
+                            <div><span class="text-navy/50 text-xs block">College</span><span id="rev-college" class="text-navy font-semibold"></span></div>
+                            <div><span class="text-navy/50 text-xs block">Faculty In-Charge</span><span id="rev-coord" class="text-navy font-semibold"></span></div>
+                            <div><span class="text-navy/50 text-xs block">Phone</span><span id="rev-phone" class="text-navy font-semibold"></span></div>
+                            <div><span class="text-navy/50 text-xs block">Email</span><span id="rev-email" class="text-navy font-semibold"></span></div>
+                        </div>
+                    </div>
+
+                    <!-- Events Summary -->
+                    <div class="bg-cream/70 border border-gold/25 rounded-xl p-4 mb-4">
+                        <div class="flex justify-between items-center mb-2 pb-1 border-b border-gold/15">
+                            <h4 class="text-xs uppercase tracking-widest font-bold text-crimson">Selected Events & Rosters</h4>
+                            <span class="text-xs font-bold text-navy">
+                                Unique Participants: <span id="rev-unique-count" class="text-crimson text-sm font-black">0</span>
+                            </span>
+                        </div>
+                        <div id="rev-events-list" class="space-y-3 max-h-[30vh] overflow-y-auto pr-1 text-sm"></div>
+                    </div>
+
+                    <!-- Guidelines Acceptance -->
+                    <div class="bg-crimson/5 border border-crimson/20 rounded-xl p-4 mb-5">
+                        <p class="text-xs font-bold text-crimson mb-2 uppercase tracking-widest">
+                            <i class="fa-solid fa-triangle-exclamation mr-1"></i>Mandatory Undertakings:
+                        </p>
+                        <ul class="space-y-1.5 text-xs text-navy/75">
+                            <li class="flex items-start gap-2"><i class="fa-solid fa-circle-check text-crimson mt-0.5"></i>All participants will carry mandatory College ID cards & authorization letter.</li>
+                            <li class="flex items-start gap-2"><i class="fa-solid fa-circle-check text-crimson mt-0.5"></i>Reporting time before 8:45 AM on 30 October 2026 at Sri Mahaveera College.</li>
+                            <li class="flex items-start gap-2"><i class="fa-solid fa-circle-check text-crimson mt-0.5"></i>We accept all event rules and judges' final verdicts.</li>
+                        </ul>
+                    </div>
+
+                    <div class="flex justify-between pt-4 border-t border-gold/20">
+                        <button type="button" class="btn-back btn-outline">
+                            <i class="fa-solid fa-arrow-left"></i> Back
+                        </button>
+                        <button type="button" id="btn-submit-final" class="btn-crimson">
+                            <i class="fa-solid fa-paper-plane"></i> Submit Final Registration
+                            <div class="loader" id="loader-3"></div>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- STEP 4: Success Screen -->
+                <div id="step-4" class="step-content text-center py-8">
+                    <div class="success-svg-wrap mb-6">
+                        <svg viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg">
+                            <circle class="success-circle" cx="26" cy="26" r="25"/>
+                            <path class="success-check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+                        </svg>
+                    </div>
+
+                    <h2 class="font-cinzel font-bold text-2xl sm:text-3xl text-navy mb-2">Registration Confirmed! 🎉</h2>
+                    <p class="text-navy/60 mb-6 text-sm" id="success-college-name">Your college contingent has been officially enrolled.</p>
+
+                    <div class="bg-cream/90 border border-gold/40 rounded-2xl p-5 max-w-md mx-auto text-left mb-6 shadow-sm">
+                        <p class="text-xs uppercase tracking-widest text-navy/50 mb-1">College Access Token</p>
+                        <div class="flex items-center gap-2 mb-4">
+                            <code class="flex-1 bg-white border border-gold/25 rounded-lg p-2 text-crimson font-mono text-xs overflow-hidden text-ellipsis whitespace-nowrap" id="success-token">token_abc...</code>
+                            <button onclick="copyToken()" class="bg-navy/10 hover:bg-navy/20 p-2 rounded-lg transition-colors text-navy" title="Copy Token">
+                                <i class="fa-regular fa-copy text-sm"></i>
+                            </button>
+                        </div>
+                        <p class="text-xs text-navy/50 mb-1">Student Quota Remaining</p>
+                        <p class="text-navy font-semibold text-sm mb-4">
+                            <i class="fa-solid fa-users text-crimson mr-1"></i>
+                            <span id="success-quota"></span> slots left for your college (out of 25)
+                        </p>
+                        <div class="pt-3 border-t border-gold/20">
+                            <p class="text-xs font-bold text-crimson mb-2">
+                                <i class="fa-solid fa-bell mr-1"></i>Reminders for 30 October 2026:
+                            </p>
+                            <ul class="text-xs text-navy/70 space-y-1.5">
+                                <li class="flex items-center gap-2"><i class="fa-solid fa-id-card text-gold"></i> Carry Student College ID cards</li>
+                                <li class="flex items-center gap-2"><i class="fa-solid fa-file-signature text-gold"></i> Principal's signed Authorization Letter</li>
+                                <li class="flex items-center gap-2"><i class="fa-solid fa-clock text-gold"></i> Reach campus by 8:45 AM (Breakfast provided)</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-wrap justify-center gap-3">
+                        <button type="button" id="btn-register-another" class="btn-gold">
+                            <i class="fa-solid fa-plus"></i> Add More Events
+                        </button>
+                        <a href="/" class="btn-outline">
+                            <i class="fa-solid fa-house"></i> Return to Home
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <!-- Toast Notification Container -->
+    <div id="toast-container"></div>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        const API_BASE_URL = 'http://localhost:8000/api';
+
+        const EVENTS_DATA = [
+            { id: 'math_crunch', dept: 'SCIENCE', name: 'Math Crunch', size: 4 },
+            { id: 'chemvista', dept: 'SCIENCE', name: 'Chemvista', size: 1 },
+            { id: 'physispark', dept: 'SCIENCE', name: 'Physispark', size: 2 },
+            { id: 'brand_rangoli', dept: 'COMMERCE', name: 'Brand Rangoli', size: 2 },
+            { id: 'olympus_oracle', dept: 'COMMERCE', name: 'Olympus Oracle Business Quiz', size: 2 },
+            { id: 'pandoras_mystery', dept: 'COMMERCE', name: "Pandora's Mystery", size: 1 },
+            { id: 'code_wars', dept: 'IT', name: 'Code Wars', size: 2 },
+            { id: 'prompt_wars', dept: 'IT', name: 'Prompt Wars', size: 2 },
+            { id: 'mind_wars', dept: 'IT', name: 'Mind Wars', size: 2 },
+            { id: 'innovation_wars', dept: 'IT', name: 'Innovation Wars', size: 2 },
+            { id: 'arthalankara', dept: 'HUMANITIES', name: 'Arthalankara', size: 2 },
+            { id: 'chitra_phalakam', dept: 'HUMANITIES', name: 'Chitra Phalakam', size: 2 },
+            { id: 'chitra_pratiyogita', dept: 'HUMANITIES', name: 'Chitra Pratiyogita', size: 1 }
+        ];
+
+        const DEPT_CONFIG = {
+            SCIENCE:    { icon: '⚗️', color: '#1d4ed8', bg: '#eff6ff', label: 'NOVEXA — Science' },
+            COMMERCE:   { icon: '📊', color: '#92400e', bg: '#fffbeb', label: 'COMQUEST — Commerce' },
+            IT:         { icon: '💻', color: '#5b21b6', bg: '#f5f3ff', label: 'UTKARSH — IT' },
+            HUMANITIES: { icon: '🎨', color: '#8B0000', bg: '#fff1f2', label: 'MAHAVITH — Humanities' }
+        };
+
+        let state = {
+            collegeId: null,
+            accessToken: null,
+            collegeDetails: {},
+            selectedEvents: {}
+        };
+
+        const showToast = (message, type = 'success') => {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+
+            let icon = 'fa-circle-check';
+            let iconColor = '#22c55e';
+            if (type === 'error') { icon = 'fa-circle-xmark'; iconColor = '#ef4444'; }
+            if (type === 'warning') { icon = 'fa-triangle-exclamation'; iconColor = '#f59e0b'; }
+
+            toast.innerHTML = `<div class="flex items-center gap-3"><i class="fa-solid ${icon}" style="color:${iconColor}"></i><span style="color:#fff;font-size:0.88rem">${message}</span></div>`;
+            container.appendChild(toast);
+
+            setTimeout(() => toast.classList.add('show'), 10);
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => toast.remove(), 300);
+            }, 5000);
+        };
+
+        const copyToken = () => {
+            navigator.clipboard.writeText(state.accessToken);
+            showToast('Access Token copied to clipboard!');
+        };
+
+        let currentStep = 1;
+
+        const goToStep = (step) => {
+            document.querySelectorAll('.step-content').forEach(el => el.classList.remove('active'));
+            document.getElementById(`step-${step}`).classList.add('active');
+
+            for (let i = 1; i <= 4; i++) {
+                const ind = document.getElementById(`indicator-${i}`);
+                const lbl = document.getElementById(`label-${i}`);
+                ind.className = 'step-dot';
+                lbl.className = 'step-label';
+
+                if (i < step) {
+                    ind.classList.add('completed');
+                    ind.innerHTML = '<i class="fa-solid fa-check text-xs"></i>';
+                } else if (i === step) {
+                    ind.classList.add('active');
+                    ind.innerHTML = (i === 4) ? '✓' : i;
+                    lbl.classList.add('active');
+                } else {
+                    ind.innerHTML = (i === 4) ? '✓' : i;
+                }
+
+                if (i < 4) {
+                    const line = document.getElementById(`line-${i}-${i+1}`);
+                    if (line) line.className = `step-line mt-4${i < step ? ' done' : ''}`;
+                }
+            }
+            currentStep = step;
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        };
+
+        document.querySelectorAll('.btn-back').forEach(btn => {
+            btn.addEventListener('click', () => {
+                if (currentStep > 1) goToStep(currentStep - 1);
+            });
+        });
+
+        const initEventsForm = () => {
+            const container = document.getElementById('events-selection-container');
+            container.innerHTML = '';
+
+            const depts = [...new Set(EVENTS_DATA.map(e => e.dept))];
+
+            depts.forEach(dept => {
+                const deptEvents = EVENTS_DATA.filter(e => e.dept === dept);
+                const cfg = DEPT_CONFIG[dept] || { icon: '📌', color: '#374151', bg: '#f9fafb', label: dept };
+
+                const deptBlock = document.createElement('div');
+                deptBlock.style.cssText = `background:${cfg.bg};border:1px solid rgba(0,0,0,0.06);border-radius:0.85rem;padding:1.15rem;border-top:3.5px solid ${cfg.color}`;
+
+                deptBlock.innerHTML = `
+                    <h4 style="font-family:'Cinzel',serif;font-weight:700;font-size:0.95rem;color:${cfg.color};margin-bottom:0.85rem;display:flex;align-items:center;gap:0.5rem">
+                        <span>${cfg.icon}</span> ${cfg.label}
+                    </h4>
+                `;
+
+                deptEvents.forEach(ev => {
+                    const id = ev.id;
+                    const eventDiv = document.createElement('div');
+                    eventDiv.className = 'mb-3 last:mb-0';
+                    eventDiv.innerHTML = `
+                        <label class="flex items-center gap-3 p-2 rounded-lg hover:bg-black/5 cursor-pointer transition">
+                            <input type="checkbox" class="event-checkbox w-4 h-4 rounded" style="accent-color:${cfg.color}" data-id="${id}">
+                            <span style="font-weight:600;font-size:0.9rem;color:#0D1B2A;flex:1">${ev.name}</span>
+                            <span style="font-size:0.7rem;padding:0.25rem 0.65rem;border-radius:999px;font-weight:700;background:#fff;color:${cfg.color};border:1px solid ${cfg.color}40;white-space:nowrap">
+                                ${ev.size === 1 ? 'Individual (1 Member)' : 'Team of ' + ev.size}
+                            </span>
+                        </label>
+                        <div id="participants-for-${id}" class="hidden mt-2.5 pl-6 space-y-2.5">
+                        </div>
+                    `;
+                    deptBlock.appendChild(eventDiv);
+                });
+
+                container.appendChild(deptBlock);
+            });
+
+            document.querySelectorAll('.event-checkbox').forEach(chk => {
+                chk.addEventListener('change', (e) => {
+                    const id = e.target.dataset.id;
+                    const partContainer = document.getElementById(`participants-for-${id}`);
+                    const eventDef = EVENTS_DATA.find(x => x.id === id);
+
+                    if (e.target.checked) {
+                        partContainer.classList.remove('hidden');
+                        partContainer.innerHTML = '';
+                        for (let i = 0; i < eventDef.size; i++) {
+                            const pCard = document.createElement('div');
+                            pCard.className = 'participant-card';
+                            pCard.innerHTML = `
+                                <div style="font-size:0.72rem;font-weight:700;color:#8B0000;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:0.5rem">
+                                    Participant ${i + 1}
+                                </div>
+                                <div class="grid grid-cols-1 sm:grid-cols-12 gap-2.5">
+                                    <div class="sm:col-span-5">
+                                        <input type="text" class="form-input text-sm py-2 participant-name" placeholder="Full Student Name" required>
+                                    </div>
+                                    <div class="sm:col-span-4 relative">
+                                        <i class="fa-solid fa-phone absolute left-3 top-1/2 -translate-y-1/2 text-xs text-gray-400"></i>
+                                        <input type="tel" class="form-input text-sm py-2 pl-8 participant-phone" placeholder="Phone (10 digits)" required>
+                                    </div>
+                                    <div class="sm:col-span-3">
+                                        <select class="form-input text-sm py-2 participant-year" required>
+                                            <option value="" disabled selected>PUC Year</option>
+                                            <option value="1st PUC">1st PUC</option>
+                                            <option value="2nd PUC">2nd PUC</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            `;
+                            partContainer.appendChild(pCard);
+                        }
+                    } else {
+                        partContainer.classList.add('hidden');
+                        partContainer.innerHTML = '';
+                    }
+                    updateStudentCounter();
+                });
+            });
+
+            container.addEventListener('input', (e) => {
+                if (e.target.classList.contains('participant-name')) {
+                    updateStudentCounter();
+                }
+            });
+        };
+
+        const updateStudentCounter = () => {
+            const allNames = Array.from(document.querySelectorAll('.participant-name'))
+                .map(i => i.value.trim().toLowerCase())
+                .filter(n => n.length > 0);
+
+            const unique = new Set(allNames).size;
+            const counter = document.getElementById('student-counter');
+            counter.innerText = unique;
+
+            if (unique > 25) {
+                counter.style.color = '#dc2626';
+            } else {
+                counter.style.color = '#8B0000';
+            }
+        };
+
+        // Step 1 Submission
+        document.getElementById('form-step-1').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const loader = document.getElementById('loader-1');
+            loader.classList.add('active');
+
+            const data = {
+                college_name: document.getElementById('college_name').value.trim(),
+                faculty_coordinator_name: document.getElementById('faculty_name').value.trim(),
+                faculty_phone: document.getElementById('faculty_phone').value.trim(),
+                faculty_email: document.getElementById('faculty_email').value.trim()
+            };
+
+            state.collegeDetails = data;
+
+            try {
+                const res = await fetch(`${API_BASE_URL}/college/register`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+
+                const json = await res.json().catch(() => ({}));
+                if (!res.ok) {
+                    const errMsg = json.error?.message || json.message || (json.error?.details && json.error.details[0]?.message) || json.detail || 'College registration failed';
+                    throw new Error(errMsg);
+                }
+
+                state.collegeId = json.data.college_id;
+                state.accessToken = json.data.access_token;
+                state.remainingQuota = json.data.remaining_student_quota ?? 25;
+
+                showToast(`College enrolled successfully! ${state.remainingQuota} participant slots available.`);
+                goToStep(2);
+            } catch (err) {
+                console.error(err);
+                showToast(err.message || 'Failed to connect to backend API.', 'error');
+            } finally {
+                loader.classList.remove('active');
+            }
+        });
+
+        // Step 2 Validation -> Step 3 Review
+        document.getElementById('btn-next-2').addEventListener('click', () => {
+            const checkedBoxes = document.querySelectorAll('.event-checkbox:checked');
+            if (checkedBoxes.length === 0) {
+                showToast('Please select at least one event to register.', 'warning');
+                return;
+            }
+
+            state.selectedEvents = {};
+            let hasError = false;
+            let totalUniqueNames = new Set();
+
+            checkedBoxes.forEach(chk => {
+                const id = chk.dataset.id;
+                const container = document.getElementById(`participants-for-${id}`);
+                const namesInputs = container.querySelectorAll('.participant-name');
+                const phonesInputs = container.querySelectorAll('.participant-phone');
+                const yearsInputs = container.querySelectorAll('.participant-year');
+
+                let participants = [];
+                let localNames = new Set();
+
+                for (let i = 0; i < namesInputs.length; i++) {
+                    const name = namesInputs[i].value.trim();
+                    const phone = (phonesInputs[i].value || '').trim();
+                    const year = yearsInputs[i].value;
+                    const evName = EVENTS_DATA.find(e => e.id === id).name;
+
+                    if (!name || !year) {
+                        showToast(`Please fill name and PUC year for ${evName}`, 'warning');
+                        hasError = true;
+                        return;
+                    }
+
+                    if (!phone) {
+                        showToast(`Please enter participant phone for ${name} (${evName})`, 'warning');
+                        hasError = true;
+                        return;
+                    }
+
+                    const cleanPhone = phone.replace(/[\s\-\(\)]/g, '');
+                    if (!/^(\+?[0-9]{10,15})$/.test(cleanPhone)) {
+                        showToast(`Invalid phone '${phone}' for ${name}. Must be 10-15 digits.`, 'warning');
+                        hasError = true;
+                        return;
+                    }
+
+                    if (localNames.has(name.toLowerCase())) {
+                        showToast(`Duplicate student '${name}' entered within same event: ${evName}`, 'error');
+                        hasError = true;
+                        return;
+                    }
+                    localNames.add(name.toLowerCase());
+                    totalUniqueNames.add(name.toLowerCase());
+
+                    participants.push({ student_name: name, student_phone: cleanPhone, puc_year: year });
+                }
+
+                if (!hasError) state.selectedEvents[id] = participants;
+            });
+
+            if (hasError) return;
+
+            if (totalUniqueNames.size > 25) {
+                showToast(`Rule 1 Cap Exceeded: Maximum 25 unique students allowed. You entered ${totalUniqueNames.size}.`, 'error');
+                return;
+            }
+
+            // Populate Review Details
+            document.getElementById('rev-college').innerText = state.collegeDetails.college_name;
+            document.getElementById('rev-coord').innerText = state.collegeDetails.faculty_coordinator_name;
+            document.getElementById('rev-phone').innerText = state.collegeDetails.faculty_coordinator_name ? state.collegeDetails.faculty_phone : '';
+            document.getElementById('rev-email').innerText = state.collegeDetails.faculty_email;
+            document.getElementById('rev-unique-count').innerText = totalUniqueNames.size;
+
+            const revList = document.getElementById('rev-events-list');
+            revList.innerHTML = '';
+
+            // Sort events by department: SCIENCE -> COMMERCE -> IT -> HUMANITIES
+            const deptOrder = ['SCIENCE', 'COMMERCE', 'IT', 'HUMANITIES'];
+            const sortedEventIds = Object.keys(state.selectedEvents).sort((a, b) => {
+                const evA = EVENTS_DATA.find(e => e.id === a);
+                const evB = EVENTS_DATA.find(e => e.id === b);
+                const orderDiff = deptOrder.indexOf(evA.dept) - deptOrder.indexOf(evB.dept);
+                if (orderDiff !== 0) return orderDiff;
+                return evA.name.localeCompare(evB.name);
+            });
+
+            sortedEventIds.forEach(id => {
+                const evDef = EVENTS_DATA.find(e => e.id === id);
+                const parts = state.selectedEvents[id];
+                const cfg = DEPT_CONFIG[evDef.dept] || { icon: '📌', color: '#8B0000', bg: '#FAF3E0', label: evDef.dept };
+
+                const item = document.createElement('div');
+                item.className = 'review-event-card';
+                item.style.borderLeft = `5px solid ${cfg.color}`;
+                item.style.background = cfg.bg;
+                item.style.borderColor = `${cfg.color}30`;
+                item.style.borderLeftColor = cfg.color;
+
+                item.innerHTML = `
+                    <div class="flex items-center justify-between mb-2 pb-1.5 border-b" style="border-color:${cfg.color}25">
+                        <div class="flex items-center gap-2">
+                            <span class="text-base">${cfg.icon}</span>
+                            <span style="font-weight:800;font-size:0.95rem;color:${cfg.color};font-family:'Cinzel',serif">
+                                ${evDef.name}
+                            </span>
+                        </div>
+                        <span style="font-size:0.68rem;padding:0.2rem 0.6rem;border-radius:999px;font-weight:700;background:#fff;color:${cfg.color};border:1px solid ${cfg.color}50;letter-spacing:0.04em">
+                            ${evDef.dept} • ${evDef.size === 1 ? '1 Student' : evDef.size + ' Students'}
+                        </span>
+                    </div>
+                    <ul style="font-size:0.8rem;color:#1e293b;line-height:1.9;list-style:none;padding:0;margin:0">
+                        ${parts.map((p, idx) => `
+                            <li class="flex items-center justify-between py-0.5 border-b border-black/5 last:border-b-0">
+                                <div>
+                                    <span style="font-weight:700;color:${cfg.color}">•</span>
+                                    <span style="font-weight:600;color:#0f172a">${p.student_name}</span>
+                                    <span style="color:#64748b;font-size:0.75rem;margin-left:0.25rem">(${p.puc_year})</span>
+                                </div>
+                                <span style="color:#059669;font-family:monospace;font-size:0.75rem;font-weight:600">
+                                    <i class="fa-solid fa-phone" style="font-size:0.65rem"></i> ${p.student_phone}
+                                </span>
+                            </li>
+                        `).join('')}
+                    </ul>
+                `;
+                revList.appendChild(item);
+            });
+
+            goToStep(3);
+        });
+
+        // Step 3 Final Submission
+        document.getElementById('btn-submit-final').addEventListener('click', async () => {
+            const loader = document.getElementById('loader-3');
+            loader.classList.add('active');
+
+            try {
+                const eventIds = Object.keys(state.selectedEvents);
+                let successCount = 0;
+
+                for (let i = 0; i < eventIds.length; i++) {
+                    const id = eventIds[i];
+                    const evDef = EVENTS_DATA.find(e => e.id === id);
+                    const parts = state.selectedEvents[id];
+
+                    const payload = {
+                        college_id: state.collegeId,
+                        event_name: evDef.name,
+                        department: evDef.dept,
+                        participants: parts
+                    };
+
+                    const res = await fetch(`${API_BASE_URL}/events/register`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${state.accessToken}`
+                        },
+                        body: JSON.stringify(payload)
+                    });
+
+                    const resJson = await res.json().catch(() => ({}));
+
+                    if (!res.ok) {
+                        const errObj = resJson.error || resJson;
+                        const code = errObj.error_code || resJson.error_code || res.statusText;
+                        const message = errObj.message || resJson.message || resJson.detail || `Failed to register ${evDef.name}`;
+
+                        if (code === 'COLLEGE_STUDENT_CAP_EXCEEDED') {
+                            throw new Error(message || 'College student cap of 25 unique students exceeded.');
+                        } else if (code === 'DUPLICATE_EVENT_REGISTRATION') {
+                            showToast(`Already registered for ${evDef.name}. Skipped duplicate.`, 'warning');
+                        } else if (code === 'REGISTRATION_DEADLINE_EXCEEDED') {
+                            throw new Error('Registration closed: Deadline was 24/10/2026 23:59:59 IST.');
+                        } else {
+                            throw new Error(`${message}`);
+                        }
+                    } else {
+                        successCount++;
+                        if (resJson.data?.remaining_college_quota !== undefined) {
+                            state.remainingQuota = resJson.data.remaining_college_quota;
+                        }
+                    }
+                }
+
+                document.getElementById('success-college-name').innerText = state.collegeDetails.college_name;
+                document.getElementById('success-token').innerText = state.accessToken || state.collegeId;
+                document.getElementById('success-quota').innerText =
+                    state.remainingQuota !== undefined
+                        ? state.remainingQuota
+                        : Math.max(0, 25 - parseInt(document.getElementById('rev-unique-count').innerText));
+
+                goToStep(4);
+                showToast(`Successfully registered ${successCount} event(s)! 🎉`, 'success');
+
+            } catch (err) {
+                console.error(err);
+                showToast(err.message || 'An error occurred during submission.', 'error');
+            } finally {
+                loader.classList.remove('active');
+            }
+        });
+
+        // Add More Events handler
+        document.getElementById('btn-register-another').addEventListener('click', () => {
+            document.querySelectorAll('.event-checkbox').forEach(chk => { chk.checked = false; });
+            document.querySelectorAll("[id^='participants-for-']").forEach(div => {
+                div.classList.add('hidden');
+                div.innerHTML = '';
+            });
+            state.selectedEvents = {};
+            updateStudentCounter();
+            goToStep(2);
+        });
+
+        // Mobile Menu Toggle
+        const mobileBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        if (mobileBtn && mobileMenu) {
+            mobileBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+            document.querySelectorAll('.mobile-link').forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.add('hidden');
+                });
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            initEventsForm();
+        });
+        if (document.readyState !== 'loading') {
+            initEventsForm();
+        }
+    </script>
+</body>
+</html>

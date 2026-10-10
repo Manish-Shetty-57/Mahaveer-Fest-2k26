@@ -1,0 +1,1760 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MAHAVEERA FEST 2K26 — Where Talent Meets Opportunity</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        cream: '#FAF3E0',
+                        parchment: '#F2E4C4',
+                        ivory: '#FFF8EE',
+                        gold: { DEFAULT: '#D4AF37', light: '#F0CB5A', dark: '#A8860C' },
+                        crimson: { DEFAULT: '#8B0000', light: '#B91C1C', deep: '#5C0000' },
+                        navy: '#0D1B2A',
+                        inkblue: '#1A2744'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        cinzel: ['Cinzel', 'serif'],
+                        playfair: ['Playfair Display', 'serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;800;900&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* ===== ROOT PALETTE ===== */
+        :root {
+            --cream: #FAF3E0;
+            --parchment: #F2E4C4;
+            --gold: #D4AF37;
+            --gold-light: #F0CB5A;
+            --gold-dark: #A8860C;
+            --crimson: #8B0000;
+            --crimson-light: #B91C1C;
+            --crimson-deep: #5C0000;
+            --navy: #0D1B2A;
+            --ink: #1A2744;
+            --border-gold: rgba(212, 175, 55, 0.3);
+        }
+
+        * { box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            background: var(--cream);
+            color: var(--navy);
+            overflow-x: hidden;
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* ===== NOISE TEXTURE OVERLAY ===== */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.4;
+        }
+
+        /* ===== NAVBAR ===== */
+        #navbar {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+            transition: all 0.4s ease;
+        }
+        #navbar.scrolled {
+            background: rgba(250, 243, 224, 0.92);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border-gold);
+            box-shadow: 0 4px 30px rgba(139,0,0,0.08);
+        }
+        .nav-link {
+            font-size: 0.82rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            font-weight: 600;
+            color: var(--navy);
+            position: relative;
+            transition: color 0.3s;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -3px; left: 0;
+            width: 0; height: 2px;
+            background: var(--crimson);
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover { color: var(--crimson); }
+        .nav-link:hover::after { width: 100%; }
+
+        /* ===== HERO ===== */
+        #hero {
+            min-height: 100vh;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background: linear-gradient(160deg, #FAF3E0 0%, #F5E6C8 40%, #EDD9A3 70%, #F2E4C4 100%);
+        }
+
+        /* Decorative radial glow */
+        #hero::before {
+            content: '';
+            position: absolute;
+            top: -10%; left: 50%;
+            transform: translateX(-50%);
+            width: 900px; height: 700px;
+            background: radial-gradient(ellipse, rgba(212,175,55,0.18) 0%, rgba(139,0,0,0.06) 50%, transparent 80%);
+            pointer-events: none;
+        }
+
+        /* Gold ornamental lines */
+        .ornament-line {
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+            width: 100%;
+            max-width: 300px;
+        }
+        .ornament-line-sm {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+            width: 100%;
+            max-width: 180px;
+        }
+
+        /* Floating particles */
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(0) scale(1) rotate(0deg); opacity: 0.6; }
+            50% { transform: translateY(-40px) scale(1.1) rotate(90deg); opacity: 0.3; }
+            100% { transform: translateY(-80px) scale(0.8) rotate(180deg); opacity: 0; }
+        }
+        @keyframes drift {
+            0%, 100% { transform: translateY(0) translateX(0); }
+            25% { transform: translateY(-25px) translateX(15px); }
+            50% { transform: translateY(-10px) translateX(-20px); }
+            75% { transform: translateY(-30px) translateX(8px); }
+        }
+        @keyframes sparkle {
+            0%, 100% { opacity: 0.2; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.4); }
+        }
+        @keyframes rotateOrb {
+            from { transform: rotate(0deg) translateX(180px) rotate(0deg); }
+            to { transform: rotate(360deg) translateX(180px) rotate(-360deg); }
+        }
+        @keyframes shimmer {
+            0% { background-position: -400% center; }
+            100% { background-position: 400% center; }
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes scaleIn {
+            from { opacity: 0; transform: scale(0.85); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        @keyframes bounceScroll {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(12px); }
+        }
+        @keyframes drawCheck {
+            0% { stroke-dashoffset: 200; }
+            100% { stroke-dashoffset: 0; }
+        }
+        @keyframes popIn {
+            0% { transform: scale(0); }
+            60% { transform: scale(1.15); }
+            100% { transform: scale(1); }
+        }
+        @keyframes borderPulse {
+            0%, 100% { border-color: rgba(212,175,55,0.3); }
+            50% { border-color: rgba(212,175,55,0.8); }
+        }
+        @keyframes countdownPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        @keyframes rotateSlow {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        @keyframes waveIn {
+            0% { clip-path: inset(0 100% 0 0); }
+            100% { clip-path: inset(0 0% 0 0); }
+        }
+
+        /* ===== GOLD HEADLINE ===== */
+        .text-gold-gradient {
+            background: linear-gradient(135deg, #A8860C 0%, #D4AF37 30%, #F0CB5A 50%, #D4AF37 70%, #A8860C 100%);
+            background-size: 300% auto;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shimmer 5s linear infinite;
+        }
+
+        /* ===== CRIMSON BADGE ===== */
+        .crimson-badge {
+            background: linear-gradient(135deg, var(--crimson-deep), var(--crimson), var(--crimson-light));
+            color: #fff;
+            padding: 0.35rem 1.2rem;
+            border-radius: 999px;
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            display: inline-block;
+            box-shadow: 0 4px 20px rgba(139,0,0,0.35);
+        }
+
+        /* ===== COUNTDOWN TIMER ===== */
+        .countdown-box {
+            background: rgba(139,0,0,0.06);
+            border: 1px solid var(--border-gold);
+            border-radius: 1rem;
+            padding: 1.25rem 1.5rem;
+            backdrop-filter: blur(8px);
+        }
+        .countdown-unit {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .countdown-num {
+            font-family: 'Cinzel', serif;
+            font-size: 2rem;
+            font-weight: 800;
+            line-height: 1;
+            color: var(--crimson);
+            min-width: 2.5ch;
+            text-align: center;
+            animation: countdownPulse 1s ease-in-out infinite;
+        }
+        .countdown-label {
+            font-size: 0.6rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--gold-dark);
+            margin-top: 0.25rem;
+        }
+        .countdown-sep {
+            font-family: 'Cinzel', serif;
+            font-size: 1.5rem;
+            color: var(--gold);
+            align-self: flex-start;
+            padding-top: 0.1rem;
+        }
+
+        /* ===== DEPT CARDS (Spatial Glow Hover) ===== */
+        .dept-card {
+            position: relative;
+            border-radius: 1.5rem;
+            overflow: hidden;
+            border: 1px solid rgba(212,175,55,0.25);
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+        }
+        .dept-card:hover {
+            transform: translateY(-8px);
+        }
+        
+        /* Specific Department Glows matching official brochures */
+        .card-science { border-top: 4px solid #1d4ed8; }
+        .card-science:hover {
+            border-color: #3b82f6;
+            box-shadow: 0 20px 45px -10px rgba(29, 78, 216, 0.35), 0 0 25px rgba(59, 130, 246, 0.4);
+        }
+        .card-science .dept-card-header { background: linear-gradient(135deg, #1e3a8a, #1d4ed8, #2563eb); }
+        .card-science .dept-card-header::before { color: #60a5fa; }
+
+        .card-commerce { border-top: 4px solid #d97706; }
+        .card-commerce:hover {
+            border-color: #f59e0b;
+            box-shadow: 0 20px 45px -10px rgba(180, 83, 9, 0.35), 0 0 25px rgba(245, 158, 11, 0.45);
+        }
+        .card-commerce .dept-card-header { background: linear-gradient(135deg, #78350f, #b45309, #d97706); }
+        .card-commerce .dept-card-header::before { color: #fbbf24; }
+
+        .card-it { border-top: 4px solid #7c3aed; }
+        .card-it:hover {
+            border-color: #a855f7;
+            box-shadow: 0 20px 45px -10px rgba(109, 40, 217, 0.35), 0 0 25px rgba(168, 85, 247, 0.45);
+        }
+        .card-it .dept-card-header { background: linear-gradient(135deg, #1e1b4b, #3730a3, #6d28d9); }
+        .card-it .dept-card-header::before { color: #a78bfa; }
+
+        .card-humanities { border-top: 4px solid var(--crimson); }
+        .card-humanities:hover {
+            border-color: #ef4444;
+            box-shadow: 0 20px 45px -10px rgba(139, 0, 0, 0.35), 0 0 25px rgba(239, 68, 68, 0.45);
+        }
+        .card-humanities .dept-card-header { background: linear-gradient(135deg, var(--crimson-deep), var(--crimson), #dc2626); }
+        .card-humanities .dept-card-header::before { color: #fca5a5; }
+
+        .dept-card-header {
+            position: relative;
+            padding: 2rem 1.75rem 1.25rem;
+            overflow: hidden;
+        }
+        .dept-card-header::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            opacity: 0.08;
+            background-size: 40px 40px;
+            background-image: radial-gradient(circle, currentColor 1px, transparent 1px);
+        }
+        .dept-card-body { padding: 1.25rem 1.75rem 1.75rem; flex: 1; display: flex; flex-direction: column; justify-content: space-between; }
+
+        .dept-title {
+            font-family: 'Cinzel', serif;
+            font-weight: 800;
+            font-size: 1.5rem;
+            color: #fff;
+            letter-spacing: 0.04em;
+        }
+        .dept-subtitle {
+            font-size: 0.78rem;
+            color: rgba(255,255,255,0.7);
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            margin-top: 0.15rem;
+        }
+        .dept-icon {
+            font-size: 2rem;
+            opacity: 0.9;
+        }
+        .event-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.7rem 0;
+            border-bottom: 1px solid rgba(212,175,55,0.12);
+        }
+        .event-row:last-child { border-bottom: none; }
+        .event-name {
+            font-weight: 600;
+            font-size: 0.88rem;
+            color: var(--navy);
+        }
+        .event-desc {
+            font-size: 0.72rem;
+            color: #6b7280;
+            margin-top: 0.1rem;
+        }
+        .team-badge {
+            font-size: 0.68rem;
+            padding: 0.25rem 0.65rem;
+            border-radius: 999px;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            white-space: nowrap;
+            flex-shrink: 0;
+            margin-left: 0.75rem;
+        }
+        .badge-blue { background: #dbeafe; color: #1d4ed8; }
+        .badge-gold { background: #fef3c7; color: #92400e; }
+        .badge-purple { background: #ede9fe; color: #5b21b6; }
+        .badge-crimson { background: #fee2e2; color: #991b1b; }
+
+        /* ===== STAT CARDS ===== */
+        .stat-card {
+            background: rgba(255,255,255,0.7);
+            border: 1px solid var(--border-gold);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            text-align: center;
+            backdrop-filter: blur(8px);
+            box-shadow: 0 4px 20px rgba(212,175,55,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .stat-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(212,175,55,0.2);
+        }
+        .stat-number {
+            font-family: 'Cinzel', serif;
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: var(--crimson);
+            line-height: 1;
+        }
+
+        /* ===== RULE CARDS ===== */
+        .rule-card {
+            background: rgba(255,255,255,0.8);
+            border: 1px solid var(--border-gold);
+            border-radius: 1.25rem;
+            padding: 2rem;
+            backdrop-filter: blur(12px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.06);
+        }
+        .rule-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            padding: 0.6rem 0;
+            border-bottom: 1px dashed rgba(212,175,55,0.2);
+        }
+        .rule-item:last-child { border-bottom: none; }
+
+        /* ===== FORM STYLES ===== */
+        .form-section {
+            background: linear-gradient(160deg, #f2e4c4 0%, #faf3e0 60%, #f5e6c8 100%);
+            position: relative;
+        }
+        .form-container {
+            background: rgba(255,255,255,0.9);
+            border: 1px solid var(--border-gold);
+            border-radius: 1.5rem;
+            box-shadow: 0 20px 80px rgba(139,0,0,0.1);
+            backdrop-filter: blur(20px);
+            overflow: hidden;
+        }
+        .form-header {
+            background: linear-gradient(135deg, var(--crimson-deep), var(--crimson), #b91c1c);
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+        .form-header::after {
+            content: '';
+            position: absolute;
+            bottom: -20px; left: 50%; transform: translateX(-50%);
+            width: 90%; height: 40px;
+            background: rgba(255,255,255,0.9);
+            border-radius: 50%;
+            filter: blur(20px);
+        }
+        .form-body { padding: 2rem; }
+
+        /* Step progress */
+        .step-prog-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0;
+            margin-bottom: 2rem;
+        }
+        .step-dot {
+            width: 36px; height: 36px;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 700; font-size: 0.85rem;
+            border: 2px solid #d1d5db;
+            color: #9ca3af;
+            background: #fff;
+            position: relative; z-index: 1;
+            transition: all 0.4s ease;
+        }
+        .step-dot.active {
+            border-color: var(--crimson);
+            background: var(--crimson);
+            color: #fff;
+            box-shadow: 0 0 0 4px rgba(139,0,0,0.15);
+        }
+        .step-dot.completed {
+            border-color: var(--gold);
+            background: var(--gold);
+            color: #fff;
+        }
+        .step-line {
+            flex: 1;
+            height: 2px;
+            background: #e5e7eb;
+            max-width: 80px;
+            transition: background 0.4s ease;
+        }
+        .step-line.done { background: var(--gold); }
+        .step-label {
+            font-size: 0.7rem;
+            color: #9ca3af;
+            margin-top: 0.4rem;
+            text-align: center;
+            letter-spacing: 0.05em;
+            font-weight: 600;
+        }
+        .step-label.active { color: var(--crimson); }
+
+        /* Form inputs */
+        .form-input {
+            width: 100%;
+            background: #fafafa;
+            border: 1.5px solid #e5d9c0;
+            border-radius: 0.6rem;
+            padding: 0.7rem 1rem;
+            font-size: 0.9rem;
+            color: var(--navy);
+            transition: border-color 0.3s, box-shadow 0.3s;
+            outline: none;
+        }
+        .form-input:focus {
+            border-color: var(--crimson);
+            box-shadow: 0 0 0 3px rgba(139,0,0,0.08);
+            background: #fff;
+        }
+        .form-input::placeholder { color: #9ca3af; }
+        select.form-input { cursor: pointer; }
+
+        /* Form label */
+        .form-label {
+            display: block;
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: var(--crimson);
+            margin-bottom: 0.4rem;
+        }
+
+        /* Buttons */
+        .btn-crimson {
+            background: linear-gradient(135deg, var(--crimson-deep) 0%, var(--crimson) 50%, var(--crimson-light) 100%);
+            background-size: 200% auto;
+            color: #fff;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 0.75rem 2rem;
+            border-radius: 0.6rem;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.85rem;
+            display: inline-flex; align-items: center; gap: 0.5rem;
+        }
+        .btn-crimson:hover {
+            background-position: right center;
+            box-shadow: 0 8px 25px rgba(139,0,0,0.4);
+            transform: translateY(-2px);
+        }
+        .btn-gold {
+            background: linear-gradient(135deg, var(--gold-dark), var(--gold), var(--gold-light));
+            background-size: 200% auto;
+            color: #1a1000;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 0.75rem 2rem;
+            border-radius: 0.6rem;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.85rem;
+            display: inline-flex; align-items: center; gap: 0.5rem;
+        }
+        .btn-gold:hover {
+            background-position: right center;
+            box-shadow: 0 8px 25px rgba(212,175,55,0.5);
+            transform: translateY(-2px);
+        }
+        .btn-outline {
+            background: transparent;
+            color: var(--navy);
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.6rem;
+            border: 1.5px solid #d1d5db;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.85rem;
+            display: inline-flex; align-items: center; gap: 0.5rem;
+        }
+        .btn-outline:hover {
+            border-color: var(--crimson);
+            color: var(--crimson);
+        }
+
+        /* Loader spinner */
+        .loader {
+            width: 18px; height: 18px;
+            border: 2.5px solid rgba(255,255,255,0.3);
+            border-top-color: #fff;
+            border-radius: 50%;
+            display: none;
+            animation: rotateSlow 0.7s linear infinite;
+        }
+        .loader.active { display: inline-block; }
+
+        /* Step content */
+        .step-content { display: none; }
+        .step-content.active { display: block; animation: fadeInUp 0.4s ease forwards; }
+
+        /* Events form */
+        .event-checkbox-row {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.6rem 0.75rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .event-checkbox-row:hover { background: rgba(212,175,55,0.08); }
+        .event-checkbox {
+            width: 18px; height: 18px;
+            accent-color: var(--crimson);
+            cursor: pointer;
+        }
+
+        /* Toast */
+        #toast-container {
+            position: fixed;
+            bottom: 1.5rem; right: 1.5rem;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+        .toast {
+            background: var(--navy);
+            color: #fff;
+            border-radius: 0.75rem;
+            padding: 0.85rem 1.25rem;
+            border-left: 4px solid var(--gold);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+            max-width: 360px;
+            transform: translateX(120%);
+            transition: transform 0.35s ease;
+            font-size: 0.88rem;
+        }
+        .toast.show { transform: translateX(0); }
+        .toast.error { border-left-color: #dc2626; }
+        .toast.warning { border-left-color: #d97706; }
+
+        /* Scroll reveal */
+        .reveal {
+            opacity: 0;
+            transform: translateY(35px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .reveal-delay-1 { transition-delay: 0.1s; }
+        .reveal-delay-2 { transition-delay: 0.2s; }
+        .reveal-delay-3 { transition-delay: 0.3s; }
+        .reveal-delay-4 { transition-delay: 0.4s; }
+
+        /* Success SVG */
+        .success-circle {
+            stroke: var(--gold);
+            stroke-width: 2.5;
+            fill: none;
+            stroke-dasharray: 166;
+            stroke-dashoffset: 166;
+            animation: drawCheck 0.8s ease forwards 0.2s;
+        }
+        .success-check {
+            stroke: var(--crimson);
+            stroke-width: 3;
+            fill: none;
+            stroke-dasharray: 200;
+            stroke-dashoffset: 200;
+            animation: drawCheck 0.6s ease forwards 0.8s;
+        }
+        .success-svg-wrap {
+            width: 80px; height: 80px;
+            margin: 0 auto;
+        }
+
+        /* Section headings */
+        .section-tag {
+            font-size: 0.72rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            font-weight: 700;
+            color: var(--crimson);
+        }
+        .section-title {
+            font-family: 'Cinzel', serif;
+            font-weight: 800;
+        }
+
+        /* Floating decorative orbs */
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(60px);
+            pointer-events: none;
+        }
+
+        /* Bounce scroll indicator */
+        .scroll-indicator {
+            animation: bounceScroll 2s ease-in-out infinite;
+        }
+
+        /* Event section BG */
+        .events-section {
+            background: linear-gradient(180deg, var(--cream) 0%, #f7ead6 40%, var(--parchment) 100%);
+            position: relative;
+        }
+        .events-section::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23D4AF37' fill-opacity='0.06'%3E%3Cpath d='M20 20m-1 0a1 1 0 1 0 2 0a1 1 0 1 0-2 0'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        /* Rules section */
+        .rules-section {
+            background: linear-gradient(135deg, var(--navy) 0%, var(--ink) 100%);
+            color: #fff;
+            position: relative;
+            overflow: hidden;
+        }
+        .rules-section::before {
+            content: '';
+            position: absolute;
+            top: -100px; right: -100px;
+            width: 400px; height: 400px;
+            background: radial-gradient(circle, rgba(212,175,55,0.08) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, #0a0f1a 0%, var(--navy) 100%);
+            color: rgba(255,255,255,0.85);
+        }
+
+        /* Mobile nav */
+        #mobile-menu {
+            background: rgba(250,243,224,0.97);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid var(--border-gold);
+        }
+
+        /* Section divider */
+        .divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+            margin: 0 auto;
+            max-width: 400px;
+        }
+
+        /* College logo area top */
+        .college-badge-strip {
+            background: rgba(139,0,0,0.06);
+            border-bottom: 1px solid rgba(212,175,55,0.2);
+            padding: 0.5rem 0;
+            font-size: 0.72rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            text-align: center;
+            color: var(--crimson);
+            font-weight: 600;
+        }
+
+        /* Dept page nav pills */
+        .dept-nav-pill {
+            display: inline-block;
+            padding: 0.4rem 1rem;
+            border-radius: 999px;
+            font-size: 0.78rem;
+            font-weight: 600;
+            border: 1px solid rgba(212,175,55,0.3);
+            color: var(--navy);
+            transition: all 0.3s;
+        }
+        .dept-nav-pill:hover {
+            background: var(--crimson);
+            color: #fff;
+            border-color: var(--crimson);
+        }
+
+        /* Top announcement bar */
+        .top-bar {
+            background: linear-gradient(90deg, var(--crimson-deep), var(--crimson), var(--crimson-deep));
+            color: #fff;
+            text-align: center;
+            font-size: 0.78rem;
+            letter-spacing: 0.08em;
+            padding: 0.45rem 1rem;
+            position: relative;
+            z-index: 101;
+        }
+
+        /* Participant card in form */
+        .participant-card {
+            background: rgba(250,243,224,0.6);
+            border: 1px solid rgba(212,175,55,0.2);
+            border-radius: 0.6rem;
+            padding: 0.75rem 1rem;
+        }
+
+        /* Review card */
+        .review-event-card {
+            background: rgba(250,243,224,0.5);
+            border: 1px solid rgba(212,175,55,0.2);
+            border-left: 3px solid var(--gold);
+            border-radius: 0.5rem;
+            padding: 0.75rem 1rem;
+        }
+
+        @media (max-width: 640px) {
+            .countdown-num { font-size: 1.5rem; }
+            .dept-title { font-size: 1.2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Top Announcement Bar -->
+    <div class="top-bar">
+        <i class="fa-solid fa-star text-yellow-300 mr-2 text-xs"></i>
+        Intercollegiate Competition for PU Students &nbsp;|&nbsp; 30 October 2026 &nbsp;|&nbsp; Sri Mahaveera College, Moodbidri
+        <i class="fa-solid fa-star text-yellow-300 ml-2 text-xs"></i>
+    </div>
+
+    <!-- NAVBAR -->
+    <nav id="navbar" class="py-3">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between">
+                <!-- Logo -->
+                <a href="#hero" class="flex items-center gap-2">
+                    <span class="text-crimson font-cinzel font-black text-xl leading-none">MAHAVEERA</span>
+                    <span class="text-gold font-cinzel font-bold text-base leading-none">FEST<span class="text-crimson-light">2K26</span></span>
+                </a>
+
+                <!-- Desktop Nav -->
+                <div class="hidden md:flex items-center gap-7">
+                    <a href="#hero" class="nav-link">Home</a>
+                    <a href="#events" class="nav-link">Events</a>
+                    <a href="#about" class="nav-link">About</a>
+                    <a href="#rules" class="nav-link">Rules</a>
+                    <a href="/check-status.html" class="nav-link text-crimson font-bold">Check Status</a>
+                    <a href="#contact" class="nav-link">Contact</a>
+                </div>
+
+                <!-- CTA + mobile -->
+                <div class="flex items-center gap-3">
+                    <a href="/register.html" class="hidden md:inline-flex btn-crimson text-sm py-2 px-5">
+                        <i class="fa-solid fa-pen-to-square"></i> Register Now
+                    </a>
+                    <button id="mobile-menu-btn" class="md:hidden p-2 text-navy">
+                        <i class="fa-solid fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile Menu -->
+            <div id="mobile-menu" class="hidden md:hidden mt-2 rounded-xl overflow-hidden border border-gold/20">
+                <div class="p-4 flex flex-col gap-3">
+                    <a href="#hero" class="mobile-link nav-link text-sm">Home</a>
+                    <a href="#events" class="mobile-link nav-link text-sm">Events</a>
+                    <a href="#about" class="mobile-link nav-link text-sm">About</a>
+                    <a href="#rules" class="mobile-link nav-link text-sm">Rules</a>
+                    <a href="/check-status.html" class="mobile-link nav-link text-sm font-bold text-crimson">Check Status</a>
+                    <a href="#contact" class="mobile-link nav-link text-sm">Contact</a>
+                    <a href="/register.html" class="mobile-link btn-crimson justify-center text-sm py-2">
+                        <i class="fa-solid fa-pen-to-square"></i> Register Now
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ===================== HERO SECTION ===================== -->
+    <section id="hero" class="pt-24 pb-16 relative">
+
+        <!-- Floating particles container -->
+        <div id="particles-container" class="absolute inset-0 overflow-hidden pointer-events-none z-0"></div>
+
+        <!-- Decorative orbs -->
+        <div class="orb w-96 h-96 bg-gold/20 top-0 -left-32" style="opacity:0.5"></div>
+        <div class="orb w-80 h-80 bg-crimson/10 bottom-20 -right-20" style="opacity:0.4"></div>
+
+        <!-- Ornamental ring -->
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] border border-gold/10 rounded-full pointer-events-none" style="z-index:0"></div>
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] border border-gold/08 rounded-full pointer-events-none" style="z-index:0"></div>
+
+        <div class="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <!-- College badge -->
+            <div class="animate-[fadeInDown_0.8s_ease_forwards] mb-5">
+                <span class="inline-flex items-center gap-2 bg-white/70 border border-gold/30 rounded-full px-5 py-2 text-sm font-semibold text-navy backdrop-blur-sm shadow-sm">
+                    <i class="fa-solid fa-graduation-cap text-crimson"></i>
+                    Sri Mahaveera College, Moodbidri
+                    <span class="text-gold mx-1">|</span>
+                    Re-accredited 'A' Grade by NAAC
+                </span>
+            </div>
+
+            <!-- Organizer line -->
+            <p class="text-xs tracking-[0.22em] uppercase text-gold-dark font-semibold mb-4 animate-[fadeInDown_0.9s_0.1s_ease_both]">
+                Internal Quality Assurance Cell (IQAC) • Jointly Organises
+            </p>
+
+            <!-- Top ornament -->
+            <div class="flex justify-center mb-4 animate-[fadeInDown_0.9s_0.2s_ease_both]">
+                <div class="ornament-line"></div>
+            </div>
+
+            <!-- MAIN TITLE -->
+            <h1 class="font-cinzel font-black leading-none mb-2 animate-[scaleIn_0.9s_0.2s_ease_both] opacity-0" style="animation-fill-mode:forwards">
+                <span class="text-gold-gradient" style="font-size: clamp(3rem, 10vw, 6.5rem);">MAHAVEERA</span><br>
+                <span class="text-crimson" style="font-size: clamp(2.5rem, 8vw, 5rem); -webkit-text-stroke: 1px rgba(139,0,0,0.3);">FEST 2K26</span>
+            </h1>
+
+            <!-- Bottom ornament -->
+            <div class="flex justify-center mt-3 mb-6 animate-[fadeInUp_0.9s_0.35s_ease_both] opacity-0" style="animation-fill-mode:forwards">
+                <div class="ornament-line-sm"></div>
+            </div>
+
+            <!-- Subtitle -->
+            <p class="font-playfair italic text-navy/70 mb-2 animate-[fadeInUp_0.8s_0.45s_ease_both] opacity-0" style="font-size:1.25rem;animation-fill-mode:forwards">
+                "Where Talent Meets Opportunity"
+            </p>
+
+            <!-- Date badge -->
+            <div class="flex justify-center mb-8 animate-[fadeInUp_0.8s_0.5s_ease_both] opacity-0" style="animation-fill-mode:forwards">
+                <span class="crimson-badge">
+                    <i class="fa-regular fa-calendar mr-2"></i>30 October 2026
+                </span>
+            </div>
+
+            <!-- DUAL COUNTDOWN -->
+            <div class="grid sm:grid-cols-2 gap-4 max-w-2xl mx-auto mb-10 animate-[fadeInUp_0.8s_0.6s_ease_both] opacity-0" style="animation-fill-mode:forwards">
+                <!-- Registration countdown -->
+                <div class="countdown-box">
+                    <p class="text-xs tracking-widest uppercase font-bold text-crimson mb-3">
+                        <i class="fa-solid fa-pen-to-square mr-1"></i>Registration Closes In
+                    </p>
+                    <div id="timer-reg" class="flex justify-center items-start gap-2">
+                        <div class="countdown-unit"><span class="countdown-num d">--</span><span class="countdown-label">Days</span></div>
+                        <span class="countdown-sep">:</span>
+                        <div class="countdown-unit"><span class="countdown-num h">--</span><span class="countdown-label">Hrs</span></div>
+                        <span class="countdown-sep">:</span>
+                        <div class="countdown-unit"><span class="countdown-num m">--</span><span class="countdown-label">Min</span></div>
+                        <span class="countdown-sep">:</span>
+                        <div class="countdown-unit"><span class="countdown-num s">--</span><span class="countdown-label">Sec</span></div>
+                    </div>
+                </div>
+                <!-- Event countdown -->
+                <div class="countdown-box">
+                    <p class="text-xs tracking-widest uppercase font-bold text-crimson mb-3">
+                        <i class="fa-solid fa-flag-checkered mr-1"></i>Event Day In
+                    </p>
+                    <div id="timer-event" class="flex justify-center items-start gap-2">
+                        <div class="countdown-unit"><span class="countdown-num d">--</span><span class="countdown-label">Days</span></div>
+                        <span class="countdown-sep">:</span>
+                        <div class="countdown-unit"><span class="countdown-num h">--</span><span class="countdown-label">Hrs</span></div>
+                        <span class="countdown-sep">:</span>
+                        <div class="countdown-unit"><span class="countdown-num m">--</span><span class="countdown-label">Min</span></div>
+                        <span class="countdown-sep">:</span>
+                        <div class="countdown-unit"><span class="countdown-num s">--</span><span class="countdown-label">Sec</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CTA Buttons -->
+            <div class="flex flex-wrap justify-center gap-4 mb-12 animate-[fadeInUp_0.8s_0.7s_ease_both] opacity-0" style="animation-fill-mode:forwards">
+                <a href="/register.html" class="btn-crimson px-8 py-3 text-base">
+                    <i class="fa-solid fa-pen-to-square"></i> Register Your College
+                </a>
+                <a href="#events" class="btn-outline px-8 py-3 text-base border-crimson/40 text-crimson hover:bg-crimson hover:text-white">
+                    <i class="fa-solid fa-list"></i> View Events
+                </a>
+            </div>
+
+            <!-- 4 Dept Preview Pills -->
+            <div class="flex flex-wrap justify-center gap-3 animate-[fadeInUp_0.8s_0.8s_ease_both] opacity-0" style="animation-fill-mode:forwards">
+                <a href="science.html" class="flex items-center gap-2 bg-blue-800/10 border border-blue-700/30 text-blue-800 hover:bg-blue-800 hover:text-white rounded-full px-5 py-2 text-sm font-semibold transition-all duration-300">
+                    ⚗️ <span>SCIENCE</span>
+                </a>
+                <a href="commerce.html" class="flex items-center gap-2 bg-amber-700/10 border border-amber-700/30 text-amber-800 hover:bg-amber-700 hover:text-white rounded-full px-5 py-2 text-sm font-semibold transition-all duration-300">
+                    📊 <span>COMMERCE</span>
+                </a>
+                <a href="it.html" class="flex items-center gap-2 bg-purple-800/10 border border-purple-700/30 text-purple-900 hover:bg-purple-800 hover:text-white rounded-full px-5 py-2 text-sm font-semibold transition-all duration-300">
+                    💻 <span>IT</span>
+                </a>
+                <a href="humanities.html" class="flex items-center gap-2 bg-crimson/10 border border-crimson/30 text-crimson hover:bg-crimson hover:text-white rounded-full px-5 py-2 text-sm font-semibold transition-all duration-300">
+                    🎨 <span>HUMANITIES</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Scroll indicator -->
+        <div class="absolute bottom-6 left-1/2 -translate-x-1/2 text-crimson/50 scroll-indicator z-10">
+            <i class="fa-solid fa-chevron-down text-xl"></i>
+        </div>
+    </section>
+
+    <div class="divider my-0"></div>
+
+    <!-- ===================== ABOUT SECTION ===================== -->
+    <section id="about" class="py-20 relative overflow-hidden" style="background:linear-gradient(160deg,#fff8ee 0%,#faf3e0 100%)">
+
+        <div class="orb w-64 h-64 bg-gold/15 -top-20 -right-20 z-0"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+
+            <div class="text-center mb-14 reveal">
+                <p class="section-tag mb-2">About the Fest</p>
+                <h2 class="section-title text-3xl sm:text-4xl text-navy mb-4">
+                    A Celebration of <span class="text-gold-gradient">Excellence</span>
+                </h2>
+                <div class="divider"></div>
+            </div>
+
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <!-- Left: Text -->
+                <div class="reveal reveal-delay-1">
+                    <p class="text-navy/80 leading-relaxed mb-5 text-base">
+                        <strong class="text-crimson font-semibold">MAHAVEERA FEST 2K26</strong> is an intercollegiate extravaganza organized by the 
+                        <strong>Internal Quality Assurance Cell (IQAC)</strong>, Science, Commerce, IT, and Humanities Associations of 
+                        Sri Mahaveera College, Moodbidri.
+                    </p>
+                    <p class="text-navy/70 leading-relaxed mb-5">
+                        Designed to provide a competitive yet inclusive platform for Pre-University students across Karnataka, 
+                        this flagship event brings together the brightest minds in Science, Commerce, Information Technology, 
+                        and Humanities — all under one roof, in the spirit of healthy competition and academic camaraderie.
+                    </p>
+                    <p class="text-navy/70 leading-relaxed mb-6">
+                        Whether you are a logical thinker, a creative artist, a tech wizard, or a business strategist, 
+                        MAHAVEERA FEST 2K26 has an event crafted for you. Join us on <strong class="text-crimson">30th October 2026</strong> for 
+                        a day of unforgettable experiences, challenges, and celebration.
+                    </p>
+                    <div class="flex flex-wrap gap-3">
+                        <a href="/register.html" class="btn-crimson py-2.5 px-6">
+                            <i class="fa-solid fa-arrow-right"></i> Register Now
+                        </a>
+                        <a href="/about.html" class="btn-outline py-2.5 px-6 border-gold/50 text-gold-dark hover:border-gold hover:bg-gold/10">
+                            <i class="fa-solid fa-circle-info"></i> About College
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Right: Stats -->
+                <div class="grid grid-cols-2 gap-5 reveal reveal-delay-2">
+                    <div class="stat-card">
+                        <div class="text-3xl mb-2">🔬</div>
+                        <div class="stat-number counter" data-target="4">0</div>
+                        <p class="text-xs uppercase tracking-widest font-bold text-navy/60 mt-2">Departments</p>
+                    </div>
+                    <div class="stat-card">
+                        <div class="text-3xl mb-2">🏆</div>
+                        <div class="stat-number counter" data-target="13">0</div>
+                        <p class="text-xs uppercase tracking-widest font-bold text-navy/60 mt-2">Events</p>
+                    </div>
+                    <div class="stat-card">
+                        <div class="text-3xl mb-2">👨‍🎓</div>
+                        <div class="stat-number counter" data-target="25">0</div>
+                        <p class="text-xs uppercase tracking-widest font-bold text-navy/60 mt-2">Students / College</p>
+                    </div>
+                    <div class="stat-card">
+                        <div class="text-3xl mb-2">🎟️</div>
+                        <div class="stat-number">Free</div>
+                        <p class="text-xs uppercase tracking-widest font-bold text-navy/60 mt-2">Entry</p>
+                    </div>
+                    <div class="stat-card col-span-2">
+                        <div class="text-3xl mb-2">🍽️</div>
+                        <div class="stat-number text-2xl">Complimentary</div>
+                        <p class="text-xs uppercase tracking-widest font-bold text-navy/60 mt-2">Breakfast & Lunch for all participants</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- ===================== DEPARTMENTS / EVENTS ===================== -->
+    <section id="events" class="py-20 events-section">
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+
+            <div class="text-center mb-14 reveal">
+                <p class="section-tag mb-2">13 Competitions • 4 Domains</p>
+                <h2 class="section-title text-3xl sm:text-4xl text-navy mb-4">
+                    Choose Your <span class="text-gold-gradient">Arena</span>
+                </h2>
+                <div class="divider"></div>
+                <p class="text-navy/60 mt-4 max-w-xl mx-auto text-sm">
+                    Select your department and compete in world-class events judged by expert panels. 
+                    One college, many events, unlimited glory.
+                </p>
+            </div>
+
+            <!-- 2x2 Dept Grid -->
+            <div class="grid md:grid-cols-2 gap-7">
+
+                <!-- SCIENCE — NOVEXA -->
+                <div class="dept-card card-science reveal reveal-delay-1" onclick="window.location.href='/science.html'">
+                    <div class="dept-card-header">
+                        <div class="flex items-start justify-between">
+                            <div>
+                                <div class="text-blue-200 text-xs uppercase tracking-widest font-bold mb-1">Science Department</div>
+                                <div class="dept-title">NOVEXA</div>
+                                <div class="dept-subtitle">Beyond the Boundary of Science</div>
+                            </div>
+                            <span class="dept-icon">⚗️</span>
+                        </div>
+                        <div class="flex flex-wrap gap-2 mt-3">
+                            <span class="text-xs bg-blue-900/50 text-blue-200 px-3 py-1 rounded-full">Mathematics</span>
+                            <span class="text-xs bg-blue-900/50 text-blue-200 px-3 py-1 rounded-full">Chemistry</span>
+                            <span class="text-xs bg-blue-900/50 text-blue-200 px-3 py-1 rounded-full">Physics</span>
+                        </div>
+                    </div>
+                    <div class="dept-card-body">
+                        <div class="space-y-1">
+                            <div class="event-row">
+                                <div>
+                                    <div class="event-name">Math Crunch</div>
+                                    <div class="event-desc">The Mathematical Race — logic, problem-solving, speed</div>
+                                </div>
+                                <span class="team-badge badge-blue">Team of 4</span>
+                            </div>
+                            <div class="event-row">
+                                <div>
+                                    <div class="event-name">Chemvista</div>
+                                    <div class="event-desc">PPT on 'Green Chemistry for a Sustainable Future'</div>
+                                </div>
+                                <span class="team-badge badge-blue">Individual</span>
+                            </div>
+                            <div class="event-row">
+                                <div>
+                                    <div class="event-name">Physispark</div>
+                                    <div class="event-desc">Physics working model exhibition & demonstration</div>
+                                </div>
+                                <span class="team-badge badge-blue">Team of 2</span>
+                            </div>
+                        </div>
+                        <div class="mt-5 pt-3 border-t border-gold/15 flex justify-between items-center" onclick="event.stopPropagation()">
+                            <a href="/science.html" class="text-blue-700 text-xs font-bold hover:text-blue-900 transition-colors flex items-center gap-1.5">
+                                Explore NOVEXA <i class="fa-solid fa-arrow-right text-xs"></i>
+                            </a>
+                            <a href="/register.html" class="text-xs btn-crimson py-1.5 px-4 shadow-sm">
+                                Register Team
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- COMMERCE — COMQUEST -->
+                <div class="dept-card card-commerce reveal reveal-delay-2" onclick="window.location.href='/commerce.html'">
+                    <div class="dept-card-header">
+                        <div class="flex items-start justify-between">
+                            <div>
+                                <div class="text-amber-200 text-xs uppercase tracking-widest font-bold mb-1">Commerce Department</div>
+                                <div class="dept-title">COMQUEST</div>
+                                <div class="dept-subtitle">Journey into the World of Commerce</div>
+                            </div>
+                            <span class="dept-icon">📊</span>
+                        </div>
+                        <div class="flex flex-wrap gap-2 mt-3">
+                            <span class="text-xs bg-amber-900/50 text-amber-200 px-3 py-1 rounded-full">Business</span>
+                            <span class="text-xs bg-amber-900/50 text-amber-200 px-3 py-1 rounded-full">Trade</span>
+                            <span class="text-xs bg-amber-900/50 text-amber-200 px-3 py-1 rounded-full">Strategy</span>
+                        </div>
+                    </div>
+                    <div class="dept-card-body">
+                        <div class="space-y-1">
+                            <div class="event-row">
+                                <div>
+                                    <div class="event-name">Brand Rangoli</div>
+                                    <div class="event-desc">Create a Brand Rangoli for a company/brand (2 hours)</div>
+                                </div>
+                                <span class="team-badge badge-gold">Team of 2</span>
+                            </div>
+                            <div class="event-row">
+                                <div>
+                                    <div class="event-name">Olympus Oracle</div>
+                                    <div class="event-desc">Multi-round Business Quiz competition</div>
+                                </div>
+                                <span class="team-badge badge-gold">Team of 2</span>
+                            </div>
+                            <div class="event-row">
+                                <div>
+                                    <div class="event-name">Pandora's Mystery</div>
+                                    <div class="event-desc">Special event — rules disclosed on the spot!</div>
+                                </div>
+                                <span class="team-badge badge-gold">Individual</span>
+                            </div>
+                        </div>
+                        <div class="mt-5 pt-3 border-t border-gold/15 flex justify-between items-center" onclick="event.stopPropagation()">
+                            <a href="/commerce.html" class="text-amber-700 text-xs font-bold hover:text-amber-900 transition-colors flex items-center gap-1.5">
+                                Explore COMQUEST <i class="fa-solid fa-arrow-right text-xs"></i>
+                            </a>
+                            <a href="/register.html" class="text-xs btn-crimson py-1.5 px-4 shadow-sm">
+                                Register Team
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- IT — UTKARSH -->
+                <div class="dept-card card-it reveal reveal-delay-3" onclick="window.location.href='/it.html'">
+                    <div class="dept-card-header">
+                        <div class="flex items-start justify-between">
+                            <div>
+                                <div class="text-purple-200 text-xs uppercase tracking-widest font-bold mb-1">IT Department</div>
+                                <div class="dept-title">UTKARSH</div>
+                                <div class="dept-subtitle">Compiling Excellence, Initializing the Future</div>
+                            </div>
+                            <span class="dept-icon">💻</span>
+                        </div>
+                        <div class="flex flex-wrap gap-2 mt-3">
+                            <span class="text-xs bg-purple-900/50 text-purple-200 px-3 py-1 rounded-full">Code</span>
+                            <span class="text-xs bg-purple-900/50 text-purple-200 px-3 py-1 rounded-full">AI</span>
+                            <span class="text-xs bg-purple-900/50 text-purple-200 px-3 py-1 rounded-full">Innovation</span>
+                        </div>
+                    </div>
+                    <div class="dept-card-body">
+                        <div class="space-y-1">
+                            <div class="event-row">
+                                <div>
+                                    <div class="event-name">Code Wars</div>
+                                    <div class="event-desc">Python debugging & programming challenge (30 mins)</div>
+                                </div>
+                                <span class="team-badge badge-purple">Team of 2</span>
+                            </div>
+                            <div class="event-row">
+                                <div>
+                                    <div class="event-name">Prompt Wars</div>
+                                    <div class="event-desc">AI Prompt Engineering & Image Generation</div>
+                                </div>
+                                <span class="team-badge badge-purple">Team of 2</span>
+                            </div>
+                            <div class="event-row">
+                                <div>
+                                    <div class="event-name">Mind Wars</div>
+                                    <div class="event-desc">IT & Computer Science Quiz Competition</div>
+                                </div>
+                                <span class="team-badge badge-purple">Team of 2</span>
+                            </div>
+                            <div class="event-row">
+                                <div>
+                                    <div class="event-name">Innovation Wars</div>
+                                    <div class="event-desc">Imaginary Startup Pitch PPT (10 minutes)</div>
+                                </div>
+                                <span class="team-badge badge-purple">Team of 2</span>
+                            </div>
+                        </div>
+                        <div class="mt-5 pt-3 border-t border-gold/15 flex justify-between items-center" onclick="event.stopPropagation()">
+                            <a href="/it.html" class="text-purple-700 text-xs font-bold hover:text-purple-900 transition-colors flex items-center gap-1.5">
+                                Explore UTKARSH <i class="fa-solid fa-arrow-right text-xs"></i>
+                            </a>
+                            <a href="/register.html" class="text-xs btn-crimson py-1.5 px-4 shadow-sm">
+                                Register Team
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- HUMANITIES — MAHAVITH -->
+                <div class="dept-card card-humanities reveal reveal-delay-4" onclick="window.location.href='/humanities.html'">
+                    <div class="dept-card-header">
+                        <div class="flex items-start justify-between">
+                            <div>
+                                <div class="text-red-200 text-xs uppercase tracking-widest font-bold mb-1">Humanities Department</div>
+                                <div class="dept-title">MAHAVITH</div>
+                                <div class="dept-subtitle">Celebrating Creativity, Culture & Expression</div>
+                            </div>
+                            <span class="dept-icon">🎨</span>
+                        </div>
+                        <div class="flex flex-wrap gap-2 mt-3">
+                            <span class="text-xs bg-red-900/50 text-red-200 px-3 py-1 rounded-full">History</span>
+                            <span class="text-xs bg-red-900/50 text-red-200 px-3 py-1 rounded-full">Arts</span>
+                            <span class="text-xs bg-red-900/50 text-red-200 px-3 py-1 rounded-full">Culture</span>
+                        </div>
+                    </div>
+                    <div class="dept-card-body">
+                        <div class="space-y-1">
+                            <div class="event-row">
+                                <div>
+                                    <div class="event-name">Arthalankara</div>
+                                    <div class="event-desc">Eco Rangoli on an Economics concept (1 hour)</div>
+                                </div>
+                                <span class="team-badge badge-crimson">Team of 2</span>
+                            </div>
+                            <div class="event-row">
+                                <div>
+                                    <div class="event-name">Chitra Phalakam</div>
+                                    <div class="event-desc">Collage on historical places of Karnataka (1 hour)</div>
+                                </div>
+                                <span class="team-badge badge-crimson">Team of 2</span>
+                            </div>
+                            <div class="event-row">
+                                <div>
+                                    <div class="event-name">Chitra Pratiyogita</div>
+                                    <div class="event-desc">Pencil Sketch on Political Science theme (1 hour)</div>
+                                </div>
+                                <span class="team-badge badge-crimson">Individual</span>
+                            </div>
+                        </div>
+                        <div class="mt-5 pt-3 border-t border-gold/15 flex justify-between items-center" onclick="event.stopPropagation()">
+                            <a href="/humanities.html" class="text-red-700 text-xs font-bold hover:text-red-900 transition-colors flex items-center gap-1.5">
+                                Explore MAHAVITH <i class="fa-solid fa-arrow-right text-xs"></i>
+                            </a>
+                            <a href="/register.html" class="text-xs btn-crimson py-1.5 px-4 shadow-sm">
+                                Register Team
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+            </div><!-- end grid -->
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- ===================== RULES & LOGISTICS ===================== -->
+    <section id="rules" class="rules-section py-20">
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+
+            <div class="text-center mb-14 reveal">
+                <p class="section-tag mb-2" style="color:var(--gold-light)">Important Information</p>
+                <h2 class="section-title text-3xl sm:text-4xl text-white mb-4">
+                    Rules & <span class="text-gold-gradient">Guidelines</span>
+                </h2>
+                <div class="ornament-line mx-auto"></div>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-7">
+
+                <!-- General Rules -->
+                <div class="rule-card reveal reveal-delay-1" style="background:rgba(13,27,42,0.7);border-color:rgba(212,175,55,0.2);color:#fff">
+                    <h3 class="font-cinzel font-bold text-lg text-gold mb-5 pb-3 border-b border-gold/20">
+                        <i class="fa-solid fa-scroll mr-2"></i>General Rules
+                    </h3>
+                    <div class="space-y-1">
+                        <div class="rule-item" style="border-color:rgba(212,175,55,0.1)">
+                            <i class="fa-solid fa-circle-check text-gold mt-0.5 shrink-0"></i>
+                            <span class="text-gray-200 text-sm">No registration fee — completely free to participate</span>
+                        </div>
+                        <div class="rule-item" style="border-color:rgba(212,175,55,0.1)">
+                            <i class="fa-solid fa-circle-check text-gold mt-0.5 shrink-0"></i>
+                            <span class="text-gray-200 text-sm">Maximum <strong class="text-gold">25 unique students</strong> per college across all events</span>
+                        </div>
+                        <div class="rule-item" style="border-color:rgba(212,175,55,0.1)">
+                            <i class="fa-solid fa-circle-check text-gold mt-0.5 shrink-0"></i>
+                            <span class="text-gray-200 text-sm">Only <strong>one team</strong> per college per event is allowed</span>
+                        </div>
+                        <div class="rule-item" style="border-color:rgba(212,175,55,0.1)">
+                            <i class="fa-solid fa-circle-check text-gold mt-0.5 shrink-0"></i>
+                            <span class="text-gray-200 text-sm"><strong class="text-crimson-light">College ID card</strong> is mandatory for every participant</span>
+                        </div>
+                        <div class="rule-item" style="border-color:rgba(212,175,55,0.1)">
+                            <i class="fa-solid fa-circle-check text-gold mt-0.5 shrink-0"></i>
+                            <span class="text-gray-200 text-sm"><strong class="text-crimson-light">Authorization letter</strong> from Principal/HOD is mandatory</span>
+                        </div>
+                        <div class="rule-item" style="border-color:rgba(212,175,55,0.1)">
+                            <i class="fa-solid fa-circle-check text-gold mt-0.5 shrink-0"></i>
+                            <span class="text-gray-200 text-sm">Judges' decision shall be final and binding</span>
+                        </div>
+                        <div class="rule-item" style="border-color:rgba(212,175,55,0.1)">
+                            <i class="fa-solid fa-circle-check text-gold mt-0.5 shrink-0"></i>
+                            <span class="text-gray-200 text-sm">Participation certificates for <strong>all students</strong></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Logistics -->
+                <div class="rule-card reveal reveal-delay-2" style="background:rgba(13,27,42,0.7);border-color:rgba(212,175,55,0.2);color:#fff">
+                    <h3 class="font-cinzel font-bold text-lg text-gold mb-5 pb-3 border-b border-gold/20">
+                        <i class="fa-solid fa-map-pin mr-2"></i>Day Logistics
+                    </h3>
+                    <div class="space-y-1">
+                        <div class="rule-item" style="border-color:rgba(212,175,55,0.1)">
+                            <i class="fa-solid fa-clock text-crimson-light mt-0.5 shrink-0"></i>
+                            <span class="text-gray-200 text-sm">Report before <strong class="text-gold">8:45 AM</strong> on 30 October 2026</span>
+                        </div>
+                        <div class="rule-item" style="border-color:rgba(212,175,55,0.1)">
+                            <i class="fa-solid fa-utensils text-crimson-light mt-0.5 shrink-0"></i>
+                            <span class="text-gray-200 text-sm">Complimentary <strong>breakfast & lunch</strong> provided for all</span>
+                        </div>
+                        <div class="rule-item" style="border-color:rgba(212,175,55,0.1)">
+                            <i class="fa-solid fa-ban text-crimson-light mt-0.5 shrink-0"></i>
+                            <span class="text-gray-200 text-sm">No TA/DA will be provided</span>
+                        </div>
+                        <div class="rule-item" style="border-color:rgba(212,175,55,0.1)">
+                            <i class="fa-solid fa-calendar-xmark text-crimson-light mt-0.5 shrink-0"></i>
+                            <span class="text-gray-200 text-sm">Online registration deadline: <strong class="text-gold">24 October 2026</strong></span>
+                        </div>
+                        <div class="rule-item" style="border-color:rgba(212,175,55,0.1)">
+                            <i class="fa-solid fa-certificate text-crimson-light mt-0.5 shrink-0"></i>
+                            <span class="text-gray-200 text-sm">Participation certificates issued to all registered participants</span>
+                        </div>
+                        <div class="rule-item" style="border-color:rgba(212,175,55,0.1)">
+                            <i class="fa-solid fa-location-dot text-crimson-light mt-0.5 shrink-0"></i>
+                            <span class="text-gray-200 text-sm">Venue: Sri Mahaveera College, Kodangallu - 574197, Moodbidri, D.K. District, Karnataka</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Highlight Notice -->
+            <div class="mt-8 reveal" style="background:rgba(212,175,55,0.08);border:1px solid rgba(212,175,55,0.25);border-radius:1rem;padding:1.5rem;text-align:center">
+                <p class="text-gold text-sm font-semibold mb-1">
+                    <i class="fa-solid fa-triangle-exclamation mr-2"></i>Important Notice
+                </p>
+                <p class="text-gray-300 text-sm">
+                    A <strong class="text-white">same student</strong> may participate in multiple events but will only be counted <strong class="text-gold">once</strong> towards the 25-student college quota.
+                </p>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ===================== REGISTRATION CTA (SPATIAL BANNER) ===================== -->
+    <section id="register" class="py-20 relative overflow-hidden" style="background:linear-gradient(160deg,#f2e4c4 0%,#faf3e0 60%,#f5e6c8 100%)">
+        <div class="orb w-96 h-96 bg-crimson/15 -top-20 -left-20 pointer-events-none"></div>
+        <div class="orb w-80 h-80 bg-gold/20 -bottom-20 -right-20 pointer-events-none"></div>
+
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="bg-white/85 border border-gold/40 rounded-3xl p-8 sm:p-12 text-center backdrop-blur-xl shadow-2xl relative overflow-hidden">
+                <div class="inline-flex items-center gap-2 bg-crimson/10 border border-crimson/30 rounded-full px-4 py-1.5 text-xs font-bold text-crimson uppercase tracking-wider mb-4">
+                    <i class="fa-solid fa-graduation-cap"></i> Free Registration Portal
+                </div>
+                <h2 class="font-cinzel font-black text-3xl sm:text-5xl text-navy mb-4">
+                    Ready to <span class="text-crimson">Compete?</span>
+                </h2>
+                <div class="divider mb-6"></div>
+                <p class="text-navy/70 text-base max-w-2xl mx-auto mb-8 leading-relaxed">
+                    Registrations are officially open for PU colleges across Karnataka. 
+                    Enrol your 25-student contingent across Science (NOVEXA), Commerce (COMQUEST), IT (UTKARSH), and Humanities (MAHAVITH) before <strong class="text-crimson">24 October 2026</strong>.
+                </p>
+
+                <div class="flex flex-wrap justify-center gap-4">
+                    <a href="/register.html" class="btn-crimson text-base px-8 py-3.5 shadow-xl hover:shadow-2xl">
+                        <i class="fa-solid fa-pen-to-square"></i> Open Registration Form
+                    </a>
+                    <a href="#events" class="btn-outline text-base px-8 py-3.5 bg-white/70">
+                        <i class="fa-solid fa-layer-group"></i> Browse All Events
+                    </a>
+                </div>
+
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-10 pt-8 border-t border-gold/20 text-xs text-navy/70">
+                    <div><strong class="block text-navy font-bold text-sm">₹0 Fee</strong> No Entry Charge</div>
+                    <div><strong class="block text-navy font-bold text-sm">25 Max</strong> Students / College</div>
+                    <div><strong class="block text-navy font-bold text-sm">13 Events</strong> Across 4 Streams</div>
+                    <div><strong class="block text-navy font-bold text-sm">30 Oct 2026</strong> Fest Date</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================== FOOTER ===================== -->
+    <footer id="contact" class="py-14">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-3 gap-10 mb-10">
+
+                <!-- Brand -->
+                <div>
+                    <h3 class="font-cinzel font-black text-xl mb-3">
+                        <span style="color:var(--gold)">MAHAVEERA</span>
+                        <span class="text-white"> FEST</span>
+                        <span style="color:var(--crimson-light)"> 2K26</span>
+                    </h3>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-4">
+                        Organized by the Internal Quality Assurance Cell (IQAC), Science, Commerce, IT & Humanities Associations of Sri Mahaveera College.
+                    </p>
+                    <div class="flex gap-3">
+                        <a href="#" class="w-9 h-9 rounded-full flex items-center justify-center border border-gray-700 hover:border-gold hover:text-gold text-gray-400 transition-all">
+                            <i class="fa-brands fa-instagram text-sm"></i>
+                        </a>
+                        <a href="#" class="w-9 h-9 rounded-full flex items-center justify-center border border-gray-700 hover:border-gold hover:text-gold text-gray-400 transition-all">
+                            <i class="fa-brands fa-facebook-f text-sm"></i>
+                        </a>
+                        <a href="#" class="w-9 h-9 rounded-full flex items-center justify-center border border-gray-700 hover:border-gold hover:text-gold text-gray-400 transition-all">
+                            <i class="fa-brands fa-youtube text-sm"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <div>
+                    <h4 class="text-white font-bold mb-4 text-sm uppercase tracking-widest">Quick Links</h4>
+                    <div class="grid grid-cols-2 gap-y-2 gap-x-4">
+                        <a href="science.html" class="text-gray-400 hover:text-gold text-sm flex items-center gap-2 transition-colors">
+                            <i class="fa-solid fa-flask text-xs"></i> NOVEXA (Science)
+                        </a>
+                        <a href="commerce.html" class="text-gray-400 hover:text-gold text-sm flex items-center gap-2 transition-colors">
+                            <i class="fa-solid fa-chart-bar text-xs"></i> COMQUEST
+                        </a>
+                        <a href="it.html" class="text-gray-400 hover:text-gold text-sm flex items-center gap-2 transition-colors">
+                            <i class="fa-solid fa-laptop-code text-xs"></i> UTKARSH (IT)
+                        </a>
+                        <a href="humanities.html" class="text-gray-400 hover:text-gold text-sm flex items-center gap-2 transition-colors">
+                            <i class="fa-solid fa-palette text-xs"></i> MAHAVITH
+                        </a>
+                        <a href="about.html" class="text-gray-400 hover:text-gold text-sm flex items-center gap-2 transition-colors">
+                            <i class="fa-solid fa-circle-info text-xs"></i> About College
+                        </a>
+                        <a href="#register" class="text-gray-400 hover:text-gold text-sm flex items-center gap-2 transition-colors">
+                            <i class="fa-solid fa-pen-to-square text-xs"></i> Register Now
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Contact -->
+                <div>
+                    <h4 class="text-white font-bold mb-4 text-sm uppercase tracking-widest">Contact & Venue</h4>
+                    <div class="space-y-3 text-sm text-gray-400">
+                        <p class="flex items-start gap-3">
+                            <i class="fa-solid fa-map-location-dot mt-0.5" style="color:var(--gold)"></i>
+                            Sri Mahaveera College, Kodangallu - 574197,<br>Moodbidri, D.K. District, Karnataka
+                        </p>
+                        <p class="flex items-center gap-3">
+                            <i class="fa-solid fa-envelope" style="color:var(--gold)"></i>
+                            fest2k26@srimahaveera.edu.in
+                        </p>
+                        <p class="flex items-center gap-3">
+                            <i class="fa-solid fa-globe" style="color:var(--gold)"></i>
+                            <a href="https://srimahaveeracollege.com" target="_blank" rel="noopener"
+                               class="hover:text-gold transition-colors">srimahaveeracollege.com</a>
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Bottom bar -->
+            <div class="border-t border-gray-800 pt-8 flex flex-col sm:flex-row justify-between items-center gap-4">
+                <p class="text-gray-600 text-xs">
+                    &copy; 2026 Sri Mahaveera College, Moodbidri. All rights reserved.
+                </p>
+                <p class="text-gray-600 text-xs">
+                    MAHAVEERA FEST 2K26 &nbsp;|&nbsp; 30 October 2026 &nbsp;|&nbsp; Free Entry
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Toast Container -->
+    <div id="toast-container"></div>
+
+    <!-- ===================================================
+         JAVASCRIPT — ALL BUSINESS LOGIC PRESERVED
+    =================================================== -->
+    <script>
+        // API Configuration
+        const API_BASE_URL = 'http://localhost:8000/api';
+
+        // Event Definitions Data
+        const EVENTS_DATA = [
+            { id: 'math_crunch', dept: 'SCIENCE', name: 'Math Crunch', size: 4 },
+            { id: 'chemvista', dept: 'SCIENCE', name: 'Chemvista', size: 1 },
+            { id: 'physispark', dept: 'SCIENCE', name: 'Physispark', size: 2 },
+            { id: 'brand_rangoli', dept: 'COMMERCE', name: 'Brand Rangoli', size: 2 },
+            { id: 'olympus_oracle', dept: 'COMMERCE', name: 'Olympus Oracle Business Quiz', size: 2 },
+            { id: 'pandoras_mystery', dept: 'COMMERCE', name: "Pandora's Mystery", size: 1 },
+            { id: 'code_wars', dept: 'IT', name: 'Code Wars', size: 2 },
+            { id: 'prompt_wars', dept: 'IT', name: 'Prompt Wars', size: 2 },
+            { id: 'mind_wars', dept: 'IT', name: 'Mind Wars', size: 2 },
+            { id: 'innovation_wars', dept: 'IT', name: 'Innovation Wars', size: 2 },
+            { id: 'arthalankara', dept: 'HUMANITIES', name: 'Arthalankara', size: 2 },
+            { id: 'chitra_phalakam', dept: 'HUMANITIES', name: 'Chitra Phalakam', size: 2 },
+            { id: 'chitra_pratiyogita', dept: 'HUMANITIES', name: 'Chitra Pratiyogita', size: 1 }
+        ];
+
+        // Dept visual config
+        const DEPT_CONFIG = {
+            SCIENCE:    { icon: '⚗️', color: '#1d4ed8', bg: '#eff6ff', label: 'NOVEXA — Science' },
+            COMMERCE:   { icon: '📊', color: '#92400e', bg: '#fffbeb', label: 'COMQUEST — Commerce' },
+            IT:         { icon: '💻', color: '#5b21b6', bg: '#f5f3ff', label: 'UTKARSH — IT' },
+            HUMANITIES: { icon: '🎨', color: '#8B0000', bg: '#fff1f2', label: 'MAHAVITH — Humanities' }
+        };
+
+        // Global State
+        let state = {
+            collegeId: null,
+            accessToken: null,
+            collegeDetails: {},
+            selectedEvents: {}
+        };
+
+        // UI Helpers
+        const showToast = (message, type = 'success') => {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+
+            let icon = 'fa-circle-check';
+            let iconColor = '#22c55e';
+            if (type === 'error') { icon = 'fa-circle-xmark'; iconColor = '#ef4444'; }
+            if (type === 'warning') { icon = 'fa-triangle-exclamation'; iconColor = '#f59e0b'; }
+
+            toast.innerHTML = `<div class="flex items-center gap-3"><i class="fa-solid ${icon}" style="color:${iconColor}"></i><span style="color:#fff;font-size:0.88rem">${message}</span></div>`;
+            container.appendChild(toast);
+
+            setTimeout(() => toast.classList.add('show'), 10);
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => toast.remove(), 300);
+            }, 5000);
+        };
+
+        const copyToken = () => {
+            navigator.clipboard.writeText(state.accessToken);
+            showToast('Token copied to clipboard!');
+        };
+
+        // Navbar Scroll
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        });
+
+        // Mobile Menu
+        const mobileBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        mobileBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+        document.querySelectorAll('.mobile-link').forEach(link => {
+            link.addEventListener('click', () => mobileMenu.classList.add('hidden'));
+        });
+
+        // Particles Generation
+        const initParticles = () => {
+            const container = document.getElementById('particles-container');
+            const particleCount = 50;
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                const size = Math.random() * 6 + 2;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.left = `${Math.random() * 100}%`;
+                particle.style.top = `${Math.random() * 100}%`;
+                // Mix gold and crimson particles
+                const isGold = Math.random() > 0.5;
+                particle.style.background = isGold
+                    ? `rgba(212,175,55,${Math.random() * 0.5 + 0.2})`
+                    : `rgba(139,0,0,${Math.random() * 0.3 + 0.1})`;
+                particle.style.animation = `drift ${Math.random() * 12 + 8}s ease-in-out infinite`;
+                particle.style.animationDelay = `${Math.random() * 6}s`;
+                if (Math.random() > 0.7) {
+                    particle.style.animation = `sparkle ${Math.random() * 3 + 2}s ease-in-out infinite`;
+                    particle.style.borderRadius = '2px';
+                    particle.style.transform = `rotate(${Math.random() * 45}deg)`;
+                }
+                container.appendChild(particle);
+            }
+        };
+
+        // Countdowns
+        const targetReg = new Date('2026-10-24T23:59:59+05:30').getTime();
+        const targetEvent = new Date('2026-10-30T08:45:00+05:30').getTime();
+
+        const updateTimer = (target, id) => {
+            const now = new Date().getTime();
+            const distance = target - now;
+
+            if (distance < 0) {
+                const el = document.getElementById(id);
+                if (el) el.innerHTML = '<span class="countdown-num" style="font-size:1rem;color:#dc2626">CLOSED</span>';
+                return;
+            }
+
+            const d = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const h = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const m = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const s = Math.floor((distance % (1000 * 60)) / 1000);
+
+            const el = document.getElementById(id);
+            if (el) {
+                el.querySelector('.d').innerText = d.toString().padStart(2, '0');
+                el.querySelector('.h').innerText = h.toString().padStart(2, '0');
+                el.querySelector('.m').innerText = m.toString().padStart(2, '0');
+                el.querySelector('.s').innerText = s.toString().padStart(2, '0');
+            }
+        };
+
+        setInterval(() => {
+            updateTimer(targetReg, 'timer-reg');
+            updateTimer(targetEvent, 'timer-event');
+        }, 1000);
+        updateTimer(targetReg, 'timer-reg');
+        updateTimer(targetEvent, 'timer-event');
+
+        // Scroll Reveal
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    if (entry.target.querySelector('.counter')) {
+                        entry.target.querySelectorAll('.counter').forEach(counter => {
+                            if (!counter.dataset.counted) {
+                                const target = +counter.getAttribute('data-target');
+                                let count = 0;
+                                const speed = target / 40;
+                                const updateCount = () => {
+                                    count += speed;
+                                    if (count < target) {
+                                        counter.innerText = Math.ceil(count);
+                                        requestAnimationFrame(updateCount);
+                                    } else {
+                                        counter.innerText = target;
+                                        counter.dataset.counted = 'true';
+                                    }
+                                };
+                                updateCount();
+                            }
+                        });
+                    }
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // Clean and simple initialization
+        document.addEventListener('DOMContentLoaded', () => {
+            initParticles();
+        });
+        if (document.readyState !== 'loading') {
+            initParticles();
+        }
+    </script>
+</body>
+</html>

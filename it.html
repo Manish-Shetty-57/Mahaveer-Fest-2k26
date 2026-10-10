@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UTKARSH - IT Department | MAHAVEERA FEST 2K26</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        cream: '#FAF3E0',
+                        parchment: '#F2E4C4',
+                        ivory: '#FFF8EE',
+                        gold: { DEFAULT: '#D4AF37', light: '#F0CB5A', dark: '#A8860C' },
+                        crimson: { DEFAULT: '#8B0000', light: '#B91C1C', deep: '#5C0000' },
+                        navy: '#0D1B2A',
+                        it: { DEFAULT: '#7c3aed', light: '#a855f7', dark: '#5b21b6', cyan: '#06b6d4' }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        cinzel: ['Cinzel', 'serif'],
+                        playfair: ['Playfair Display', 'serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;800;900&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --cream: #FAF3E0;
+            --gold: #D4AF37;
+            --purple: #7c3aed;
+            --navy: #0D1B2A;
+            --purple-glow: rgba(168, 85, 247, 0.4);
+        }
+
+        body {
+            background: radial-gradient(circle at 10% 20%, #FAF3E0 0%, #F5E6C8 50%, #EDD9A3 100%);
+            color: var(--navy);
+            overflow-x: hidden;
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.4;
+        }
+
+        /* Spatial Navbar */
+        #navbar {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+            background: rgba(250, 243, 224, 0.9);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+            box-shadow: 0 8px 32px rgba(124, 58, 237, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        .nav-link {
+            font-size: 0.82rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            font-weight: 600;
+            color: var(--navy);
+            position: relative;
+            transition: color 0.3s;
+        }
+        .nav-link:hover { color: #7c3aed; }
+        .nav-link.active { color: #7c3aed; font-weight: 700; }
+
+        /* Spatial Dept Hero */
+        .dept-hero {
+            background: linear-gradient(135deg, #1e1b4b 0%, #312e81 40%, #581c87 75%, #7c3aed 100%);
+            border-radius: 2rem;
+            border: 1px solid rgba(168, 85, 247, 0.35);
+            box-shadow: 0 25px 60px -15px rgba(109, 40, 217, 0.4), 0 0 40px rgba(168, 85, 247, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Spatial Glass Cards */
+        .spatial-card {
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(124, 58, 237, 0.25);
+            border-radius: 1.5rem;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        .spatial-card:hover {
+            transform: translateY(-6px);
+            border-color: #a855f7;
+            box-shadow: 0 20px 45px -10px rgba(109, 40, 217, 0.25), 0 0 25px rgba(168, 85, 247, 0.35);
+        }
+
+        .btn-it {
+            background: linear-gradient(135deg, #4c1d95 0%, #6d28d9 50%, #8b5cf6 100%);
+            background-size: 200% auto;
+            color: #fff;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 0.75rem 1.75rem;
+            border-radius: 0.65rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(109, 40, 217, 0.3);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .btn-it:hover {
+            background-position: right center;
+            box-shadow: 0 8px 25px rgba(109, 40, 217, 0.5);
+            transform: translateY(-2px);
+        }
+
+        .orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(90px);
+            pointer-events: none;
+            z-index: 0;
+        }
+    </style>
+</head>
+<body class="pt-24 pb-16">
+
+    <!-- Ambient Purple Spatial Orbs -->
+    <div class="orb w-96 h-96 bg-purple-500/15 top-10 left-[-80px]"></div>
+    <div class="orb w-96 h-96 bg-indigo-500/15 bottom-10 right-[-80px]"></div>
+
+    <!-- NAVBAR -->
+    <nav id="navbar" class="py-3">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between">
+                <a href="/" class="flex items-center gap-2">
+                    <span class="text-crimson font-cinzel font-black text-xl leading-none">MAHAVEERA</span>
+                    <span class="text-gold font-cinzel font-bold text-base leading-none">FEST<span class="text-purple-600">2K26</span></span>
+                </a>
+                <div class="hidden md:flex items-center gap-7">
+                    <a href="/" class="nav-link">Home</a>
+                    <a href="/science.html" class="nav-link">Science</a>
+                    <a href="/commerce.html" class="nav-link">Commerce</a>
+                    <a href="/it.html" class="nav-link active">IT</a>
+                    <a href="/humanities.html" class="nav-link">Humanities</a>
+                    <a href="/check-status.html" class="nav-link">Check Status</a>
+                    <a href="/about.html" class="nav-link">About</a>
+                </div>
+                <div class="flex items-center gap-3">
+                    <a href="/register.html" class="hidden sm:inline-flex btn-it text-xs py-2 px-4">
+                        <i class="fa-solid fa-pen-to-square"></i> Register Team
+                    </a>
+                    <button id="mobile-menu-btn" class="md:hidden p-2 text-navy rounded-lg focus:outline-none" aria-label="Toggle Menu">
+                        <i class="fa-solid fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile Dropdown Menu -->
+            <div id="mobile-menu" class="hidden md:hidden mt-3 p-4 rounded-2xl bg-white/95 backdrop-blur-md border border-purple-200 shadow-xl flex flex-col gap-3">
+                <a href="/" class="mobile-link text-sm font-semibold text-navy hover:text-purple-700 py-1">Home</a>
+                <a href="/science.html" class="mobile-link text-sm font-semibold text-blue-700 hover:text-purple-700 py-1">Science (NOVEXA)</a>
+                <a href="/commerce.html" class="mobile-link text-sm font-semibold text-amber-700 hover:text-purple-700 py-1">Commerce (COMQUEST)</a>
+                <a href="/it.html" class="mobile-link text-sm font-bold text-purple-700 py-1">IT (UTKARSH)</a>
+                <a href="/humanities.html" class="mobile-link text-sm font-semibold text-rose-700 hover:text-purple-700 py-1">Humanities (MAHAVITH)</a>
+                <a href="/check-status.html" class="mobile-link text-sm font-semibold text-crimson hover:text-purple-700 py-1 font-bold">Check Status</a>
+                <a href="/about.html" class="mobile-link text-sm font-semibold text-navy hover:text-purple-700 py-1">About Fest</a>
+                <a href="/register.html" class="mobile-link btn-it text-center text-xs py-2.5 mt-1 justify-center">
+                    <i class="fa-solid fa-pen-to-square"></i> Register Team
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+
+        <!-- DEPT HERO BANNER -->
+        <div class="dept-hero p-8 sm:p-14 text-white text-center mb-16">
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-purple-500/20 border border-purple-300/40 text-purple-200 text-xs uppercase tracking-widest font-bold mb-4 backdrop-blur-md">
+                <i class="fa-solid fa-laptop-code text-cyan-300"></i> Department of IT • UTKARSH
+            </div>
+            <h1 class="text-4xl sm:text-6xl font-cinzel font-black mb-3 tracking-wide">
+                Compiling Excellence, <span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-200 via-pink-200 to-cyan-300">Initializing Future</span>
+            </h1>
+            <p class="font-playfair italic text-purple-100 text-lg sm:text-xl max-w-2xl mx-auto mb-6">
+                "Where technology meets possibilities — Think, Code, Create, Innovate."
+            </p>
+            <div class="flex flex-wrap justify-center gap-3">
+                <span class="px-4 py-1.5 rounded-full bg-white/10 text-xs font-semibold backdrop-blur-md border border-white/20">4 Competitions</span>
+                <span class="px-4 py-1.5 rounded-full bg-white/10 text-xs font-semibold backdrop-blur-md border border-white/20">Max 8 Students</span>
+                <span class="px-4 py-1.5 rounded-full bg-white/10 text-xs font-semibold backdrop-blur-md border border-white/20">Python, AI & Pitch</span>
+            </div>
+        </div>
+
+        <!-- EVENTS LIST (4 EVENTS) -->
+        <div class="space-y-8">
+
+            <!-- EVENT 1: Code Wars -->
+            <div class="spatial-card p-8 border-t-4 border-t-purple-600">
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 pb-4 border-b border-purple-900/10">
+                    <div>
+                        <span class="text-xs font-bold uppercase tracking-wider text-purple-600">Event 01 • Programming</span>
+                        <h2 class="text-2xl sm:text-3xl font-cinzel font-black text-navy flex items-center gap-3 mt-0.5">
+                            <i class="fa-solid fa-terminal text-purple-600"></i> CODE WARS
+                        </h2>
+                        <p class="text-sm text-gray-500 italic font-playfair">Python Debugging & Programming</p>
+                    </div>
+                    <div>
+                        <span class="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-purple-50 border border-purple-200 text-purple-800 text-xs font-bold uppercase tracking-wider">
+                            <i class="fa-solid fa-users text-purple-600"></i> Team of 2 Members
+                        </span>
+                    </div>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div>
+                        <h3 class="text-xs font-bold text-navy uppercase tracking-wider mb-3">Rules & Regulations:</h3>
+                        <ul class="text-sm text-gray-700 space-y-2 list-disc list-inside leading-relaxed">
+                            <li>Participants must identify and fix errors in Python programs provided by organizers.</li>
+                            <li>The competition duration will be <strong>30 minutes</strong>.</li>
+                            <li>Only the provided code repository may be modified to correct bugs.</li>
+                            <li>Team consists of exactly <strong>2 participants</strong>.</li>
+                        </ul>
+                    </div>
+                    <div class="bg-purple-50/70 rounded-2xl p-5 border border-purple-200/60 flex flex-col justify-between">
+                        <div>
+                            <span class="text-xs uppercase text-purple-800 font-bold tracking-wider block mb-1">Student Coordinators</span>
+                            <p class="text-navy font-bold text-base">Manish (72599 10453)</p>
+                            <p class="text-navy font-bold text-base mt-1">Sudheeksha (86810 43460)</p>
+                        </div>
+                        <div class="mt-5">
+                            <a href="/register.html" class="btn-it w-full justify-center text-sm py-2.5">
+                                Register for Code Wars
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- EVENT 2: Prompt Wars -->
+            <div class="spatial-card p-8 border-t-4 border-t-cyan-600">
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 pb-4 border-b border-cyan-900/10">
+                    <div>
+                        <span class="text-xs font-bold uppercase tracking-wider text-cyan-600">Event 02 • Generative AI</span>
+                        <h2 class="text-2xl sm:text-3xl font-cinzel font-black text-navy flex items-center gap-3 mt-0.5">
+                            <i class="fa-solid fa-wand-magic-sparkles text-cyan-600"></i> PROMPT WARS
+                        </h2>
+                        <p class="text-sm text-gray-500 italic font-playfair">AI Prompt Engineering & Image Generation</p>
+                    </div>
+                    <div>
+                        <span class="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-cyan-50 border border-cyan-200 text-cyan-800 text-xs font-bold uppercase tracking-wider">
+                            <i class="fa-solid fa-users text-cyan-600"></i> Team of 2 Members
+                        </span>
+                    </div>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div>
+                        <h3 class="text-xs font-bold text-navy uppercase tracking-wider mb-3">Rules & Regulations:</h3>
+                        <ul class="text-sm text-gray-700 space-y-2 list-disc list-inside leading-relaxed">
+                            <li>Participants create AI-generated images based on the theme announced on the spot.</li>
+                            <li>Final submission must include both the generated image and the prompt used.</li>
+                            <li>Images must be original and generated during the live event.</li>
+                            <li>The competition is conducted across sequential rounds.</li>
+                            <li>Team consists of exactly <strong>2 participants</strong>.</li>
+                        </ul>
+                    </div>
+                    <div class="bg-cyan-50/70 rounded-2xl p-5 border border-cyan-200/60 flex flex-col justify-between">
+                        <div>
+                            <span class="text-xs uppercase text-cyan-800 font-bold tracking-wider block mb-1">Student Coordinators</span>
+                            <p class="text-navy font-bold text-base">Balakrishna (77954 08045)</p>
+                            <p class="text-navy font-bold text-base mt-1">Meenakshi (63600 75785)</p>
+                        </div>
+                        <div class="mt-5">
+                            <a href="/register.html" class="btn-it w-full justify-center text-sm py-2.5" style="background: linear-gradient(135deg, #0e7490, #06b6d4);">
+                                Register for Prompt Wars
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- EVENT 3: Mind Wars -->
+            <div class="spatial-card p-8 border-t-4 border-t-pink-600">
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 pb-4 border-b border-pink-900/10">
+                    <div>
+                        <span class="text-xs font-bold uppercase tracking-wider text-pink-600">Event 03 • Tech Quiz</span>
+                        <h2 class="text-2xl sm:text-3xl font-cinzel font-black text-navy flex items-center gap-3 mt-0.5">
+                            <i class="fa-solid fa-brain text-pink-600"></i> MIND WARS
+                        </h2>
+                        <p class="text-sm text-gray-500 italic font-playfair">IT & Computer Science Quiz Competition</p>
+                    </div>
+                    <div>
+                        <span class="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-pink-50 border border-pink-200 text-pink-800 text-xs font-bold uppercase tracking-wider">
+                            <i class="fa-solid fa-users text-pink-600"></i> Team of 2 Members
+                        </span>
+                    </div>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div>
+                        <h3 class="text-xs font-bold text-navy uppercase tracking-wider mb-3">Rules & Regulations:</h3>
+                        <ul class="text-sm text-gray-700 space-y-2 list-disc list-inside leading-relaxed">
+                            <li><strong>Electronic gadgets are strictly prohibited.</strong></li>
+                            <li>Details of each round will be disclosed on the spot.</li>
+                            <li>Questions across all rounds strictly based on IT, AI, Computing, and tech history.</li>
+                            <li>Team consists of exactly <strong>2 participants</strong>.</li>
+                        </ul>
+                    </div>
+                    <div class="bg-pink-50/70 rounded-2xl p-5 border border-pink-200/60 flex flex-col justify-between">
+                        <div>
+                            <span class="text-xs uppercase text-pink-800 font-bold tracking-wider block mb-1">Student Coordinators</span>
+                            <p class="text-navy font-bold text-base">Natraj (81055 35640)</p>
+                            <p class="text-navy font-bold text-base mt-1">Swapna (73488 57481)</p>
+                        </div>
+                        <div class="mt-5">
+                            <a href="/register.html" class="btn-it w-full justify-center text-sm py-2.5" style="background: linear-gradient(135deg, #be185d, #ec4899);">
+                                Register for Mind Wars
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- EVENT 4: Innovation Wars -->
+            <div class="spatial-card p-8 border-t-4 border-t-purple-700">
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 pb-4 border-b border-purple-900/10">
+                    <div>
+                        <span class="text-xs font-bold uppercase tracking-wider text-purple-700">Event 04 • Startup Pitch</span>
+                        <h2 class="text-2xl sm:text-3xl font-cinzel font-black text-navy flex items-center gap-3 mt-0.5">
+                            <i class="fa-solid fa-rocket text-purple-600"></i> INNOVATION WARS
+                        </h2>
+                        <p class="text-sm text-gray-500 italic font-playfair">Imaginary Product Launch & Startup Pitch</p>
+                    </div>
+                    <div>
+                        <span class="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-purple-50 border border-purple-200 text-purple-800 text-xs font-bold uppercase tracking-wider">
+                            <i class="fa-solid fa-users text-purple-700"></i> Team of 2 Members
+                        </span>
+                    </div>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div>
+                        <h3 class="text-xs font-bold text-navy uppercase tracking-wider mb-3">Rules & Regulations:</h3>
+                        <ul class="text-sm text-gray-700 space-y-2 list-disc list-inside leading-relaxed">
+                            <li>Present an original imaginary tech product solving a real-world problem.</li>
+                            <li>May be software, hardware device, AI solution, smart system, or innovative service.</li>
+                            <li>Each team allotted <strong>10 minutes for presentation</strong> including demo and concept explanation.</li>
+                            <li>Must cover problem statement, proposed solution, target users, and features.</li>
+                            <li>Product idea must be original and prepared on PPT.</li>
+                            <li>Team consists of exactly <strong>2 participants</strong>.</li>
+                        </ul>
+                    </div>
+                    <div class="bg-purple-50/70 rounded-2xl p-5 border border-purple-200/60 flex flex-col justify-between">
+                        <div>
+                            <span class="text-xs uppercase text-purple-800 font-bold tracking-wider block mb-1">Student Coordinators</span>
+                            <p class="text-navy font-bold text-base">Anvith (82178 22800)</p>
+                            <p class="text-navy font-bold text-base mt-1">Sahana (72598 92642)</p>
+                        </div>
+                        <div class="mt-5">
+                            <a href="/register.html" class="btn-it w-full justify-center text-sm py-2.5">
+                                Register for Innovation Wars
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Faculty In-Charge Card -->
+        <div class="mt-12 spatial-card p-6 border border-purple-300 text-center bg-purple-900/5">
+            <p class="text-xs uppercase text-purple-800 font-bold tracking-wider mb-1">Faculty Coordinator (Information Technology)</p>
+            <p class="text-xl font-cinzel font-bold text-navy">Ms. Nikshitha — <a href="tel:8105687765" class="text-purple-700 hover:underline">81056 87765</a></p>
+            <p class="text-xs text-gray-500 mt-1">Student Coordinator: Shodhan (78992 51547)</p>
+        </div>
+
+    </main>
+
+    <footer class="mt-20 py-8 text-center text-xs text-gray-600 border-t border-gold/20">
+        <p>&copy; 2026 Sri Mahaveera College, Moodbidri. Department of IT (UTKARSH).</p>
+        <p class="mt-1"><a href="/" class="text-purple-700 hover:underline">← Return to Main Fest Portal</a></p>
+    </footer>
+
+    <script>
+        const mobileBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        if (mobileBtn && mobileMenu) {
+            mobileBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+            document.querySelectorAll('.mobile-link').forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.add('hidden');
+                });
+            });
+        }
+    </script>
+</body>
+</html>
