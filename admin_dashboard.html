@@ -297,8 +297,10 @@
         let adminSecretKey = '';
 
         // ====================================================================
-        // LOGIN GATE
+        // LOGIN GATE & AUTHENTICATION
         // ====================================================================
+        const MASTER_ADMIN_SECRET = 'Mahaveera2026Secure';
+
         function toggleKeyVisibility() {
             const inp = document.getElementById('login-key-input');
             const icon = document.getElementById('eye-icon');
@@ -319,31 +321,22 @@
                 errEl.querySelector('span').textContent = 'Please enter the admin secret key.';
                 return;
             }
-            // Validate key by hitting the API
-            try {
-                const res = await fetch(`${API_BASE_URL}/admin/summary?ADMIN_SECRET_KEY=${encodeURIComponent(key)}`);
-                if (res.status === 403) {
-                    errEl.classList.remove('hidden');
-                    errEl.querySelector('span').textContent = 'Invalid secret key. Access denied.';
-                    return;
-                }
-                if (!res.ok) {
-                    errEl.classList.remove('hidden');
-                    errEl.querySelector('span').textContent = 'Cannot connect to backend server.';
-                    return;
-                }
-                // Success
-                adminSecretKey = key;
-                const json = await res.json();
-                rawSummaryData = json.data;
-                document.getElementById('login-gate').classList.add('hidden');
-                document.getElementById('dashboard-content').classList.remove('hidden');
-                document.getElementById('dashboard-content').classList.add('flex');
-                renderDashboard();
-            } catch (err) {
+
+            // Verify against secret key
+            if (key !== MASTER_ADMIN_SECRET) {
                 errEl.classList.remove('hidden');
-                errEl.querySelector('span').textContent = 'Cannot connect to backend server. Is it running?';
+                errEl.querySelector('span').textContent = 'Invalid secret key. Access denied.';
+                return;
             }
+
+            // Success - unlock dashboard
+            adminSecretKey = key;
+            document.getElementById('login-gate').classList.add('hidden');
+            document.getElementById('dashboard-content').classList.remove('hidden');
+            document.getElementById('dashboard-content').classList.add('flex');
+
+            // Try to load live data from backend
+            fetchDashboardData();
         }
 
         function logout() {
@@ -395,13 +388,24 @@
         async function fetchDashboardData() {
             try {
                 const res = await fetch(`${API_BASE_URL}/admin/summary?ADMIN_SECRET_KEY=${encodeURIComponent(adminSecretKey)}`);
-                if (!res.ok) throw new Error('Failed to fetch summary data');
+                if (!res.ok) throw new Error('Backend responded with error code ' + res.status);
                 const json = await res.json();
                 rawSummaryData = json.data;
                 renderDashboard();
             } catch (err) {
-                console.error(err);
-                showToast(err.message || 'Failed to refresh data', 'error');
+                console.warn('Backend server offline or unreachable:', err);
+                // Graceful fallback for static deployments: initialize empty state cleanly
+                if (!rawSummaryData) {
+                    rawSummaryData = {
+                        total_colleges: 0,
+                        total_unique_students_across_fest: 0,
+                        total_event_enrollments: 0,
+                        college_wise_summary: [],
+                        event_wise_summary: []
+                    };
+                    renderDashboard();
+                }
+                showToast('Backend offline or not reachable from this domain. Local changes can be managed once connected.', 'info');
             }
         }
 
