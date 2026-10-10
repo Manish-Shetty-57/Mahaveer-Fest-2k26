@@ -45,6 +45,7 @@ class CollegeResponse(BaseModel):
     remaining_student_quota: int
     access_token: Optional[str] = None
     token_type: Optional[str] = "bearer"
+    registered_events: Optional[List[str]] = []
 
 
 class CollegeStatusQueryRequest(BaseModel):

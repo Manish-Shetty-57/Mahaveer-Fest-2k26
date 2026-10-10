@@ -6,42 +6,83 @@ from sqlalchemy.orm import Session
 from app.domain.models import College, Registration, Student, registration_members
 from app.domain.schemas import CollegeRegisterRequest, CollegeResponse, CollegeStatusResponse
 from app.core.security import create_access_token
+import re
+from fastapi import HTTPException, status
 from app.core.exceptions import CollegeNotFoundException
 from app.core.constants import MAX_COLLEGE_STUDENTS_CAP, GENERAL_RULE_REMINDERS
+
+
+def _normalize_phone(p: str) -> str:
+    """Strip spaces, dashes, parentheses and +91 prefix to compare last 10 digits."""
+    digits = re.sub(r"\D", "", p or "")
+    return digits[-10:] if len(digits) >= 10 else digits
 
 
 class CollegeService:
     @staticmethod
     def register_or_get_college(db: Session, request: CollegeRegisterRequest) -> CollegeResponse:
         """
-        Registers a new college or returns the existing college profile if already registered.
-        Generates and returns an authentication session token.
+        Registers a new college or authenticates returning coordinator if already registered.
+        Verifies BOTH faculty email and phone number to prevent unauthorized overwrites.
         """
         college = db.query(College).filter(
             College.college_name.ilike(request.college_name.strip())
         ).first()
 
+        req_email = request.faculty_email.lower().strip()
+        req_phone_norm = _normalize_phone(request.faculty_phone)
+
         if not college:
+            # Fresh registration: create new college
             college = College(
                 college_name=request.college_name.strip(),
                 faculty_coordinator_name=request.faculty_coordinator_name.strip(),
                 faculty_phone=request.faculty_phone.strip(),
-                faculty_email=request.faculty_email.lower().strip(),
+                faculty_email=req_email,
                 total_students_registered=0
             )
             db.add(college)
             db.commit()
             db.refresh(college)
         else:
-            # Update coordinator contact details if updated
-            college.faculty_coordinator_name = request.faculty_coordinator_name.strip()
-            college.faculty_phone = request.faculty_phone.strip()
-            college.faculty_email = request.faculty_email.lower().strip()
-            db.commit()
-            db.refresh(college)
+            # Existing college: STRICT verification of BOTH email and phone
+            stored_email = college.faculty_email.lower().strip()
+            stored_phone_norm = _normalize_phone(college.faculty_phone)
+
+            email_matches = (stored_email == req_email)
+            phone_matches = (stored_phone_norm == req_phone_norm)
+
+            if not email_matches or not phone_matches:
+                mismatch_fields = []
+                if not email_matches:
+                    mismatch_fields.append("Faculty Email")
+                if not phone_matches:
+                    mismatch_fields.append("Faculty Phone Number")
+                mismatches_str = " and ".join(mismatch_fields)
+                raise HTTPException(
+                    status_code=status.HTTP_409_CONFLICT,
+                    detail={
+                        "error_code": "COLLEGE_COORDINATOR_MISMATCH",
+                        "message": (
+                            f"College '{college.college_name}' is already registered with different coordinator credentials. "
+                            f"{mismatches_str} does not match the registered coordinator. "
+                            "Please use the original registered email and phone number, or contact the fest organizers."
+                        ),
+                        "details": {
+                            "college_name": college.college_name,
+                            "email_matched": email_matches,
+                            "phone_matched": phone_matches
+                        }
+                    }
+                )
+
+            # Verified returning coordinator: do NOT overwrite details! Keep original credentials.
+
+        # Fetch all already submitted events for this college
+        existing_regs = db.query(Registration).filter(Registration.college_id == college.id).all()
+        registered_events_list = [r.event_name for r in existing_regs]
 
         token = create_access_token({"sub": college.id, "college_name": college.college_name})
-
         remaining_quota = max(0, MAX_COLLEGE_STUDENTS_CAP - college.total_students_registered)
 
         return CollegeResponse(
@@ -53,7 +94,8 @@ class CollegeService:
             total_students_registered=college.total_students_registered,
             remaining_student_quota=remaining_quota,
             access_token=token,
-            token_type="bearer"
+            token_type="bearer",
+            registered_events=registered_events_list
         )
 
     @staticmethod

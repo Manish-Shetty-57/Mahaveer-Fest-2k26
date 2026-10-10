@@ -745,11 +745,12 @@
             });
         });
 
-        const initEventsForm = () => {
+        const initEventsForm = (alreadyRegisteredEvents = []) => {
             const container = document.getElementById('events-selection-container');
             container.innerHTML = '';
 
             const depts = [...new Set(EVENTS_DATA.map(e => e.dept))];
+            const registeredLower = (alreadyRegisteredEvents || []).map(e => e.trim().toLowerCase());
 
             depts.forEach(dept => {
                 const deptEvents = EVENTS_DATA.filter(e => e.dept === dept);
@@ -766,19 +767,35 @@
 
                 deptEvents.forEach(ev => {
                     const id = ev.id;
+                    const isAlreadyDone = registeredLower.includes(ev.name.trim().toLowerCase());
                     const eventDiv = document.createElement('div');
                     eventDiv.className = 'mb-3 last:mb-0';
-                    eventDiv.innerHTML = `
-                        <label class="flex items-center gap-3 p-2 rounded-lg hover:bg-black/5 cursor-pointer transition">
-                            <input type="checkbox" class="event-checkbox w-4 h-4 rounded" style="accent-color:${cfg.color}" data-id="${id}">
-                            <span style="font-weight:600;font-size:0.9rem;color:#0D1B2A;flex:1">${ev.name}</span>
-                            <span style="font-size:0.7rem;padding:0.25rem 0.65rem;border-radius:999px;font-weight:700;background:#fff;color:${cfg.color};border:1px solid ${cfg.color}40;white-space:nowrap">
-                                ${ev.size === 1 ? 'Individual (1 Member)' : 'Team of ' + ev.size}
-                            </span>
-                        </label>
-                        <div id="participants-for-${id}" class="hidden mt-2.5 pl-6 space-y-2.5">
-                        </div>
-                    `;
+
+                    if (isAlreadyDone) {
+                        eventDiv.innerHTML = `
+                            <div class="flex items-center justify-between p-2.5 rounded-lg bg-green-500/10 border border-green-600/20">
+                                <div class="flex items-center gap-3">
+                                    <span class="w-4 h-4 rounded-full bg-green-600 text-white flex items-center justify-center text-[10px] font-bold">✓</span>
+                                    <span style="font-weight:600;font-size:0.9rem;color:#0D1B2A">${ev.name}</span>
+                                </div>
+                                <span class="text-xs font-bold text-green-700 bg-green-100 px-2.5 py-0.5 rounded-full border border-green-300">
+                                    <i class="fa-solid fa-check mr-1"></i> Already Registered
+                                </span>
+                            </div>
+                        `;
+                    } else {
+                        eventDiv.innerHTML = `
+                            <label class="flex items-center gap-3 p-2 rounded-lg hover:bg-black/5 cursor-pointer transition">
+                                <input type="checkbox" class="event-checkbox w-4 h-4 rounded" style="accent-color:${cfg.color}" data-id="${id}">
+                                <span style="font-weight:600;font-size:0.9rem;color:#0D1B2A;flex:1">${ev.name}</span>
+                                <span style="font-size:0.7rem;padding:0.25rem 0.65rem;border-radius:999px;font-weight:700;background:#fff;color:${cfg.color};border:1px solid ${cfg.color}40;white-space:nowrap">
+                                    ${ev.size === 1 ? 'Individual (1 Member)' : 'Team of ' + ev.size}
+                                </span>
+                            </label>
+                            <div id="participants-for-${id}" class="hidden mt-2.5 pl-6 space-y-2.5">
+                            </div>
+                        `;
+                    }
                     deptBlock.appendChild(eventDiv);
                 });
 
@@ -882,8 +899,16 @@
                 state.collegeId = json.data.college_id;
                 state.accessToken = json.data.access_token;
                 state.remainingQuota = json.data.remaining_student_quota ?? 25;
+                state.registeredEvents = json.data.registered_events || [];
 
-                showToast(`College enrolled successfully! ${state.remainingQuota} participant slots available.`);
+                // Re-initialize events form to disable already registered events
+                initEventsForm(state.registeredEvents);
+
+                if (state.registeredEvents.length > 0) {
+                    showToast(`Welcome back, ${json.data.faculty_coordinator_name}! You have already registered ${state.registeredEvents.length} event(s). Add more below (${state.remainingQuota} slots left).`, 'success');
+                } else {
+                    showToast(`College enrolled successfully! ${state.remainingQuota} participant slots available.`, 'success');
+                }
                 goToStep(2);
             } catch (err) {
                 console.error(err);
