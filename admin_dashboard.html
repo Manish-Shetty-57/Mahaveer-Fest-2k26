@@ -420,8 +420,9 @@
             // Compile Master Students List with Event details
             masterStudentsList = [];
 
-            // Build student -> events map
+            // Build student -> events map and student -> departments map
             const studentEventsMap = {};
+            const studentDeptsMap = {};
             if (rawSummaryData.event_wise_summary) {
                 rawSummaryData.event_wise_summary.forEach(ev => {
                     if (ev.roster) {
@@ -429,7 +430,9 @@
                             if (team.team_members) {
                                 team.team_members.forEach(m => {
                                     if (!studentEventsMap[m.id]) studentEventsMap[m.id] = [];
+                                    if (!studentDeptsMap[m.id]) studentDeptsMap[m.id] = new Set();
                                     studentEventsMap[m.id].push(`${ev.event_name} (${ev.department})`);
+                                    studentDeptsMap[m.id].add(ev.department);
                                 });
                             }
                         });
@@ -441,6 +444,7 @@
                 rawSummaryData.college_wise_summary.forEach(col => {
                     if (col.unique_students_roster) {
                         col.unique_students_roster.forEach(st => {
+                            const depts = Array.from(studentDeptsMap[st.id] || []);
                             masterStudentsList.push({
                                 id: st.id,
                                 student_name: st.student_name,
@@ -450,7 +454,8 @@
                                 college_id: col.college_id,
                                 coordinator: `${col.faculty_coordinator_name} (${col.faculty_phone})`,
                                 coordinator_email: col.faculty_email,
-                                events: (studentEventsMap[st.id] || []).join(', ') || 'Registered'
+                                events: (studentEventsMap[st.id] || []).join(', ') || 'Registered',
+                                departments: depts
                             });
                         });
                     }
@@ -586,24 +591,60 @@
             const query = (document.getElementById('searchInput').value || '').toLowerCase();
             const dept = document.getElementById('deptFilter').value;
 
+            // Filter master students
             const filteredStudents = masterStudentsList.filter(s => {
-                const matchesQuery = s.student_name.toLowerCase().includes(query) ||
+                const matchesQuery = !query ||
+                    s.student_name.toLowerCase().includes(query) ||
                     s.student_phone.toLowerCase().includes(query) ||
                     s.college_name.toLowerCase().includes(query) ||
                     s.coordinator.toLowerCase().includes(query);
-                const matchesDept = !dept || s.events.includes(dept);
+
+                // Exact department matching: check s.departments array or exact "(DEPT)" suffix
+                const matchesDept = !dept ||
+                    (s.departments && s.departments.includes(dept)) ||
+                    (s.events && s.events.includes(`(${dept})`));
+
                 return matchesQuery && matchesDept;
             });
             renderStudentsTable(filteredStudents);
 
+            // Filter colleges
             if (rawSummaryData && rawSummaryData.college_wise_summary) {
+                const deptEventNames = (dept && rawSummaryData.event_wise_summary)
+                    ? rawSummaryData.event_wise_summary.filter(e => e.department === dept).map(e => e.event_name.toLowerCase())
+                    : null;
+
                 const filteredColleges = rawSummaryData.college_wise_summary.filter(c => {
-                    return c.college_name.toLowerCase().includes(query) ||
+                    const matchesQuery = !query ||
+                        c.college_name.toLowerCase().includes(query) ||
                         c.faculty_coordinator_name.toLowerCase().includes(query) ||
                         c.faculty_phone.includes(query) ||
                         c.faculty_email.toLowerCase().includes(query);
+
+                    const matchesDept = !dept || (c.events_enrolled && c.events_enrolled.some(ev =>
+                        deptEventNames ? deptEventNames.includes(ev.toLowerCase()) : false
+                    ));
+
+                    return matchesQuery && matchesDept;
                 });
                 renderCollegesTable(filteredColleges);
+            }
+
+            // Filter event rosters
+            if (rawSummaryData && rawSummaryData.event_wise_summary) {
+                const filteredEvents = rawSummaryData.event_wise_summary.filter(ev => {
+                    const matchesDept = !dept || ev.department === dept;
+                    const matchesQuery = !query ||
+                        ev.event_name.toLowerCase().includes(query) ||
+                        ev.department.toLowerCase().includes(query) ||
+                        (ev.roster && ev.roster.some(r =>
+                            r.college_name.toLowerCase().includes(query) ||
+                            r.faculty_coordinator.toLowerCase().includes(query) ||
+                            (r.team_members && r.team_members.some(m => m.student_name.toLowerCase().includes(query)))
+                        ));
+                    return matchesDept && matchesQuery;
+                });
+                renderEventRosters(filteredEvents);
             }
         }
 
