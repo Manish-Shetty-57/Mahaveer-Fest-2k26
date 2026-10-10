@@ -289,9 +289,9 @@
 
     <!-- Script for Dashboard & Excel Download -->
     <script>
-        const API_BASE_URL = window.location.origin.includes('localhost') 
-            ? 'http://localhost:8000/api' 
-            : `${window.location.origin}/api`;
+        const API_BASE_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+            ? 'http://localhost:8000/api'
+            : 'https://mahaveera-fest-api.onrender.com/api';
         let rawSummaryData = null;
         let masterStudentsList = [];
         let adminSecretKey = '';
