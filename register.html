@@ -682,6 +682,27 @@
             selectedEvents: {}
         };
 
+        const extractErrorMessage = (data, fallback = 'An error occurred') => {
+            if (!data) return fallback;
+            if (typeof data === 'string') return data;
+            if (data.detail) {
+                if (typeof data.detail === 'string') return data.detail;
+                if (data.detail.message) return data.detail.message;
+                if (Array.isArray(data.detail)) {
+                    return data.detail.map(d => d.msg || d.message || JSON.stringify(d)).join('; ');
+                }
+            }
+            if (data.message && typeof data.message === 'string') return data.message;
+            if (data.error) {
+                if (typeof data.error === 'string') return data.error;
+                if (data.error.message) return data.error.message;
+                if (Array.isArray(data.error.details) && data.error.details[0]?.message) {
+                    return data.error.details[0].message;
+                }
+            }
+            return fallback;
+        };
+
         const showToast = (message, type = 'success') => {
             const container = document.getElementById('toast-container');
             const toast = document.createElement('div');
@@ -692,14 +713,18 @@
             if (type === 'error') { icon = 'fa-circle-xmark'; iconColor = '#ef4444'; }
             if (type === 'warning') { icon = 'fa-triangle-exclamation'; iconColor = '#f59e0b'; }
 
-            toast.innerHTML = `<div class="flex items-center gap-3"><i class="fa-solid ${icon}" style="color:${iconColor}"></i><span style="color:#fff;font-size:0.88rem">${message}</span></div>`;
+            const cleanMsg = (typeof message === 'object' && message !== null) 
+                ? (message.message || extractErrorMessage(message)) 
+                : String(message);
+
+            toast.innerHTML = `<div class="flex items-center gap-3"><i class="fa-solid ${icon}" style="color:${iconColor}"></i><span style="color:#fff;font-size:0.88rem;line-height:1.4">${cleanMsg}</span></div>`;
             container.appendChild(toast);
 
             setTimeout(() => toast.classList.add('show'), 10);
             setTimeout(() => {
                 toast.classList.remove('show');
                 setTimeout(() => toast.remove(), 300);
-            }, 5000);
+            }, 6000);
         };
 
         const copyToken = () => {
@@ -892,7 +917,7 @@
 
                 const json = await res.json().catch(() => ({}));
                 if (!res.ok) {
-                    const errMsg = json.error?.message || json.message || (json.error?.details && json.error.details[0]?.message) || json.detail || 'College registration failed';
+                    const errMsg = extractErrorMessage(json, 'College registration failed');
                     throw new Error(errMsg);
                 }
 
@@ -1084,9 +1109,8 @@
                     const resJson = await res.json().catch(() => ({}));
 
                     if (!res.ok) {
-                        const errObj = resJson.error || resJson;
-                        const code = errObj.error_code || resJson.error_code || res.statusText;
-                        const message = errObj.message || resJson.message || resJson.detail || `Failed to register ${evDef.name}`;
+                        const message = extractErrorMessage(resJson, `Failed to register ${evDef.name}`);
+                        const code = resJson.error?.error_code || resJson.detail?.error_code || resJson.error_code || '';
 
                         if (code === 'COLLEGE_STUDENT_CAP_EXCEEDED') {
                             throw new Error(message || 'College student cap of 25 unique students exceeded.');
@@ -1095,7 +1119,7 @@
                         } else if (code === 'REGISTRATION_DEADLINE_EXCEEDED') {
                             throw new Error('Registration closed: Deadline was 24/10/2026 23:59:59 IST.');
                         } else {
-                            throw new Error(`${message}`);
+                            throw new Error(message);
                         }
                     } else {
                         successCount++;

@@ -261,7 +261,7 @@
                             College Name *
                         </label>
                         <input type="text" id="college_name" required class="form-input"
-                            placeholder="e.g. Sri Bhuvanendra PU College">
+                            placeholder="e.g. Sri Mahaveera PU College">
                         <span class="text-[11px] text-gray-500 mt-1 block">Full or partial name as registered</span>
                     </div>
 
@@ -428,7 +428,12 @@
                 const json = await res.json().catch(() => ({}));
 
                 if (!res.ok) {
-                    const msg = json.detail || json.message || (json.error && json.error.message) || 'Unable to find matching registration.';
+                    const msg = (typeof json.detail === 'string' && json.detail)
+                        || json.detail?.message
+                        || json.message
+                        || (json.error && json.error.message)
+                        || (Array.isArray(json.detail) && json.detail.map(d => d.msg).join('; '))
+                        || 'Unable to find matching registration.';
                     throw new Error(msg);
                 }
 

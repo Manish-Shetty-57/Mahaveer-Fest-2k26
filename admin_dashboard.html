@@ -847,8 +847,15 @@
                         faculty_email: email
                     })
                 });
-                const json = await res.json();
-                if (!res.ok) throw new Error(json.error?.message || json.detail || 'Registration failed');
+                const json = await res.json().catch(() => ({}));
+                if (!res.ok) {
+                    const msg = (typeof json.detail === 'string' && json.detail)
+                        || json.detail?.message
+                        || json.error?.message
+                        || json.message
+                        || 'Registration failed';
+                    throw new Error(msg);
+                }
                 showToast(`College "${name}" registered successfully!`);
                 // Clear form
                 ['mc-college-name', 'mc-faculty-name', 'mc-faculty-phone', 'mc-faculty-email'].forEach(id => document.getElementById(id).value = '');
