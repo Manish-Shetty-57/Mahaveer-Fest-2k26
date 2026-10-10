@@ -23,6 +23,14 @@ class Settings(BaseModel):
         "DATABASE_URL", 
         "sqlite:///./mahaveera_fest_2k26.db"
     )
+
+    @property
+    def sqlalchemy_database_url(self) -> str:
+        """SQLAlchemy 2.0 requires postgresql:// instead of postgres://."""
+        url = self.DATABASE_URL
+        if url.startswith("postgres://"):
+            url = url.replace("postgres://", "postgresql://", 1)
+        return url
     
     # Registration Deadline in IST
     REGISTRATION_DEADLINE_STR: str = os.getenv("REGISTRATION_DEADLINE", DEFAULT_DEADLINE_ISO)
