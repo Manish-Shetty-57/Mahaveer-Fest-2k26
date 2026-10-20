@@ -32,7 +32,7 @@ class DeadlineExceededException(DomainException):
             details={
                 "deadline": deadline_str,
                 "server_time": current_time_str,
-                "rule": "Rule 3: Registration submissions past 24/10/2026 23:59:59 are rejected."
+                "rule": f"Rule 3: Registration submissions past {deadline_str} are rejected."
             }
         )
 

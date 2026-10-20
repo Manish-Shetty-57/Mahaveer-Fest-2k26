@@ -629,10 +629,19 @@
                         </div>
                     </div>
 
+                    <!-- Check Status Notice Line -->
+                    <div class="bg-amber-500/10 border border-gold/40 rounded-xl p-4 max-w-md mx-auto mb-6 text-xs sm:text-sm text-navy/85 text-center shadow-xs">
+                        <i class="fa-solid fa-clipboard-check text-crimson mr-1.5 text-base align-middle"></i>
+                        <span>You can see your enrolled events and full participants list anytime in <a href="/check-status.html" class="font-bold text-crimson underline hover:text-navy transition-colors">Check Status</a> in the navigation bar.</span>
+                    </div>
+
                     <div class="flex flex-wrap justify-center gap-3">
                         <button type="button" id="btn-register-another" class="btn-gold">
                             <i class="fa-solid fa-plus"></i> Add More Events
                         </button>
+                        <a href="/check-status.html" class="btn-outline">
+                            <i class="fa-solid fa-clipboard-list"></i> Check Status
+                        </a>
                         <a href="/" class="btn-outline">
                             <i class="fa-solid fa-house"></i> Return to Home
                         </a>
@@ -1117,7 +1126,7 @@
                         } else if (code === 'DUPLICATE_EVENT_REGISTRATION') {
                             showToast(`Already registered for ${evDef.name}. Skipped duplicate.`, 'warning');
                         } else if (code === 'REGISTRATION_DEADLINE_EXCEEDED') {
-                            throw new Error('Registration closed: Deadline was 24/10/2026 23:59:59 IST.');
+                            throw new Error(message || 'Registration closed: The deadline has passed.');
                         } else {
                             throw new Error(message);
                         }

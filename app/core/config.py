@@ -9,8 +9,8 @@ from pydantic import BaseModel
 # Standard Indian Standard Timezone (Asia/Kolkata)
 IST = ZoneInfo("Asia/Kolkata")
 
-# Registration Deadline: 24/10/2026 23:59:59 IST
-DEFAULT_DEADLINE_ISO = "2026-10-24T23:59:59+05:30"
+# Registration Deadline: 28/10/2026 23:59:59 IST (timer shows 24/10 for urgency, backend cutoff on 28/10 11:59:59 PM)
+DEFAULT_DEADLINE_ISO = "2026-10-28T23:59:59+05:30"
 
 
 class Settings(BaseModel):

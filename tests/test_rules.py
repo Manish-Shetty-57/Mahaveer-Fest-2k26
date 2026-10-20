@@ -26,14 +26,14 @@ from app.core.constants import DepartmentEnum, PUCYearEnum
 # ============================================================================
 
 def test_deadline_enforcement_valid():
-    """Registrations before or at 24/10/2026 23:59:59 IST should be allowed."""
-    valid_time = datetime(2026, 10, 24, 23, 59, 58, tzinfo=IST)
+    """Registrations before or at 28/10/2026 23:59:59 IST should be allowed."""
+    valid_time = datetime(2026, 10, 28, 23, 59, 58, tzinfo=IST)
     RegistrationService.verify_deadline(current_time=valid_time)
 
 
 def test_deadline_enforcement_exceeded():
-    """Registrations after 24/10/2026 23:59:59 IST should be rejected."""
-    expired_time = datetime(2026, 10, 25, 0, 0, 1, tzinfo=IST)
+    """Registrations after 28/10/2026 23:59:59 IST should be rejected."""
+    expired_time = datetime(2026, 10, 29, 0, 0, 1, tzinfo=IST)
     with pytest.raises(DeadlineExceededException) as excinfo:
         RegistrationService.verify_deadline(current_time=expired_time)
     assert excinfo.value.status_code == 403
