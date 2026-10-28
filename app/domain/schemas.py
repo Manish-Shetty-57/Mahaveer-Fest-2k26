@@ -127,7 +127,9 @@ class ParticipantInput(BaseModel):
         if not v:
             return None
         clean_phone = re.sub(r"[\s\-\(\)]", "", v.strip())
-        if clean_phone and not re.match(r"^(\+?[0-9]{10,15})$", clean_phone):
+        if not clean_phone:
+            return None
+        if not re.match(r"^(\+?[0-9]{10,15})$", clean_phone):
             raise ValueError("Invalid student phone number format. Provide a valid 10-15 digit contact number.")
         return clean_phone
 
