@@ -426,6 +426,19 @@
             </p>
         </div>
 
+        <!-- Spot Registration Notice -->
+        <div class="mb-6 p-4 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-center shadow-sm">
+            <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-crimson/10 border border-crimson/25 text-crimson font-bold text-xs uppercase tracking-wider mb-2">
+                <i class="fa-solid fa-circle-exclamation"></i> Online Registration Closed
+            </div>
+            <p class="text-navy font-bold text-sm sm:text-base">
+                Don’t worry, spot registration is available!
+            </p>
+            <p class="text-navy/70 text-xs sm:text-sm mt-1 max-w-xl mx-auto">
+                Colleges can register their contingent in-person directly at the Sri Mahaveera College campus registration desk on event day (30 Oct 2026).
+            </p>
+        </div>
+
         <div class="form-container">
             <!-- Header Banner -->
             <div class="form-header text-center">
@@ -1133,7 +1146,7 @@
                         } else if (code === 'DUPLICATE_EVENT_REGISTRATION') {
                             showToast(`Already registered for ${evDef.name}. Skipped duplicate.`, 'warning');
                         } else if (code === 'REGISTRATION_DEADLINE_EXCEEDED') {
-                            throw new Error(message || 'Registration closed: The deadline has passed.');
+                            throw new Error(message || 'Online registration is closed. Don’t worry, spot registration is available at the venue!');
                         } else {
                             throw new Error(message);
                         }

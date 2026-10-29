@@ -42,6 +42,17 @@ def test_deadline_enforcement_exceeded():
 
 # ============================================================================
 # Rule 2 Tests: Strict Event Team-Size Validation Matrix
+@pytest.fixture(autouse=True)
+def mock_valid_time_for_rule_tests(monkeypatch, request):
+    if "deadline" in request.node.name:
+        return
+    valid_time = datetime(2026, 10, 25, 12, 0, 0, tzinfo=IST)
+    orig_verify = RegistrationService.verify_deadline
+    monkeypatch.setattr(
+        RegistrationService,
+        "verify_deadline",
+        lambda current_time=None: orig_verify(current_time or valid_time)
+    )
 # ============================================================================
 
 def test_team_size_math_crunch_exact_4(db_session):

@@ -28,7 +28,7 @@ class DeadlineExceededException(DomainException):
         super().__init__(
             status_code=status.HTTP_403_FORBIDDEN,
             error_code="REGISTRATION_DEADLINE_EXCEEDED",
-            message=f"Registration closed. The deadline was {deadline_str}. Current server time is {current_time_str}.",
+            message=f"Online registration is closed. Don’t worry, spot registration is available at the venue! (Online deadline closed on {deadline_str}).",
             details={
                 "deadline": deadline_str,
                 "server_time": current_time_str,

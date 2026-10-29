@@ -959,17 +959,14 @@
             <div class="grid sm:grid-cols-2 gap-4 max-w-2xl mx-auto mb-10 animate-[fadeInUp_0.8s_0.6s_ease_both] opacity-0" style="animation-fill-mode:forwards">
                 <!-- Registration countdown -->
                 <div class="countdown-box">
-                    <p class="text-xs tracking-widest uppercase font-bold text-crimson mb-3">
-                        <i class="fa-solid fa-pen-to-square mr-1"></i>Registration Closes In
+                    <p class="text-xs tracking-widest uppercase font-bold text-crimson mb-2">
+                        <i class="fa-solid fa-bell mr-1"></i>Registration Status
                     </p>
-                    <div id="timer-reg" class="flex justify-center items-start gap-2">
-                        <div class="countdown-unit"><span class="countdown-num d">--</span><span class="countdown-label">Days</span></div>
-                        <span class="countdown-sep">:</span>
-                        <div class="countdown-unit"><span class="countdown-num h">--</span><span class="countdown-label">Hrs</span></div>
-                        <span class="countdown-sep">:</span>
-                        <div class="countdown-unit"><span class="countdown-num m">--</span><span class="countdown-label">Min</span></div>
-                        <span class="countdown-sep">:</span>
-                        <div class="countdown-unit"><span class="countdown-num s">--</span><span class="countdown-label">Sec</span></div>
+                    <div id="timer-reg" class="flex flex-col items-center justify-center text-center">
+                        <span class="countdown-num" style="font-size:1.15rem;color:#dc2626;line-height:1.2;font-weight:800;letter-spacing:0.02em">Registration Closed</span>
+                        <span style="font-size:0.75rem;font-weight:600;color:#92400e;background:rgba(217,119,6,0.12);border:1px solid rgba(217,119,6,0.25);border-radius:9999px;padding:3px 10px;margin-top:6px;display:inline-flex;align-items:center;gap:4px">
+                            <i class="fa-solid fa-circle-check text-amber-600"></i> Don’t worry, spot registration is available!
+                        </span>
                     </div>
                 </div>
                 <!-- Event countdown -->
@@ -1414,7 +1411,7 @@
                         </div>
                         <div class="rule-item" style="border-color:rgba(212,175,55,0.1)">
                             <i class="fa-solid fa-calendar-xmark text-crimson-light mt-0.5 shrink-0"></i>
-                            <span class="text-gray-200 text-sm">Online registration deadline: <strong class="text-gold">29 October 2026, 4:00 PM</strong></span>
+                            <span class="text-gray-200 text-sm">Online registration closed &bull; <strong class="text-gold">Spot registration is available at venue</strong></span>
                         </div>
                         <div class="rule-item" style="border-color:rgba(212,175,55,0.1)">
                             <i class="fa-solid fa-certificate text-crimson-light mt-0.5 shrink-0"></i>
@@ -1458,7 +1455,7 @@
                 <div class="divider mb-6"></div>
                 <p class="text-navy/70 text-base max-w-2xl mx-auto mb-8 leading-relaxed">
                     Registrations are officially open for PU colleges across Karnataka. 
-                    Enrol your 25-student contingent across Science (NOVEXA), Commerce (COMQUEST), IT (UTKARSH), and Humanities (MAHAVITH) before <strong class="text-crimson">29 October 2026, 4:00 PM</strong>.
+                    Enrol your 25-student contingent across Science (NOVEXA), Commerce (COMQUEST), IT (UTKARSH), and Humanities (MAHAVITH) before the online deadline. <strong class="text-crimson">Don’t worry, spot registration is available</strong> at the campus venue on event day!
                 </p>
 
                 <div class="flex flex-wrap justify-center gap-4">
@@ -1694,7 +1691,19 @@
 
             if (distance < 0) {
                 const el = document.getElementById(id);
-                if (el) el.innerHTML = '<span class="countdown-num" style="font-size:1rem;color:#dc2626">CLOSED</span>';
+                if (el) {
+                    if (id === 'timer-reg') {
+                        const box = el.closest('.countdown-box');
+                        if (box) {
+                            const title = box.querySelector('p');
+                            if (title) title.innerHTML = '<i class="fa-solid fa-bell mr-1"></i>Registration Status';
+                        }
+                        el.className = 'flex flex-col items-center justify-center text-center';
+                        el.innerHTML = '<span class="countdown-num" style="font-size:1.15rem;color:#dc2626;line-height:1.2;font-weight:800;letter-spacing:0.02em">Registration Closed</span><span style="font-size:0.75rem;font-weight:600;color:#92400e;background:rgba(217,119,6,0.12);border:1px solid rgba(217,119,6,0.25);border-radius:9999px;padding:3px 10px;margin-top:6px;display:inline-flex;align-items:center;gap:4px"><i class="fa-solid fa-circle-check text-amber-600"></i> Don’t worry, spot registration is available!</span>';
+                    } else {
+                        el.innerHTML = '<span class="countdown-num" style="font-size:1rem;color:#dc2626">EVENT DAY</span>';
+                    }
+                }
                 return;
             }
 
