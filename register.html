@@ -414,262 +414,113 @@
     <!-- MAIN REGISTRATION SECTION -->
     <main class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
-        <div class="text-center mb-8">
-            <span class="inline-flex items-center gap-2 bg-white/80 border border-gold/40 rounded-full px-4 py-1.5 text-xs font-bold text-crimson uppercase tracking-wider mb-3 shadow-sm">
-                <i class="fa-solid fa-ticket"></i> Free Registration Portal
+        <div class="text-center mb-6">
+            <span class="inline-flex items-center gap-2 bg-red-100 border border-red-200 rounded-full px-4 py-1.5 text-xs font-bold text-crimson uppercase tracking-wider mb-3 shadow-sm">
+                <i class="fa-solid fa-circle-xmark"></i> Online Registration Closed
             </span>
             <h1 class="font-cinzel font-black text-2xl sm:text-4xl text-navy mb-2">
-                College Team <span class="text-crimson">Registration</span>
+                Registration <span class="text-crimson">Status</span>
             </h1>
             <p class="text-navy/60 text-xs sm:text-sm">
-                Sri Mahaveera College, Moodbidri &nbsp;|&nbsp; Deadline: 29 October 2026, 4:00 PM &nbsp;|&nbsp; Max 25 Students
+                Sri Mahaveera College, Moodbidri &nbsp;|&nbsp; Fest Date: 30 October 2026
             </p>
         </div>
 
-        <!-- Spot Registration Notice -->
-        <div class="mb-6 p-4 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-center shadow-sm">
-            <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-crimson/10 border border-crimson/25 text-crimson font-bold text-xs uppercase tracking-wider mb-2">
-                <i class="fa-solid fa-circle-exclamation"></i> Online Registration Closed
-            </div>
-            <p class="text-navy font-bold text-sm sm:text-base">
-                Don’t worry, spot registration is available!
-            </p>
-            <p class="text-navy/70 text-xs sm:text-sm mt-1 max-w-xl mx-auto">
-                Colleges can register their contingent in-person directly at the Sri Mahaveera College campus registration desk on event day (30 Oct 2026).
-            </p>
-        </div>
-
-        <div class="form-container">
+        <div class="form-container overflow-hidden">
             <!-- Header Banner -->
             <div class="form-header text-center">
                 <h2 class="font-cinzel font-bold text-white text-lg sm:text-xl">
                     MAHAVEERA FEST 2K26
                 </h2>
                 <p class="text-red-100 text-[11px] sm:text-xs mt-1 uppercase tracking-widest font-semibold">
-                    Intercollegiate PU Competition Registration Form
+                    Intercollegiate PU Competition &bull; Sri Mahaveera College, Moodbidri
                 </p>
             </div>
 
-            <!-- Step Progress Indicator -->
-            <div class="px-2 sm:px-6 py-4 sm:py-5 border-b border-gold/15 bg-white/40">
-                <div class="flex items-start justify-center gap-0">
-                    <div class="flex flex-col items-center w-14 sm:w-20">
-                        <div class="step-dot active" id="indicator-1">1</div>
-                        <span class="step-label active" id="label-1">College</span>
-                    </div>
-                    <div class="step-line mt-3 sm:mt-4" id="line-1-2"></div>
-                    <div class="flex flex-col items-center w-14 sm:w-20">
-                        <div class="step-dot" id="indicator-2">2</div>
-                        <span class="step-label" id="label-2">Events</span>
-                    </div>
-                    <div class="step-line mt-3 sm:mt-4" id="line-2-3"></div>
-                    <div class="flex flex-col items-center w-14 sm:w-20">
-                        <div class="step-dot" id="indicator-3">3</div>
-                        <span class="step-label" id="label-3">Review</span>
-                    </div>
-                    <div class="step-line mt-3 sm:mt-4" id="line-3-4"></div>
-                    <div class="flex flex-col items-center w-14 sm:w-20">
-                        <div class="step-dot" id="indicator-4">✓</div>
-                        <span class="step-label" id="label-4">Done</span>
-                    </div>
+            <!-- Registration Closed Body -->
+            <div class="p-6 sm:p-10 text-center">
+                <div class="w-16 h-16 bg-red-100 text-crimson rounded-full flex items-center justify-center mx-auto mb-4 text-2xl shadow-inner border border-red-200">
+                    <i class="fa-solid fa-lock"></i>
                 </div>
-            </div>
 
-            <!-- Form Content Body -->
-            <div class="p-6 sm:p-8">
+                <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-crimson/10 border border-crimson/25 text-crimson font-bold text-xs uppercase tracking-wider mb-3">
+                    Online Portal Closed
+                </div>
 
-                <!-- STEP 1: College Details -->
-                <div id="step-1" class="step-content active">
-                    <h3 class="font-cinzel font-bold text-lg text-navy mb-4 pb-2 border-b border-gold/20 flex items-center gap-2">
-                        <i class="fa-solid fa-school text-crimson"></i> Step 1: College & Faculty Coordinator
-                    </h3>
+                <h3 class="font-cinzel font-black text-2xl sm:text-3xl text-navy mb-3">
+                    Online Registration is Closed
+                </h3>
 
-                    <form id="form-step-1" class="space-y-4" novalidate>
-                        <div>
-                            <label class="form-label" for="college_name">College Name *</label>
-                            <input type="text" id="college_name" name="college_name" required
-                                class="form-input" placeholder="e.g. Sri Mahaveera PU College, Moodbidri">
+                <p class="text-navy/70 text-sm max-w-lg mx-auto mb-6 leading-relaxed">
+                    The online registration portal closed on <strong class="text-navy">29 October 2026 at 4:00 PM IST</strong>. Online submissions through this portal are no longer accepted.
+                </p>
+
+                <!-- Spot Registration Highlight Card -->
+                <div class="max-w-xl mx-auto bg-amber-500/10 border-2 border-amber-500/30 rounded-2xl p-5 sm:p-6 mb-8 text-left shadow-sm">
+                    <div class="flex items-start gap-3.5">
+                        <div class="w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center text-amber-700 shrink-0 mt-0.5">
+                            <i class="fa-solid fa-ticket text-lg"></i>
                         </div>
                         <div>
-                            <label class="form-label" for="faculty_name">Faculty Coordinator Name *</label>
-                            <input type="text" id="faculty_name" name="faculty_name" required
-                                class="form-input" placeholder="Full name of faculty-in-charge">
-                        </div>
-                        <div class="grid sm:grid-cols-2 gap-4">
-                            <div>
-                                <label class="form-label" for="faculty_phone">Faculty Phone Number *</label>
-                                <div class="relative">
-                                    <span class="absolute left-3 top-1/2 -translate-y-1/2 text-navy/40 text-sm font-semibold">+91</span>
-                                    <input type="tel" id="faculty_phone" name="faculty_phone" required
-                                        class="form-input pl-12" placeholder="9876543210">
-                                </div>
-                            </div>
-                            <div>
-                                <label class="form-label" for="faculty_email">Faculty Official Email *</label>
-                                <input type="email" id="faculty_email" name="faculty_email" required
-                                    class="form-input" placeholder="coordinator@college.edu.in">
-                            </div>
-                        </div>
-
-                        <!-- Important Note on Credentials -->
-                        <div class="mt-5 bg-amber-500/10 border border-gold/40 rounded-xl p-3.5 flex items-start gap-3 text-left">
-                            <i class="fa-solid fa-circle-info text-amber-700 text-base shrink-0 mt-0.5"></i>
-                            <div class="text-xs text-navy/80 leading-relaxed">
-                                <strong class="text-navy font-bold">Important Note:</strong>
-                                Please note down the <strong>Email Address</strong> and <strong>Phone Number</strong> entered above. Once your college is registered, you must use these exact same details whenever you return to add new events, register additional participants, or check your registration status.
-                            </div>
-                        </div>
-
-                        <div class="flex justify-between items-center pt-5 border-t border-gold/15 mt-5">
-                            <span class="text-xs text-navy/50 italic">All fields marked with * are strictly mandatory</span>
-                            <button type="submit" class="btn-crimson">
-                                Next: Select Events <i class="fa-solid fa-arrow-right"></i>
-                                <div class="loader" id="loader-1"></div>
-                            </button>
-                        </div>
-                    </form>
-                </div>
-
-                <!-- STEP 2: Select Events -->
-                <div id="step-2" class="step-content">
-                    <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-2 mb-4">
-                        <h3 class="font-cinzel font-bold text-lg text-navy flex items-center gap-2">
-                            <i class="fa-solid fa-list-check text-crimson"></i> Step 2: Choose Events & Rosters
-                        </h3>
-                        <div class="flex items-center gap-2 bg-cream/90 border border-gold/40 rounded-xl px-3 py-1.5 shadow-sm">
-                            <i class="fa-solid fa-users text-crimson text-sm"></i>
-                            <span class="text-xs font-semibold text-navy">Unique Students:</span>
-                            <span id="student-counter" class="font-bold text-crimson text-lg">0</span>
-                            <span class="text-navy/40 text-xs">/ 25 Cap</span>
-                        </div>
-                    </div>
-                    <p class="text-navy/60 text-xs mb-5 pb-3 border-b border-gold/15">
-                        Tick the events your college wishes to enter. Enter participant Full Name and PUC Year (Student Mobile Number is optional). Same student may participate in multiple events.
-                    </p>
-
-                    <div id="events-selection-container" class="space-y-5 max-h-[55vh] overflow-y-auto pr-1 pb-2">
-                        <!-- Dynamically populated via JS -->
-                    </div>
-
-                    <div class="flex justify-between pt-5 border-t border-gold/20 mt-6">
-                        <button type="button" class="btn-back btn-outline">
-                            <i class="fa-solid fa-arrow-left"></i> Back
-                        </button>
-                        <button type="button" id="btn-next-2" class="btn-crimson">
-                            Review Registration <i class="fa-solid fa-arrow-right"></i>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- STEP 3: Review & Confirm -->
-                <div id="step-3" class="step-content">
-                    <h3 class="font-cinzel font-bold text-lg text-navy mb-4 flex items-center gap-2">
-                        <i class="fa-solid fa-file-contract text-crimson"></i> Step 3: Review & Confirm Entry
-                    </h3>
-
-                    <!-- College Summary -->
-                    <div class="bg-cream/70 border border-gold/25 rounded-xl p-4 mb-4">
-                        <h4 class="text-xs uppercase tracking-widest font-bold text-crimson mb-2 pb-1 border-b border-gold/15">
-                            Contingent Details
-                        </h4>
-                        <div class="grid sm:grid-cols-2 gap-3 text-sm">
-                            <div><span class="text-navy/50 text-xs block">College</span><span id="rev-college" class="text-navy font-semibold"></span></div>
-                            <div><span class="text-navy/50 text-xs block">Faculty In-Charge</span><span id="rev-coord" class="text-navy font-semibold"></span></div>
-                            <div><span class="text-navy/50 text-xs block">Phone</span><span id="rev-phone" class="text-navy font-semibold"></span></div>
-                            <div><span class="text-navy/50 text-xs block">Email</span><span id="rev-email" class="text-navy font-semibold"></span></div>
-                        </div>
-                    </div>
-
-                    <!-- Events Summary -->
-                    <div class="bg-cream/70 border border-gold/25 rounded-xl p-4 mb-4">
-                        <div class="flex justify-between items-center mb-2 pb-1 border-b border-gold/15">
-                            <h4 class="text-xs uppercase tracking-widest font-bold text-crimson">Selected Events & Rosters</h4>
-                            <span class="text-xs font-bold text-navy">
-                                Unique Participants: <span id="rev-unique-count" class="text-crimson text-sm font-black">0</span>
-                            </span>
-                        </div>
-                        <div id="rev-events-list" class="space-y-3 max-h-[30vh] overflow-y-auto pr-1 text-sm"></div>
-                    </div>
-
-                    <!-- Guidelines Acceptance -->
-                    <div class="bg-crimson/5 border border-crimson/20 rounded-xl p-4 mb-5">
-                        <p class="text-xs font-bold text-crimson mb-2 uppercase tracking-widest">
-                            <i class="fa-solid fa-triangle-exclamation mr-1"></i>Mandatory Undertakings:
-                        </p>
-                        <ul class="space-y-1.5 text-xs text-navy/75">
-                            <li class="flex items-start gap-2"><i class="fa-solid fa-circle-check text-crimson mt-0.5"></i>All participants will carry mandatory College ID cards & authorization letter.</li>
-                            <li class="flex items-start gap-2"><i class="fa-solid fa-circle-check text-crimson mt-0.5"></i>Reporting time before 8:45 AM on 30 October 2026 at Sri Mahaveera College.</li>
-                            <li class="flex items-start gap-2"><i class="fa-solid fa-circle-check text-crimson mt-0.5"></i>We accept all event rules and judges' final verdicts.</li>
-                        </ul>
-                    </div>
-
-                    <div class="flex justify-between pt-4 border-t border-gold/20">
-                        <button type="button" class="btn-back btn-outline">
-                            <i class="fa-solid fa-arrow-left"></i> Back
-                        </button>
-                        <button type="button" id="btn-submit-final" class="btn-crimson">
-                            <i class="fa-solid fa-paper-plane"></i> Submit Final Registration
-                            <div class="loader" id="loader-3"></div>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- STEP 4: Success Screen -->
-                <div id="step-4" class="step-content text-center py-8">
-                    <div class="success-svg-wrap mb-6">
-                        <svg viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg">
-                            <circle class="success-circle" cx="26" cy="26" r="25"/>
-                            <path class="success-check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
-                        </svg>
-                    </div>
-
-                    <h2 class="font-cinzel font-bold text-2xl sm:text-3xl text-navy mb-2">Registration Confirmed! 🎉</h2>
-                    <p class="text-navy/60 mb-6 text-sm" id="success-college-name">Your college contingent has been officially enrolled.</p>
-
-                    <div class="bg-cream/90 border border-gold/40 rounded-2xl p-5 max-w-md mx-auto text-left mb-6 shadow-sm">
-                        <p class="text-xs uppercase tracking-widest text-navy/50 mb-1">College Access Token</p>
-                        <div class="flex items-center gap-2 mb-4">
-                            <code class="flex-1 bg-white border border-gold/25 rounded-lg p-2 text-crimson font-mono text-xs overflow-hidden text-ellipsis whitespace-nowrap" id="success-token">token_abc...</code>
-                            <button onclick="copyToken()" class="bg-navy/10 hover:bg-navy/20 p-2 rounded-lg transition-colors text-navy" title="Copy Token">
-                                <i class="fa-regular fa-copy text-sm"></i>
-                            </button>
-                        </div>
-                        <p class="text-xs text-navy/50 mb-1">Student Quota Remaining</p>
-                        <p class="text-navy font-semibold text-sm mb-4">
-                            <i class="fa-solid fa-users text-crimson mr-1"></i>
-                            <span id="success-quota"></span> slots left for your college (out of 25)
-                        </p>
-                        <div class="pt-3 border-t border-gold/20">
-                            <p class="text-xs font-bold text-crimson mb-2">
-                                <i class="fa-solid fa-bell mr-1"></i>Reminders for 30 October 2026:
+                            <h4 class="font-bold text-navy text-base sm:text-lg">
+                                Don’t worry! Spot registration is available.
+                            </h4>
+                            <p class="text-navy/75 text-xs sm:text-sm mt-1 leading-relaxed">
+                                Colleges that missed the online deadline can register their student contingent directly at the <strong>Spot Registration Desk</strong> on the morning of the fest.
                             </p>
-                            <ul class="text-xs text-navy/70 space-y-1.5">
-                                <li class="flex items-center gap-2"><i class="fa-solid fa-id-card text-gold"></i> Carry Student College ID cards</li>
-                                <li class="flex items-center gap-2"><i class="fa-solid fa-file-signature text-gold"></i> Principal's signed Authorization Letter</li>
-                                <li class="flex items-center gap-2"><i class="fa-solid fa-clock text-gold"></i> Reach campus by 8:45 AM (Breakfast provided)</li>
-                            </ul>
                         </div>
                     </div>
 
-                    <!-- Check Status Notice Line -->
-                    <div class="bg-amber-500/10 border border-gold/40 rounded-xl p-4 max-w-md mx-auto mb-6 text-xs sm:text-sm text-navy/85 text-center shadow-xs">
-                        <i class="fa-solid fa-clipboard-check text-crimson mr-1.5 text-base align-middle"></i>
-                        <span>You can see your enrolled events and full participants list anytime in <a href="/check-status.html" class="font-bold text-crimson underline hover:text-navy transition-colors">Check Status</a> in the navigation bar.</span>
-                    </div>
-
-                    <div class="flex flex-wrap justify-center gap-3">
-                        <button type="button" id="btn-register-another" class="btn-gold">
-                            <i class="fa-solid fa-plus"></i> Add More Events
-                        </button>
-                        <a href="/check-status.html" class="btn-outline">
-                            <i class="fa-solid fa-clipboard-list"></i> Check Status
-                        </a>
-                        <a href="/" class="btn-outline">
-                            <i class="fa-solid fa-house"></i> Return to Home
-                        </a>
+                    <div class="grid sm:grid-cols-2 gap-3 mt-5 pt-4 border-t border-amber-500/20 text-xs text-navy/80">
+                        <div class="flex items-center gap-2">
+                            <i class="fa-solid fa-calendar-check text-crimson"></i>
+                            <span><strong>Fest Date:</strong> 30 October 2026</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <i class="fa-solid fa-clock text-crimson"></i>
+                            <span><strong>Desk Opens:</strong> 8:45 AM</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <i class="fa-solid fa-location-dot text-crimson"></i>
+                            <span><strong>Venue:</strong> SMC Moodbidri Campus</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <i class="fa-solid fa-tag text-crimson"></i>
+                            <span><strong>Entry Fee:</strong> ₹0 (Completely Free)</span>
+                        </div>
                     </div>
                 </div>
 
+                <!-- Already Registered Colleges Check Status Box -->
+                <div class="max-w-xl mx-auto bg-white/80 border border-gold/30 rounded-2xl p-5 mb-8 text-left shadow-sm">
+                    <div class="flex items-start gap-3">
+                        <i class="fa-solid fa-clipboard-check text-crimson text-xl shrink-0 mt-0.5"></i>
+                        <div class="flex-1">
+                            <h5 class="font-bold text-navy text-sm sm:text-base">Already Registered Online?</h5>
+                            <p class="text-navy/70 text-xs mt-1 leading-relaxed">
+                                If your college registered earlier, you can view your enrolled events, registered participants, and college details anytime on the <strong>Check Status</strong> page.
+                            </p>
+                            <div class="mt-3">
+                                <a href="/check-status.html" class="inline-flex items-center gap-1.5 text-xs font-bold text-crimson hover:underline">
+                                    <i class="fa-solid fa-magnifying-glass"></i> Go to Check Status &rarr;
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Navigation CTAs -->
+                <div class="flex flex-wrap justify-center gap-3">
+                    <a href="/check-status.html" class="btn-crimson px-6 py-3 text-sm shadow-md flex items-center gap-2">
+                        <i class="fa-solid fa-magnifying-glass"></i> Check Status
+                    </a>
+                    <a href="/#events" class="btn-outline px-6 py-3 text-sm border-gold/40 text-navy bg-white hover:bg-cream/60 flex items-center gap-2">
+                        <i class="fa-solid fa-layer-group"></i> Browse Events & Rules
+                    </a>
+                    <a href="/" class="btn-outline px-6 py-3 text-sm border-gold/40 text-navy bg-white hover:bg-cream/60 flex items-center gap-2">
+                        <i class="fa-solid fa-house"></i> Home
+                    </a>
+                </div>
             </div>
         </div>
     </main>
@@ -925,7 +776,7 @@
         };
 
         // Step 1 Submission
-        document.getElementById('form-step-1').addEventListener('submit', async (e) => {
+        const form1 = document.getElementById('form-step-1'); if (form1) form1.addEventListener('submit', async (e) => {
             e.preventDefault();
             const loader = document.getElementById('loader-1');
             loader.classList.add('active');
@@ -1106,7 +957,7 @@
         });
 
         // Step 3 Final Submission
-        document.getElementById('btn-submit-final').addEventListener('click', async () => {
+        const finalBtn = document.getElementById('btn-submit-final'); if (finalBtn) finalBtn.addEventListener('click', async () => {
             const loader = document.getElementById('loader-3');
             loader.classList.add('active');
 
@@ -1177,7 +1028,7 @@
         });
 
         // Add More Events handler
-        document.getElementById('btn-register-another').addEventListener('click', () => {
+        const anotherBtn = document.getElementById('btn-register-another'); if (anotherBtn) anotherBtn.addEventListener('click', () => {
             document.querySelectorAll('.event-checkbox').forEach(chk => { chk.checked = false; });
             document.querySelectorAll("[id^='participants-for-']").forEach(div => {
                 div.classList.add('hidden');
@@ -1203,10 +1054,10 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
-            initEventsForm();
+            if (document.getElementById('events-container')) initEventsForm();
         });
         if (document.readyState !== 'loading') {
-            initEventsForm();
+            if (document.getElementById('events-container')) initEventsForm();
         }
     </script>
 </body>
